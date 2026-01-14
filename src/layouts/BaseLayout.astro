@@ -1,0 +1,32 @@
+---
+import "../styles/global.css";
+
+const { title = "Víctor Cazorla" } = Astro.props;
+const currentPath = Astro.url.pathname;
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  </head>
+  <body>
+    <header>
+      <nav>
+  <a href="/" class={currentPath === "/" ? "active" : ""}>Sobre mí</a> |
+  <a href="/it" class={currentPath.startsWith("/it") ? "active" : ""}>IT</a> |
+  <a href="/cienciasambientales" class={currentPath.startsWith("/cienciasambientales") ? "active" : ""}>Ciencias Ambientales</a> |
+  <a href="/docencia" class={currentPath.startsWith("/docencia") ? "active" : ""}>Docencia</a> |
+  <a href="/deontologia" class={currentPath.startsWith("/deontologia") ? "active" : ""}>Deontología</a> |
+  <a href="/contacto" class={currentPath.startsWith("/contacto") ? "active" : ""}>Contacto</a>
+      </nav>
+    </header>
+
+    <main>
+      <slot />
+    </main>
+  </body>
+</html>
