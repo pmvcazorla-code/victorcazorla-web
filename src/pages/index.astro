@@ -1,71 +1,196 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
+---
+const title = "Víctor Cazorla — Medio Ambiente, Docencia y Ética Profesional";
+const description = "Ambientólogo colegiado. Proyectos ambientales, docencia especializada y compromiso ético con el territorio y las personas.";
 ---
 
-<BaseLayout title="Sobre mí">
-  <main class="container">
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content={description} />
+  <title>{title}</title>
 
-    <section id="sobre-mi">
-      <h1>Sobre mí</h1>
+  <style>
+    :root {
+      --bg: #0b1220;
+      --bg-soft: #121a2f;
+      --primary: #5fa8ff;
+      --accent: #7ce7c9;
+      --text: #e6ebf5;
+      --muted: #9aa4bf;
+    }
 
-<p>
-  Desarrollo mi actividad laboral en la intersección entre sistemas técnicos, la gestión de equipos y la toma de decisiones con impacto organizativo y social. De hecho, mi trayectoria no sigue una línea única, sino un eje común: comprender sistemas complejos, identificar patrones, gestionarlos con rigor y actuar con criterio fundamentado cuando las decisiones importan.
-</p>
+    * {
+      box-sizing: border-box;
+    }
 
-<p>
-  En este sentido, trabajo en ámbitos como las tecnologías de la información, la gestión ambiental, la docencia y la ética profesional; no de un modo estanco, sino interconectado, como espacios donde aplicar una misma forma de trabajar basada en el análisis, la responsabilidad, el cumplimiento normativo y la atención a las consecuencias de cada decisión, tanto técnicas como humanas.
-</p>
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Inter, Helvetica, Arial, sans-serif;
+      background: linear-gradient(180deg, var(--bg), var(--bg-soft));
+      color: var(--text);
+      line-height: 1.6;
+    }
 
-<p>
-  Considero que mi pericia se sitúa entre lo operativo y lo estratégico. He crecido profesionalmente en entornos donde la fiabilidad, la trazabilidad y la debida gestión de recursos no son opcionales, y donde el error tiene consecuencias relevantes. Esta experiencia ha configurado en mí una manera de entender el trabajo apoyada en la precisión, el buen hacer de las <em>best practices</em>, la mejora continua y el respeto por los marcos ético-jurídicos.
-</p>
+    a {
+      color: var(--primary);
+      text-decoration: none;
+    }
 
-<p>
-  Parte de mi labor consiste en examinar críticamente supuestos que suelen operar como evidencias tácitas en el plano social y en la gestión de personas, entre ellos la idea de una experiencia humana homogénea. Desde ahí, presto una atención consciente y rigurosa a la diversidad —incluida la neurodivergencia y, con especial énfasis, la condición del espectro autista— en mi práctica diaria como <em>Manager</em>.
-</p>
+    a:hover {
+      text-decoration: underline;
+    }
 
-<p>
-  Por ende, este espacio nace con la intención de compartir y aportar valor a partir de ese recorrido transversal. Aquí recojo reflexiones propias, artículos publicados, intervenciones en medios y materiales vinculados a mi actividad profesional.
-</p>
+    header {
+      padding: 6rem 1.5rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      display: grid;
+      gap: 2.5rem;
+    }
+
+    .eyebrow {
+      color: var(--accent);
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-size: 0.85rem;
+    }
+
+    h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.15;
+      margin: 0;
+    }
+
+    .lead {
+      font-size: 1.25rem;
+      color: var(--muted);
+      max-width: 720px;
+    }
+
+    .cta {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      margin-top: 1.5rem;
+    }
+
+    .button {
+      padding: 0.9rem 1.4rem;
+      border-radius: 8px;
+      font-weight: 600;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .button.primary {
+      background: var(--primary);
+      color: #0b1220;
+    }
+
+    .button.primary:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.05);
+    }
+
+    .button.secondary {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: transparent;
+    }
+
+    .button.secondary:hover {
+      background: rgba(95, 168, 255, 0.1);
+    }
+
+    section {
+      padding: 5rem 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-intro {
+      color: var(--muted);
+      max-width: 700px;
+      margin-bottom: 3rem;
+    }
+
+    .grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 14px;
+      padding: 2rem;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+    }
+
+    .card h3 {
+      margin-top: 0;
+      margin-bottom: 0.75rem;
+    }
+
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="hero">
+      <span class="eyebrow">Ambientología · Docencia · Ética</span>
+
+      <h1>
+        Pensar el territorio.<br />
+        Actuar con responsabilidad.
+      </h1>
+
+      <p class="lead">
+        Soy <strong>Víctor Cazorla</strong>, ambientólogo colegiado.
+        Trabajo en la intersección entre medio ambiente, gestión pública,
+        docencia especializada y ética profesional.
       </p>
-    </section>
-<section id="ambitos">
-  <h2>Especialización profesional</h2>
 
-  <div class="ambitos-grid">
-    <a href="/it" class="ambito">
-      <img src="/images/image_IT.png" alt="Tecnologías de la Información" />
-      <span>Tecnologías de la Información</span>
-    </a>
+      <div class="cta">
+        <a href="/cienciasambientales" class="button primary">
+          Ciencias Ambientales
+        </a>
+        <a href="/docencia" class="button secondary">
+          Docencia
+        </a>
+        <a href="/deontologia" class="button secondary">
+          Deontología profesional
+        </a>
+      </div>
+    </div>
+  </header>
 
-    <a href="/cienciasambientales" class="ambito">
-      <img src="/images/image_ambientologo.png" alt="Ciencias Ambientales" />
-      <span>Ciencias Ambientales</span>
-    </a>
-
-    <a href="/deontologia" class="ambito">
-      <img src="/images/image_deontologia.png" alt="Deontología profesional" />
-      <span>Deontología profesional</span>
-    </a>
-  </div>
-</section>
-
-<section id="seguir">
-  <h2>Contacto y presencia profesional</h2>
-
-  <a
-    class="linkedin-card"
-    href="https://www.linkedin.com/in/victorcazorla-f"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <span class="linkedin-title">LinkedIn ↗</span>
-    <span class="linkedin-subtitle">
-      Artículos, reflexiones y actividad profesional
-    </span>
-  </a>
-</section>
-    </section>
-
-  </main>
-</BaseLayout>
+  <section>
+    <h2 class="section-title">Áreas de trabajo</h2>
+    <
