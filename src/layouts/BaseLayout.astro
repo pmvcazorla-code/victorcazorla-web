@@ -1,7 +1,7 @@
 ---
 import "../styles/global.css";
 
-const { title = "Víctor Cazorla" } = Astro.props;
+const { title = "Víctor Cazorla Fernández" } = Astro.props;
 const currentPath = Astro.url.pathname;
 ---
 
@@ -10,19 +10,25 @@ const currentPath = Astro.url.pathname;
   <head>
     <meta charset="utf-8" />
     <title>{title}</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-
   </head>
+
   <body>
-    <header>
-      <nav>
-  <a href="/" class={currentPath === "/" ? "active" : ""}>Sobre mí</a> |
-  <a href="/it" class={currentPath.startsWith("/it") ? "active" : ""}>IT</a> |
-  <a href="/cienciasambientales" class={currentPath.startsWith("/cienciasambientales") ? "active" : ""}>Ciencias Ambientales</a> |
-  <a href="/docencia" class={currentPath.startsWith("/docencia") ? "active" : ""}>Docencia</a> |
-  <a href="/deontologia" class={currentPath.startsWith("/deontologia") ? "active" : ""}>Deontología</a> |
-  <a href="/contacto" class={currentPath.startsWith("/contacto") ? "active" : ""}>Contacto</a>
-      </nav>
+    <header class="site-header">
+      <div class="header-inner">
+        <div class="identity">
+          <h1 class="site-title">Víctor Cazorla Fernández</h1>
+          <p class="site-subtitle">
+            Tecnología · Ciencia · Docencia · Ética profesional
+          </p>
+        </div>
+
+        <nav class="main-nav">
+          <a href="/" class={currentPath === "/" ? "active" : ""}>Sobre mí</a>
+          <a href="/it" class={currentPath.startsWith("/it") ? "active" : ""}>Dirección y Gobernanza de IT</a>
+          <a href="/cienciasambientales" class={currentPath.startsWith("/cienciasambientales") ? "active" : ""}>Gestión Ambiental</a>
+          <a href="/deontologia" class={currentPath.startsWith("/deontologia") ? "active" : ""}>Deontología</a>
+        </nav>
+      </div>
     </header>
 
     <main>
