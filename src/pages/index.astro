@@ -1,196 +1,215 @@
 ---
----
-const title = "Víctor Cazorla — Medio Ambiente, Docencia y Ética Profesional";
-const description = "Ambientólogo colegiado. Proyectos ambientales, docencia especializada y compromiso ético con el territorio y las personas.";
+const title = "Víctor Cazorla Fernández";
+const description =
+  "Tecnología · Ciencia · Docencia · Ética profesional";
 ---
 
 <!DOCTYPE html>
 <html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content={description} />
-  <title>{title}</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content={description} />
+    <title>{title}</title>
 
-  <style>
-    :root {
-      --bg: #0b1220;
-      --bg-soft: #121a2f;
-      --primary: #5fa8ff;
-      --accent: #7ce7c9;
-      --text: #e6ebf5;
-      --muted: #9aa4bf;
-    }
+    <style>
+      :root {
+        --bg: #070b16;
+        --bg-soft: #0d1426;
+        --primary: #8bb4ff;
+        --text: #eef2ff;
+        --muted: #a7b0c8;
+        --card: rgba(255, 255, 255, 0.04);
+        --border: rgba(255, 255, 255, 0.08);
+      }
 
-    * {
-      box-sizing: border-box;
-    }
+      * {
+        box-sizing: border-box;
+      }
 
-    body {
-      margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-        Inter, Helvetica, Arial, sans-serif;
-      background: linear-gradient(180deg, var(--bg), var(--bg-soft));
-      color: var(--text);
-      line-height: 1.6;
-    }
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Inter, Helvetica, Arial, sans-serif;
+        background: radial-gradient(
+          1200px 600px at 50% -200px,
+          #162044,
+          var(--bg)
+        );
+        color: var(--text);
+        line-height: 1.7;
+      }
 
-    a {
-      color: var(--primary);
-      text-decoration: none;
-    }
+      h1,
+      h2,
+      h3 {
+        font-family: "Georgia", "Times New Roman", serif;
+        letter-spacing: -0.02em;
+      }
 
-    a:hover {
-      text-decoration: underline;
-    }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
 
-    header {
-      padding: 6rem 1.5rem 4rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+      /* Sticky navigation */
+      header {
+        position: sticky;
+        top: 0;
+        z-index: 50;
+        backdrop-filter: blur(12px);
+        background: rgba(7, 11, 22, 0.75);
+        border-bottom: 1px solid var(--border);
+      }
 
-    .hero {
-      display: grid;
-      gap: 2.5rem;
-    }
+      nav {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 1.25rem 1.5rem;
+        display: flex;
+        gap: 1.25rem;
+        justify-content: center;
+        flex-wrap: wrap;
+      }
 
-    .eyebrow {
-      color: var(--accent);
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: 0.85rem;
-    }
+      nav a {
+        padding: 0.6rem 1.1rem;
+        border-radius: 999px;
+        background: var(--card);
+        border: 1px solid var(--border);
+        font-weight: 600;
+        transition: all 0.25s ease;
+      }
 
-    h1 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      line-height: 1.15;
-      margin: 0;
-    }
+      nav a:hover {
+        background: rgba(255, 255, 255, 0.08);
+        transform: translateY(-1px);
+      }
 
-    .lead {
-      font-size: 1.25rem;
-      color: var(--muted);
-      max-width: 720px;
-    }
+      /* Hero */
+      .hero {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 5.5rem 1.5rem 3.5rem;
+        text-align: center;
+        animation: fadeUp 0.8s ease both;
+      }
 
-    .cta {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      margin-top: 1.5rem;
-    }
+      .hero h1 {
+        font-size: clamp(3rem, 6vw, 4.2rem);
+        margin-bottom: 1rem;
+      }
 
-    .button {
-      padding: 0.9rem 1.4rem;
-      border-radius: 8px;
-      font-weight: 600;
-      border: 1px solid transparent;
-      transition: all 0.2s ease;
-    }
+      .hero p {
+        color: var(--muted);
+        font-size: 1.25rem;
+      }
 
-    .button.primary {
-      background: var(--primary);
-      color: #0b1220;
-    }
+      /* Content */
+      main {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 3.5rem 1.5rem;
+        animation: fadeUp 0.9s ease both;
+      }
 
-    .button.primary:hover {
-      transform: translateY(-1px);
-      filter: brightness(1.05);
-    }
+      main h2 {
+        font-size: 2.2rem;
+        margin-bottom: 1.5rem;
+      }
 
-    .button.secondary {
-      border-color: var(--primary);
-      color: var(--primary);
-      background: transparent;
-    }
+      main p {
+        color: var(--muted);
+        margin-bottom: 1.6rem;
+        text-align: justify;
+      }
 
-    .button.secondary:hover {
-      background: rgba(95, 168, 255, 0.1);
-    }
+      footer {
+        text-align: center;
+        padding: 3rem 1.5rem;
+        font-size: 0.9rem;
+        color: var(--muted);
+        border-top: 1px solid var(--border);
+      }
 
-    section {
-      padding: 5rem 1.5rem;
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(18px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
 
-    .section-title {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
+  <body>
+    <header>
+      <nav>
+        <a href="/">Sobre mí</a>
+        <a href="/it">Dirección y Gobernanza de IT</a>
+        <a href="/cienciasambientales">Gestión Ambiental</a>
+        <a href="/deontologia">Deontología</a>
+      </nav>
+    </header>
 
-    .section-intro {
-      color: var(--muted);
-      max-width: 700px;
-      margin-bottom: 3rem;
-    }
+    <section class="hero">
+      <h1>Víctor Cazorla Fernández</h1>
+      <p>Tecnología · Ciencia · Docencia · Ética profesional</p>
+    </section>
 
-    .grid {
-      display: grid;
-      gap: 2rem;
-      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-    }
+    <main>
+      <h2>Sobre mí</h2>
 
-    .card {
-      background: rgba(255, 255, 255, 0.03);
-      border: 1px solid rgba(255, 255, 255, 0.06);
-      border-radius: 14px;
-      padding: 2rem;
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
-    }
-
-    .card h3 {
-      margin-top: 0;
-      margin-bottom: 0.75rem;
-    }
-
-    footer {
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 3rem 1.5rem;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.95rem;
-    }
-  </style>
-</head>
-
-<body>
-  <header>
-    <div class="hero">
-      <span class="eyebrow">Ambientología · Docencia · Ética</span>
-
-      <h1>
-        Pensar el territorio.<br />
-        Actuar con responsabilidad.
-      </h1>
-
-      <p class="lead">
-        Soy <strong>Víctor Cazorla</strong>, ambientólogo colegiado.
-        Trabajo en la intersección entre medio ambiente, gestión pública,
-        docencia especializada y ética profesional.
+      <p>
+        Desarrollo mi actividad laboral en la intersección entre sistemas
+        técnicos, la gestión de equipos y la toma de decisiones con impacto
+        organizativo y social. De hecho, mi trayectoria no sigue una línea única,
+        sino un eje común: comprender sistemas complejos, identificar patrones,
+        gestionarlos con rigor y actuar con criterio fundamentado cuando las
+        decisiones importan.
       </p>
 
-      <div class="cta">
-        <a href="/cienciasambientales" class="button primary">
-          Ciencias Ambientales
-        </a>
-        <a href="/docencia" class="button secondary">
-          Docencia
-        </a>
-        <a href="/deontologia" class="button secondary">
-          Deontología profesional
-        </a>
-      </div>
-    </div>
-  </header>
+      <p>
+        En este sentido, trabajo en ámbitos como las tecnologías de la
+        información, la gestión ambiental, la docencia y la ética profesional; no
+        de un modo estanco, sino interconectado, como espacios donde aplicar una
+        misma forma de trabajar basada en el análisis, la responsabilidad, el
+        cumplimiento normativo y la atención a las consecuencias de cada
+        decisión, tanto técnicas como humanas.
+      </p>
 
-  <section>
-    <h2 class="section-title">Áreas de trabajo</h2>
-    <
+      <p>
+        Considero que mi pericia se sitúa entre lo operativo y lo estratégico. He
+        crecido profesionalmente en entornos donde la fiabilidad, la
+        trazabilidad y la debida gestión de recursos no son opcionales, y donde el
+        error tiene consecuencias relevantes. Esta experiencia ha configurado en
+        mí una manera de entender el trabajo apoyada en la precisión, el buen
+        hacer de las best practices, la mejora continua y el respeto por los
+        marcos ético-jurídicos.
+      </p>
+
+      <p>
+        Parte de mi labor consiste en examinar críticamente supuestos que suelen
+        operar como evidencias tácitas en el plano social y en la gestión de
+        personas, entre ellos la idea de una experiencia humana homogénea. Desde
+        ahí, presto una atención consciente y rigurosa a la diversidad —incluida
+        la neurodivergencia y, con especial énfasis, la condición del espectro
+        autista— en mi práctica diaria como Manager.
+      </p>
+
+      <p>
+        Por ende, este espacio nace con la intención de compartir y aportar valor
+        a partir de ese recorrido transversal. Aquí recojo reflexiones propias,
+        artículos publicados, intervenciones en medios y materiales vinculados a
+        mi actividad profesional.
+      </p>
+    </main>
+
+    <footer>
+      © 2026 · Víctor Cazorla Fernández
+    </footer>
+  </body>
+</html>
