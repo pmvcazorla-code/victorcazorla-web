@@ -1,38 +1,151 @@
 ---
-import "../styles/global.css";
-
-const { title = "Víctor Cazorla Fernández" } = Astro.props;
-const currentPath = Astro.url.pathname;
+const { title = "Víctor Cazorla Fernández", description = "" } = Astro.props;
 ---
 
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <title>{title}</title>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  {description && <meta name="description" content={description} />}
+  <title>{title}</title>
 
-  <body>
-    <header class="site-header">
-      <div class="header-inner">
-        <div class="identity">
-          <h1 class="site-title">Víctor Cazorla Fernández</h1>
-          <p class="site-subtitle">
-            Tecnología · Ciencia · Docencia · Ética profesional
-          </p>
-        </div>
+  <!-- Tipografía serif SOLO para títulos -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
-        <nav class="main-nav">
-          <a href="/" class={currentPath === "/" ? "active" : ""}>Sobre mí</a>
-          <a href="/it" class={currentPath.startsWith("/it") ? "active" : ""}>Dirección y Gobernanza de IT</a>
-          <a href="/cienciasambientales" class={currentPath.startsWith("/cienciasambientales") ? "active" : ""}>Gestión Ambiental</a>
-          <a href="/deontologia" class={currentPath.startsWith("/deontologia") ? "active" : ""}>Deontología</a>
-        </nav>
-      </div>
-    </header>
+  <style>
+    :root {
+      --bg: #070b14;
+      --bg-soft: #0d1324;
+      --primary: #6aa6ff;
+      --text: #e6ebf5;
+      --muted: #aab2cc;
+      --card: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.08);
+    }
 
-    <main>
-      <slot />
-    </main>
-  </body>
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Inter, Helvetica, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 50% -200px, #142048 0%, var(--bg) 60%);
+      color: var(--text);
+      line-height: 1.65;
+    }
+
+    h1, h2, h3 {
+      font-family: "Playfair Display", serif;
+      letter-spacing: -0.02em;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* ---------- HEADER / NAV ---------- */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(10px);
+      background: linear-gradient(
+        to bottom,
+        rgba(7,11,20,0.85),
+        rgba(7,11,20,0.55)
+      );
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1.25rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .nav a {
+      padding: 0.65rem 1.3rem;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      font-weight: 600;
+      transition: all 0.25s ease;
+    }
+
+    .nav a:hover {
+      background: rgba(255,255,255,0.08);
+      transform: translateY(-1px);
+    }
+
+    /* ---------- MAIN CONTENT ---------- */
+
+    main {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 4rem 1.5rem 5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    main h1:first-child {
+      margin-top: 0;
+    }
+
+    /* ---------- FOOTER ---------- */
+
+    footer {
+      text-align: center;
+      padding: 3rem 1.5rem;
+      font-size: 0.9rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <nav class="nav">
+      <a href="/">Sobre mí</a>
+      <a href="/it">Dirección y Gobernanza de IT</a>
+      <a href="/cienciasambientales">Gestión Ambiental</a>
+      <a href="/deontologia">Deontología</a>
+    </nav>
+  </header>
+
+  <main>
+    <slot />
+  </main>
+
+  <footer>
+    © 2026 · Víctor Cazorla Fernández
+  </footer>
+
+</body>
 </html>
