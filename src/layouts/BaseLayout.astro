@@ -131,19 +131,23 @@ const { title = "Víctor Cazorla Fernández" } = Astro.props;
         color: var(--text-main);
       }
 
-      /* ================= ENLACES ================= */
+      /* ================= ENLACES DE CONTENIDO ================= */
 
-      a {
-        color: var(--accent);
+      main a {
+        color: #9cc4ff;
         text-decoration: underline;
         text-decoration-thickness: 1px;
-        text-underline-offset: 3px;
+        text-underline-offset: 0.22em;
         transition: color 0.2s ease, text-decoration-color 0.2s ease;
       }
 
-      a:hover {
-        color: #c9d9ff;
-        text-decoration-color: #c9d9ff;
+      main a:visited {
+        color: #9cc4ff;
+      }
+
+      main a:hover {
+        color: #cfe2ff;
+        text-decoration-color: #cfe2ff;
       }
 
       /* ================= FOOTER ================= */
