@@ -3,6 +3,9 @@ const {
   title = "Víctor Cazorla Fernández",
   description = "Dirección IT · Gestión Ambiental · Ética profesional"
 } = Astro.props;
+
+/* Ruta actual para resaltar el botón activo del menú */
+const currentPath = Astro.url.pathname;
 ---
 
 <!DOCTYPE html>
@@ -29,6 +32,9 @@ const {
         --accent: #8fb3ff;
         --accent-soft: rgba(143, 179, 255, 0.15);
         --border-soft: rgba(255, 255, 255, 0.08);
+
+        /* Color dorado para estado activo del menú */
+        --accent-gold: #d4af37;
       }
 
       * {
@@ -104,6 +110,20 @@ const {
         border-color: var(--accent);
       }
 
+      /* ===== ESTADO ACTIVO DEL MENÚ ===== */
+      nav a.active {
+        border-color: var(--accent-gold);
+        background: linear-gradient(
+          145deg,
+          rgba(212, 175, 55, 0.18),
+          rgba(212, 175, 55, 0.05)
+        );
+        box-shadow:
+          0 4px 18px rgba(212, 175, 55, 0.25),
+          inset 0 0 0 1px rgba(212, 175, 55, 0.35);
+        color: #ffffff;
+      }
+
       main {
         max-width: 820px;
         margin: 0 auto;
@@ -154,7 +174,7 @@ const {
         }
 
         nav {
-          flex-wrap: wrap;          /* 👈 CLAVE */
+          flex-wrap: wrap;
           justify-content: center;
         }
 
@@ -173,10 +193,22 @@ const {
           Dirección IT · Gestión Ambiental · Ética profesional
         </div>
         <nav>
-          <a href="/">Inicio</a>
-          <a href="/it">Dirección y Gobernanza de IT</a>
-          <a href="/cienciasambientales">Gestión Ambiental</a>
-          <a href="/deontologia">Deontología</a>
+          <a href="/" class={currentPath === "/" ? "active" : ""}>Inicio</a>
+          <a href="/it" class={currentPath.startsWith("/it") ? "active" : ""}>
+            Dirección y Gobernanza de IT
+          </a>
+          <a
+            href="/cienciasambientales"
+            class={currentPath.startsWith("/cienciasambientales") ? "active" : ""}
+          >
+            Gestión Ambiental
+          </a>
+          <a
+            href="/deontologia"
+            class={currentPath.startsWith("/deontologia") ? "active" : ""}
+          >
+            Deontología
+          </a>
         </nav>
       </div>
     </header>
