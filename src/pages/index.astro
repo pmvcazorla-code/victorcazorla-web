@@ -1,199 +1,52 @@
 ---
+import BaseLayout from "../layouts/BaseLayout.astro";
+
 const title = "Víctor Cazorla Fernández";
 const description = "Dirección IT · Gestión Ambiental · Ética profesional";
 ---
 
-<!DOCTYPE html>
-<html lang="es">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content={description} />
-    <title>{title}</title>
+<BaseLayout title={title} description={description}>
+  <section id="sobre-mi">
+    <h2>Sobre mí</h2>
 
-    <!-- Tipografías -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <p>
+      Desarrollo mi actividad laboral en la intersección entre sistemas técnicos,
+      la gestión de equipos y la toma de decisiones con impacto organizativo y social.
+      De hecho, mi trayectoria no sigue una línea única, sino un eje común: comprender
+      sistemas complejos, identificar patrones, gestionarlos con rigor y actuar con
+      criterio fundamentado cuando las decisiones importan.
+    </p>
 
-    <style>
-      :root {
-        --bg-main: #070b14;
-        --bg-header: rgba(7, 11, 20, 0.85);
-        --text-main: #e6e9ef;
-        --text-muted: #b6bcc8;
-        --accent: #8fb3ff;
-        --accent-soft: rgba(143, 179, 255, 0.15);
-        --border-soft: rgba(255, 255, 255, 0.08);
-      }
+    <p>
+      En este sentido, trabajo en ámbitos como las tecnologías de la información,
+      la gestión ambiental, la docencia y la ética profesional; no de un modo estanco,
+      sino interconectado, como espacios donde aplicar una misma forma de trabajar
+      basada en el análisis, la responsabilidad, el cumplimiento normativo y la
+      atención a las consecuencias de cada decisión, tanto técnicas como humanas.
+    </p>
 
-      * {
-        box-sizing: border-box;
-      }
+    <p>
+      Considero que mi pericia se sitúa entre lo operativo y lo estratégico. He crecido
+      profesionalmente en entornos donde la fiabilidad, la trazabilidad y la debida
+      gestión de recursos no son opcionales, y donde el error tiene consecuencias
+      relevantes. Esta experiencia ha configurado en mí una manera de entender el
+      trabajo apoyada en la precisión, las buenas prácticas, la mejora continua y el
+      respeto por los marcos ético-jurídicos.
+    </p>
 
-      body {
-        margin: 0;
-        font-family: "Inter", system-ui, sans-serif;
-        background: radial-gradient(
-            1200px 600px at 50% -200px,
-            #121a2f 0%,
-            transparent 70%
-          ),
-          var(--bg-main);
-        color: var(--text-main);
-        line-height: 1.75;
-      }
+    <p>
+      Parte de mi labor consiste en examinar críticamente supuestos que suelen operar
+      como evidencias tácitas en el plano social y en la gestión de personas, entre
+      ellos la idea de una experiencia humana homogénea. Desde ahí, presto una atención
+      consciente y rigurosa a la diversidad —incluida la neurodivergencia y, con especial
+      énfasis, la condición del espectro autista— en mi práctica diaria como manager.
+    </p>
 
-      header {
-        position: sticky;
-        top: 0;
-        z-index: 100;
-        background: var(--bg-header);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid var(--border-soft);
-      }
-
-      .header-inner {
-        max-width: 1200px;
-        margin: 0 auto;
-        padding: 1.5rem 2rem 1.75rem;
-        text-align: center;
-      }
-
-      h1 {
-        font-family: "Playfair Display", serif;
-        font-size: clamp(2.4rem, 4vw, 3.4rem);
-        margin: 0;
-        letter-spacing: 0.02em;
-      }
-
-      .subtitle {
-        margin-top: 0.75rem;
-        font-size: 0.85rem;
-        letter-spacing: 0.25em;
-        text-transform: uppercase;
-        color: var(--text-muted);
-      }
-
-      nav {
-        margin-top: 1.75rem;
-        display: flex;
-        gap: 1rem;
-        justify-content: center;
-        flex-wrap: wrap;
-      }
-
-      nav a {
-        padding: 0.6rem 1.25rem;
-        border-radius: 999px;
-        border: 1px solid var(--border-soft);
-        color: var(--text-main);
-        text-decoration: none;
-        font-size: 0.9rem;
-        background: rgba(255, 255, 255, 0.02);
-        transition: all 0.25s ease;
-      }
-
-      nav a:hover {
-        background: var(--accent-soft);
-        border-color: var(--accent);
-      }
-
-      main {
-        max-width: 820px;
-        margin: 0 auto;
-        padding: 5rem 2rem 6rem;
-      }
-
-      h2 {
-        font-family: "Playfair Display", serif;
-        margin-top: 3.5rem;
-        margin-bottom: 1.25rem;
-        font-size: 2rem;
-      }
-
-      p {
-        margin: 0 0 1.6rem;
-      }
-
-      footer {
-        border-top: 1px solid var(--border-soft);
-        text-align: center;
-        padding: 2.5rem 1rem;
-        font-size: 0.85rem;
-        color: var(--text-muted);
-      }
-    </style>
-  </head>
-
-  <body>
-    <header>
-      <div class="header-inner">
-        <h1>Víctor Cazorla Fernández</h1>
-        <div class="subtitle">
-          Dirección IT · Gestión Ambiental · Ética profesional
-        </div>
-
-        <nav>
-          <a href="/">Sobre mí</a>
-          <a href="/it">Dirección y Gobernanza de IT</a>
-          <a href="/cienciasambientales">Gestión Ambiental</a>
-          <a href="/deontologia">Deontología</a>
-        </nav>
-      </div>
-    </header>
-
-    <main>
-      <section id="sobre-mi">
-        <h2>Sobre mí</h2>
-
-        <p>
-          Desarrollo mi actividad laboral en la intersección entre sistemas técnicos,
-          la gestión de equipos y la toma de decisiones con impacto organizativo y social.
-          De hecho, mi trayectoria no sigue una línea única, sino un eje común: comprender
-          sistemas complejos, identificar patrones, gestionarlos con rigor y actuar con
-          criterio fundamentado cuando las decisiones importan.
-        </p>
-
-        <p>
-          En este sentido, trabajo en ámbitos como las tecnologías de la información,
-          la gestión ambiental, la docencia y la ética profesional; no de un modo estanco,
-          sino interconectado, como espacios donde aplicar una misma forma de trabajar
-          basada en el análisis, la responsabilidad, el cumplimiento normativo y la
-          atención a las consecuencias de cada decisión, tanto técnicas como humanas.
-        </p>
-
-        <p>
-          Considero que mi pericia se sitúa entre lo operativo y lo estratégico. He crecido
-          profesionalmente en entornos donde la fiabilidad, la trazabilidad y la debida
-          gestión de recursos no son opcionales, y donde el error tiene consecuencias
-          relevantes. Esta experiencia ha configurado en mí una manera de entender el
-          trabajo apoyada en la precisión, las buenas prácticas, la mejora continua y el
-          respeto por los marcos ético-jurídicos.
-        </p>
-
-        <p>
-          Parte de mi labor consiste en examinar críticamente supuestos que suelen operar
-          como evidencias tácitas en el plano social y en la gestión de personas, entre
-          ellos la idea de una experiencia humana homogénea. Desde ahí, presto una atención
-          consciente y rigurosa a la diversidad —incluida la neurodivergencia y, con especial
-          énfasis, la condición del espectro autista— en mi práctica diaria como manager.
-        </p>
-
-        <p>
-          Por ende, este espacio nace con la intención de compartir y aportar valor a partir
-          de ese recorrido transversal. Aquí recojo reflexiones propias, artículos
-          publicados, intervenciones en medios y materiales vinculados a mi actividad
-          profesional.
-        </p>
-      </section>
-    </main>
-
-    <footer>
-      © 2026 · Víctor Cazorla Fernández
-    </footer>
-  </body>
-</html>
+    <p>
+      Por ende, este espacio nace con la intención de compartir y aportar valor a partir
+      de ese recorrido transversal. Aquí recojo reflexiones propias, artículos
+      publicados, intervenciones en medios y materiales vinculados a mi actividad
+      profesional.
+    </p>
+  </section>
+</BaseLayout>
