@@ -3,26 +3,26 @@ const {
   title = "Víctor Cazorla Fernández",
   description = "Dirección IT · Gestión Ambiental · Ética profesional"
 } = Astro.props;
-        
+
 /* Ruta actual para resaltar el botón activo del menú */
 const currentPath = Astro.url.pathname;
 ---
-       
+
 <!DOCTYPE html>
-<html lang="es"> 
+<html lang="es">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
     <title>{title}</title>
-       
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&display=swap"
       rel="stylesheet"
     />
-        
+
     <style>
       :root {
         --bg-main: #070b14;
@@ -33,12 +33,12 @@ const currentPath = Astro.url.pathname;
         --accent-soft: rgba(143, 179, 255, 0.15);
         --border-soft: rgba(255, 255, 255, 0.08);
         --accent-gold: #d4af37;
-      }  
+      }
 
       * {
         box-sizing: border-box;
       }
-         
+
       body {
         margin: 0;
         font-family: "Inter", system-ui, sans-serif;
@@ -51,25 +51,28 @@ const currentPath = Astro.url.pathname;
         color: var(--text-main);
         line-height: 1.75;
       }
-        
+
+      /* ===== HEADER ===== */
       header {
         position: sticky;
         top: 0;
         z-index: 100;
-        background: var(--bg-header);
-        backdrop-filter: blur(12px);    
-        border-bottom: 1px solid var(--border-soft);
-      }     
-         
+        background: linear-gradient(
+          to bottom,
+          rgba(18, 26, 47, 0.92),
+          rgba(7, 11, 20, 0.88)
+        );
+        backdrop-filter: blur(12px);
+        border-bottom: 1px solid rgba(212, 175, 55, 0.25);
+      }
+
       .header-inner {
         max-width: 1200px;
-        margin: 0 auto;  
-        padding: 1.1rem 1.5rem 1.2rem;
-        text-align: center;
+        margin: 0 auto;
         padding: 1.1rem 1.5rem 1.2rem;
         text-align: center;
       }
-  
+
       h1 {
         font-family: "Playfair Display", serif;
         font-size: clamp(2.1rem, 4vw, 3.4rem);
@@ -79,12 +82,12 @@ const currentPath = Astro.url.pathname;
 
       .subtitle {
         margin-top: 0.4rem;
-        font-size: 0.8rem;  
+        font-size: 0.8rem;
         letter-spacing: 0.22em;
         text-transform: uppercase;
         color: var(--text-muted);
       }
-    
+
       nav {
         margin-top: 1rem;
         display: flex;
@@ -92,7 +95,7 @@ const currentPath = Astro.url.pathname;
         gap: 0.6rem;
         flex-wrap: nowrap;
       }
-      
+
       nav a {
         padding: 0.45rem 1rem;
         border-radius: 999px;
@@ -103,16 +106,17 @@ const currentPath = Astro.url.pathname;
         background: rgba(255, 255, 255, 0.03);
         white-space: nowrap;
         transition: all 0.25s ease;
-      }  
+      }
 
       nav a:hover {
         background: var(--accent-soft);
         border-color: var(--accent);
-      }  
-      
+      }
+
       nav a.active {
         border-color: var(--accent-gold);
-        background: linear-gradient(145deg,
+        background: linear-gradient(
+          145deg,
           rgba(212, 175, 55, 0.18),
           rgba(212, 175, 55, 0.05)
         );
@@ -121,36 +125,35 @@ const currentPath = Astro.url.pathname;
           inset 0 0 0 1px rgba(212, 175, 55, 0.35);
         color: #ffffff;
       }
-        
-      main {   
+
+      /* ===== MAIN ===== */
+      main {
         max-width: 820px;
         margin: 0 auto;
-        padding: 3.2rem 1.6rem 5.5rem;  
+        padding: 3.2rem 1.6rem 5.5rem;
       }
-            
+
       h2,
       h3 {
         font-family: "Playfair Display", serif;
         margin-top: 3rem;
         margin-bottom: 1.2rem;
         letter-spacing: 0.02em;
-        margin-bottom: 1.2rem;
-        letter-spacing: 0.02em;
       }
-  
+
       h2 {
         font-size: 2rem;
       }
-        
+
       h3 {
         font-size: 1.45rem;
       }
-      
+
       p {
-        margin: 0 0 1.6rem; 
+        margin: 0 0 1.6rem;
       }
 
-      /* ===== MEJORA DE RITMO EN TEXTO EDITORIAL ===== */
+      /* ===== RITMO TEXTO EDITORIAL ===== */
       .editorial-text p {
         margin-bottom: 2.2rem;
       }
@@ -167,8 +170,8 @@ const currentPath = Astro.url.pathname;
       .editorial-text.subtle p {
         margin-bottom: 2rem;
       }
-      /* ===== FIN AJUSTES TEXTO EDITORIAL ===== */
-        
+
+      /* ===== FOOTER ===== */
       footer {
         border-top: 1px solid var(--border-soft);
         text-align: center;
@@ -176,41 +179,42 @@ const currentPath = Astro.url.pathname;
         font-size: 0.85rem;
         color: var(--text-muted);
       }
-        
+
+      /* ===== MOBILE ===== */
       @media (max-width: 768px) {
         .header-inner {
           padding: 0.8rem 1rem 0.9rem;
         }
-        
+
         h1 {
           font-size: 1.7rem;
         }
-        
+
         .subtitle {
           font-size: 0.7rem;
-          letter-spacing: 0.16em;  
+          letter-spacing: 0.16em;
         }
 
         nav {
           flex-wrap: wrap;
-          justify-content: center;  
+          justify-content: center;
         }
-      
+
         main {
           padding: 2.6rem 1.2rem 4.5rem;
         }
       }
     </style>
   </head>
-          
-  <body>  
+
+  <body>
     <header>
       <div class="header-inner">
         <h1>Víctor Cazorla Fernández</h1>
         <div class="subtitle">
           Dirección IT · Gestión Ambiental · Ética profesional
         </div>
-        <nav>  
+        <nav>
           <a href="/" class={currentPath === "/" ? "active" : ""}>Inicio</a>
           <a href="/it" class={currentPath.startsWith("/it") ? "active" : ""}>
             Dirección y Gobernanza de IT
@@ -225,16 +229,16 @@ const currentPath = Astro.url.pathname;
             href="/deontologia"
             class={currentPath.startsWith("/deontologia") ? "active" : ""}
           >
-            Deontología 
+            Deontología
           </a>
         </nav>
       </div>
     </header>
-       
+
     <main>
       <slot />
     </main>
-       
+
     <footer>
       © 2026 · Víctor Cazorla Fernández
     </footer>
