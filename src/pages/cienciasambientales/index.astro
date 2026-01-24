@@ -18,19 +18,19 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
       </h2>
 
       <p>
-        La cuestión ambiental, pensada desde la experiencia con sistemas vivos, obliga a atender a la fragilidad, a la inestabilidad y a los límites de intervención. Las decisiones, incluso cuando son bien intencionadas, generan efectos no previstos y acumulativos. Esa forma de entender lo ambiental muestra su tensión cuando se enfrenta al modo en que las organizaciones funcionan y toman decisiones.
+        La cuestión ambiental, pensada desde la experiencia con sistemas vivos, obliga a atender a la fragilidad, a la inestabilidad y a los límites de intervención. Las decisiones, incluso cuando son bien intencionadas, generan efectos no previstos y comprometen equilibrios que no siempre pueden corregirse a posteriori.
       </p>
 
       <p>
-        La empresa deja de aparecer como un espacio neutral sobre el que el cambio ambiental actúa desde fuera. Sus estructuras, sus dinámicas y sus elecciones producen efectos materiales. Las decisiones relativas a energía, infraestructuras o modos de trabajo no son ajustes técnicos: establecen prioridades, distribuyen costes y determinan qué impactos se asumen y cuáles se desplazan.
+        La empresa deja de aparecer como un espacio neutral sobre el que el cambio ambiental actúa desde fuera. Sus estructuras, sus dinámicas y sus elecciones producen efectos materiales. Las decisiones relativas a energía, infraestructura o uso de recursos configuran relaciones concretas con el territorio y con los sistemas ecológicos.
       </p>
 
       <p>
-        La eficiencia energética, la reducción de emisiones o el cálculo de la huella de carbono hacen visibles ciertos efectos, pero no agotan el problema. Medir ordena y compara; no sustituye al juicio. Cuando la optimización se separa de sus criterios, la eficiencia pierde su condición de herramienta y se integra en la legitimación de modelos organizativos que redistribuyen impactos y responsabilidades, ya sea mediante infraestructuras tecnológicas intensivas, la externalización de consumos o la fragmentación del impacto.
+        La eficiencia energética, la reducción de emisiones o el cálculo de la huella de carbono hacen visibles ciertos efectos, pero no agotan el problema. Medir ordena y compara; no sustituye al juicio. Cuando la optimización se separa de la responsabilidad, la técnica deja de orientar y pasa a simplificar en exceso.
       </p>
 
       <p>
-        Pensar la sostenibilidad en la empresa exige interrogar los criterios que orientan la decisión. Asumir los límites materiales de la organización implica reconocer que cada elección configura una forma de trabajo, delimita responsabilidades y expresa una relación concreta con un entorno finito.
+        Pensar la sostenibilidad en la empresa exige interrogar los criterios que orientan la decisión. Asumir los límites materiales de la organización implica reconocer que cada elección configura una forma de trabajo, delimita responsabilidades y produce consecuencias que no siempre son reversibles.
       </p>
 
       <h2 class="section-subtitle">
@@ -61,21 +61,70 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
         poder público responsable y orientado al interés general.
       </p>
 
-      <p class="external-link">
+      <!-- Escuela de Formación del COAMB (bloque lateral discreto) -->
+      <div
+        style="
+          margin-top: 2rem;
+          padding: 0.9rem 1.1rem;
+          max-width: 520px;
+          display: flex;
+          align-items: center;
+          gap: 1.2rem;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          border-radius: 12px;
+          background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.03),
+            rgba(255, 255, 255, 0.01)
+          );
+        "
+      >
         <a
           href="https://www.coamb.cat/formacio/lescola-de-formacio-del-coamb/"
           target="_blank"
-          rel="noopener"
+          rel="noopener noreferrer"
+          style="
+            display: block;
+            flex-shrink: 0;
+          "
         >
-          Escuela de Formación del COAMB ↗
+          <img
+            src="/img/banner-coamb.jpg"
+            alt="Escuela de Formación del Colegio Oficial de Ambientólogos de Cataluña"
+            style="
+              width: 120px;
+              height: auto;
+              max-height: 60px;
+              object-fit: contain;
+              display: block;
+              background: transparent;
+            "
+          />
         </a>
+
+        <p
+          style="
+            margin: 0;
+            font-size: 0.85rem;
+            line-height: 1.4;
+            opacity: 0.8;
+          "
+        >
+          Escuela de Formación del Colegio Oficial de Ambientólogos de Cataluña
+        </p>
+      </div>
+
+      <h2
+        class="section-subtitle"
+        style="margin-top: 3.4rem;"
+      >
+        Peritaje ambiental
+      </h2>
+
+      <p>
+        La cuestión del peritaje ambiental no es qué se evalúa, sino bajo qué condiciones puede decirse verdad cuando esa verdad produce efectos jurídicos y sociales. El perito interviene allí donde el conflicto exige una fijación de sentido, donde se espera que el conocimiento transforme la incertidumbre en un punto estable, aun sabiendo que ese conocimiento puede operar como cierre anticipado, como coartada técnica o, en determinados usos, como sustitución del juicio colectivo, cuando el informe deja de orientar la decisión y pasa a funcionar como decisión sustitutiva. ¿Qué se exige entonces a la verdad en ese contexto? No una afirmación concluyente, sino una relación estricta con lo que puede sostenerse, con sus límites y con las consecuencias mismas de enunciar. El problema no es la ausencia de respuesta, sino la presión constante a decir más de lo que el propio marco del saber permite.
       </p>
 
-      <h2 class="section-subtitle">Peritaje ambiental</h2>
-
-<p>
-La cuestión del peritaje ambiental no es qué se evalúa, sino bajo qué condiciones puede decirse verdad cuando esa verdad produce efectos jurídicos y sociales. El perito interviene allí donde el conflicto exige una fijación de sentido, donde se espera que el conocimiento transforme la incertidumbre en un punto estable, aun sabiendo que ese conocimiento puede operar como cierre anticipado, como coartada técnica o, en determinados usos, como sustitución del juicio colectivo, cuando el informe deja de orientar la decisión y pasa a funcionar como decisión sustitutiva. ¿Qué se exige entonces a la verdad en ese contexto? No una afirmación concluyente, sino una relación estricta con lo que puede sostenerse, con sus límites y con las consecuencias mismas de enunciar. El problema no es la ausencia de respuesta, sino la presión constante a decir más de lo que el propio marco del saber permite.
-</p>
     </section>
 
     <!-- Proyectos y participación ambiental -->
