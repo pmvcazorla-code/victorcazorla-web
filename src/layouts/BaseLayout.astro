@@ -149,7 +149,7 @@ const currentPath = Astro.url.pathname;
         color: var(--text-muted);
       }
 
-      /* ===== MOBILE ===== */
+      /* ===== MOBILE (BASE) ===== */
       @media (max-width: 768px) {
         .header-inner {
           padding: 0.5rem 0.8rem 0.6rem;
@@ -184,6 +184,21 @@ const currentPath = Astro.url.pathname;
         h2 {
           font-size: 1.45rem;
           line-height: 1.35;
+        }
+      }
+
+      /* ===== MOBILE NAV — TODO VISIBLE, SIN SCROLL ===== */
+      @media (max-width: 768px) {
+        nav {
+          overflow-x: visible;
+          justify-content: center;
+          flex-wrap: wrap;
+          row-gap: 0.4rem;
+        }
+
+        nav a {
+          font-size: 0.72rem;
+          padding: 0.28rem 0.65rem;
         }
       }
     </style>
