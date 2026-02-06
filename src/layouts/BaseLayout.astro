@@ -231,6 +231,12 @@ const currentPath = Astro.url.pathname;
           >
             Deontología
           </a>
+          <a
+            href="/formacion"
+            class={currentPath.startsWith("/formacion") ? "active" : ""}
+          >
+            Formación
+          </a>
         </nav>
       </div>
     </header>
