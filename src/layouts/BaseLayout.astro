@@ -191,11 +191,23 @@ const currentPath = Astro.url.pathname;
       @media (max-width: 768px) {
         main h1 {
           font-family: "Playfair Display", serif;
-          font-size: 1.45rem;
-          line-height: 1.22;
+          font-size: 1.3rem;
+          line-height: 1.2;
           margin-top: 1.2rem;
           margin-bottom: 0.6rem;
           letter-spacing: 0.01em;
+          word-break: break-word;
+          hyphens: auto;
+        }
+      }
+
+      /* ===== MOBILE SECTION SUBTITLE ===== */
+      @media (max-width: 768px) {
+        .section-subtitle {
+          font-size: 1.15rem !important;
+          line-height: 1.25 !important;
+          word-break: break-word;
+          hyphens: auto;
         }
       }
 
