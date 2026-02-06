@@ -4,7 +4,6 @@ const {
   description = "Dirección IT · Gestión Ambiental · Ética profesional"
 } = Astro.props;
 
-/* Ruta actual para resaltar el botón activo del menú */
 const currentPath = Astro.url.pathname;
 ---
 
@@ -108,11 +107,6 @@ const currentPath = Astro.url.pathname;
         transition: all 0.25s ease;
       }
 
-      nav a:hover {
-        background: var(--accent-soft);
-        border-color: var(--accent);
-      }
-
       nav a.active {
         border-color: var(--accent-gold);
         background: linear-gradient(
@@ -123,7 +117,6 @@ const currentPath = Astro.url.pathname;
         box-shadow:
           0 4px 18px rgba(212, 175, 55, 0.25),
           inset 0 0 0 1px rgba(212, 175, 55, 0.35);
-        color: #ffffff;
       }
 
       /* ===== MAIN ===== */
@@ -133,45 +126,21 @@ const currentPath = Astro.url.pathname;
         padding: 3.2rem 1.6rem 5.5rem;
       }
 
-      h2,
-      h3 {
+      h2 {
         font-family: "Playfair Display", serif;
+        font-size: 2rem;
         margin-top: 3rem;
         margin-bottom: 1.2rem;
-        letter-spacing: 0.02em;
-      }
-
-      h2 {
-        font-size: 2rem;
-      }
-
-      h3 {
-        font-size: 1.45rem;
       }
 
       p {
         margin: 0 0 1.6rem;
       }
 
-      /* ===== RITMO TEXTO EDITORIAL ===== */
       .editorial-text p {
         margin-bottom: 2.2rem;
       }
 
-      .editorial-text p:last-child {
-        margin-bottom: 0;
-      }
-
-      .editorial-text .section-subtitle {
-        margin-top: 4rem;
-        margin-bottom: 2rem;
-      }
-
-      .editorial-text.subtle p {
-        margin-bottom: 2rem;
-      }
-
-      /* ===== FOOTER ===== */
       footer {
         border-top: 1px solid var(--border-soft);
         text-align: center;
@@ -183,25 +152,38 @@ const currentPath = Astro.url.pathname;
       /* ===== MOBILE ===== */
       @media (max-width: 768px) {
         .header-inner {
-          padding: 0.8rem 1rem 0.9rem;
+          padding: 0.5rem 0.8rem 0.6rem;
         }
 
         h1 {
-          font-size: 1.7rem;
+          font-size: 1.45rem;
         }
 
         .subtitle {
-          font-size: 0.7rem;
-          letter-spacing: 0.16em;
+          font-size: 0.65rem;
+          letter-spacing: 0.14em;
+          margin-top: 0.2rem;
         }
 
         nav {
-          flex-wrap: wrap;
-          justify-content: center;
+          margin-top: 0.6rem;
+          justify-content: flex-start;
+          overflow-x: auto;
+          padding-bottom: 0.3rem;
+        }
+
+        nav a {
+          font-size: 0.8rem;
+          padding: 0.35rem 0.8rem;
         }
 
         main {
-          padding: 2.6rem 1.2rem 4.5rem;
+          padding: 1.8rem 1.2rem 4rem;
+        }
+
+        h2 {
+          font-size: 1.45rem;
+          line-height: 1.35;
         }
       }
     </style>
