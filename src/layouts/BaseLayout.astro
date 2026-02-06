@@ -187,15 +187,26 @@ const currentPath = Astro.url.pathname;
         }
       }
 
-      /* ===== MOBILE PAGE H1 — REDUCCIÓN REAL ===== */
+      /* ===== MOBILE PAGE H1 — COMPACTACIÓN REAL ===== */
       @media (max-width: 768px) {
         main h1 {
           font-family: "Playfair Display", serif;
           font-size: 1.45rem;
           line-height: 1.22;
-          margin-top: 1.6rem;
-          margin-bottom: 0.9rem;
+          margin-top: 1.2rem;
+          margin-bottom: 0.6rem;
           letter-spacing: 0.01em;
+        }
+      }
+
+      /* ===== MOBILE — COMPACTAR ARRANQUE REAL DEL CONTENIDO ===== */
+      @media (max-width: 768px) {
+        main {
+          padding-top: 1.2rem;
+        }
+
+        main > *:first-child {
+          margin-top: 0 !important;
         }
       }
     </style>
