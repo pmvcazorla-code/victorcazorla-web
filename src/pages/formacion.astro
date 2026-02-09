@@ -2,9 +2,40 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 
 const title = "Formación";
+const credentials = [
+  // list of credentials mirrored from page content
+  "Máster en Dirección y Gestión de Tecnologías de la Información",
+  "Máster en Dirección de Operaciones, Calidad y Proyectos",
+  "Máster en Logística, Transporte, Cadena de Suministro y Estrategia Operativa",
+  "Postgrado en Administración y Dirección de Empresas",
+  "Postgrado en Bolsa y Mercados Financieros",
+  "Postgrado en Lean Management y Sistemas de Calidad ISO 9001",
+  "Postgrado en Sostenibilidad, Seguridad e Innovación Tecnológica",
+  "Máster en Gestión del Medioambiente y Economía de la Energía",
+  "Postgrado en Derecho Medioambiental",
+  "Postgrado en Gestión de Proyectos",
+  "Postgrado en Auditoría Ambiental",
+  "Postgrado en Sistemas Energéticos y Gestión de Residuos",
+  "Postgrado en Entomología",
+  "Postgrado en Virología",
+  "Postgrado en Estadística",
+  "Grado en Ciencias Ambientales",
+  "Máster de Investigación en Filosofía",
+  "Postgrado en Psicología"
+];
+
+const jsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Víctor Cazorla Fernández",
+  "hasCredential": credentials.map((c) => ({
+    "@type": "EducationalOccupationalCredential",
+    "name": c
+  }))
+});
 ---
 
-<BaseLayout title={title}>
+<BaseLayout title={title} jsonLd={jsonLd} image="/images/og/formacion.svg" imageAlt="Formación — Víctor Cazorla Fernández" >
   <main class="container narrow">
 
     <!-- Header -->
@@ -14,46 +45,65 @@ const title = "Formación";
 
     <!-- Introducción -->
     <section class="page-content">
-    <header class="page-intro">
-      <p>
-        <em>Hay una manera de estar en el mundo que no se agota con el paso del tiempo: la de quien persevera en la pregunta incluso cuando las respuestas parecen dadas. Esa curiosidad, más próxima al gesto infantil de desmontar lo que funciona que a la seguridad del experto que lo da por sabido, conduce a atravesar disciplinas, a habitar lenguajes distintos y a desconfiar de las certezas prematuras. La formación, por tanto, no es el objeto en sí del conocimiento, sino el efecto inevitable de una mirada que se resiste a acostumbrarse a ver el mundo que le es dado.</em>
-      </p>
-    </header>
+      <header class="page-intro">
+        <p>
+          <em>Hay una manera de estar en el mundo que no se agota con el paso del tiempo: la de quien persevera en la pregunta incluso cuando las respuestas parecen dadas. Esa curiosidad, más próxima al gesto infantil de desmontar lo que funciona que a la seguridad del experto que lo da por sabido, conduce a atravesar disciplinas, a habitar lenguajes distintos y a desconfiar de las certezas prematuras. La formación, por tanto, no es el objeto en sí del conocimiento, sino el efecto inevitable de una mirada que se resiste a acostumbrarse a ver el mundo que le es dado.</em>
+        </p>
+      </header>
 
-    <section class="formation-block">
-      <h2>Formación Universitaria en Dirección Tecnológica y Empresarial</h2>
-      <ul>
-        <li>Máster en Dirección y Gestión de Tecnologías de la Información</li>
-        <li>Máster en Dirección de Operaciones, Calidad y Proyectos</li>
-        <li>Máster en Logística, Transporte, Cadena de Suministro y Estrategia Operativa</li>
-        <li>Postgrado en Administración y Dirección de Empresas</li>
-        <li>Postgrado en Bolsa y Mercados Financieros</li>
-        <li>Postgrado en Lean Management y Sistemas de Calidad ISO 9001</li>
-        <li>Postgrado en Sostenibilidad, Seguridad e Innovación Tecnológica</li>
-      </ul>
-    </section>
+      <section id="formacion-direccion" class="formation-block" aria-labelledby="h-direccion">
+        <h2 id="h-direccion">Formación Universitaria en Dirección Tecnológica y Empresarial</h2>
+        <ul>
+          <li><span class="degree">Máster en Dirección y Gestión de Tecnologías de la Información</span></li>
+          <li><span class="degree">Máster en Dirección de Operaciones, Calidad y Proyectos</span></li>
+          <li><span class="degree">Máster en Logística, Transporte, Cadena de Suministro y Estrategia Operativa</span></li>
+          <li><span class="degree">Postgrado en Administración y Dirección de Empresas</span></li>
+          <li><span class="degree">Postgrado en Bolsa y Mercados Financieros</span></li>
+          <li><span class="degree">Postgrado en Lean Management y Sistemas de Calidad ISO 9001</span></li>
+          <li><span class="degree">Postgrado en Sostenibilidad, Seguridad e Innovación Tecnológica</span></li>
+        </ul>
+      </section>
 
-    <section class="formation-block">
-      <h2>Formación Universitaria en Ciencias del Medio Ambiente</h2>
-      <ul>
-        <li>Máster en Gestión del Medioambiente y Economía de la Energía</li>
-        <li>Postgrado en Derecho Medioambiental</li>
-        <li>Postgrado en Gestión de Proyectos</li>
-        <li>Postgrado en Auditoría Ambiental</li>
-        <li>Postgrado en Sistemas Energéticos y Gestión de Residuos</li>
-        <li>Postgrado en Entomología</li>
-        <li>Postgrado en Virología</li>
-        <li>Postgrado en Estadística</li>
-        <li>Grado en Ciencias Ambientales</li>
-      </ul>
-    </section>
+      <section class="formation-block">
+        <h2 id="h-medioambiente">Formación Universitaria en Ciencias del Medio Ambiente</h2>
+      </section>
+      <section id="formacion-medioambiente" class="formation-block" aria-labelledby="h-medioambiente">
+        <ul>
+          <li><span class="degree">Máster en Gestión del Medioambiente y Economía de la Energía</span></li>
+          <li><span class="degree">Postgrado en Derecho Medioambiental</span></li>
+          <li><span class="degree">Postgrado en Gestión de Proyectos</span></li>
+          <li><span class="degree">Postgrado en Auditoría Ambiental</span></li>
+          <li><span class="degree">Postgrado en Sistemas Energéticos y Gestión de Residuos</span></li>
+          <li><span class="degree">Postgrado en Entomología</span></li>
+          <li><span class="degree">Postgrado en Virología</span></li>
+          <li><span class="degree">Postgrado en Estadística</span></li>
+          <li><span class="degree">Grado en Ciencias Ambientales</span></li>
+        </ul>
+      </section>
 
-    <section class="formation-block">
-      <h2>Formación Universitaria en Humanidades</h2>
-      <ul>
-        <li>Máster de Investigación en Filosofía</li>
-        <li>Postgrado en Psicología</li>
-      </ul>
+      <section id="formacion-humanidades" class="formation-block" aria-labelledby="h-humanidades">
+        <h2 id="h-humanidades">Formación Universitaria en Humanidades</h2>
+        <ul>
+          <li><span class="degree">Máster de Investigación en Filosofía</span></li>
+          <li><span class="degree">Postgrado en Psicología</span></li>
+        </ul>
+      </section>
+
+      <!-- Nota institucional -->
+      <footer class="page-note">
+        <p>
+          Todas las titulaciones de postgrado mencionadas corresponden a titulaciones universitarias debidamente acreditadas, impartidas por universidades españolas —entre ellas la
+          <a href="https://www.uned.es" target="_blank" rel="noopener noreferrer">UNED</a>
+          y la
+          <a href="https://www.unir.net" target="_blank" rel="noopener noreferrer">UNIR</a>—,
+          conforme a los criterios de calidad y reconocimiento establecidos por
+          <a href="https://www.aneca.es" target="_blank" rel="noopener noreferrer">ANECA</a>
+          y la
+          <a href="https://www.crue.org" target="_blank" rel="noopener noreferrer">CRUE</a>,
+          incluyendo Diplomas de Experto Universitario, Máster Universitario y Máster de Formación Permanente Universitaria.
+        </p>
+      </footer>
+
     </section>
-  </section>
+  </main>
 </BaseLayout>

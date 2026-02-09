@@ -200,6 +200,40 @@ a:focus {
   outline-offset: 2px;
 }
 
+/* Página: nota al pie en formación */
+.page-note {
+  margin-top: 4rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.page-note p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--color-muted);
+  max-width: 680px;
+}
+
+.page-note a {
+  color: var(--color-accent);
+  text-decoration: none;
+  border-bottom: 1px dotted rgba(31, 58, 95, 0.25);
+}
+
+.page-note a:hover,
+.page-note a:focus {
+  color: #0f2340;
+  border-bottom-color: rgba(31, 58, 95, 0.6);
+}
+
+/* Reglas de impresión básicas */
+@media print {
+  nav, .main-nav, header, footer { display: none !important; }
+  body { background: white; color: black; }
+  .container { max-width: 100%; padding: 0; }
+  a::after { content: " (" attr(href) ")"; font-size: 0.85em; }
+}
+
 /* ================================
    GRID DE ESPECIALIZACIONES
 ================================ */

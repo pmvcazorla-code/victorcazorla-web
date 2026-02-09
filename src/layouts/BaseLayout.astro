@@ -1,7 +1,10 @@
 ---
 const {
   title = "Víctor Cazorla Fernández",
-  description = "Dirección IT · Gestión Ambiental · Ética profesional"
+  description = "Dirección IT · Gestión Ambiental · Ética profesional",
+  jsonLd = null,
+  image = null,
+  imageAlt = ""
 } = Astro.props;
 
 const currentPath = Astro.url.pathname;
@@ -13,6 +16,16 @@ const currentPath = Astro.url.pathname;
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={currentPath} />
+    <meta name="twitter:card" content="summary_large_image" />
+    {image ? <meta property="og:image" content={image} /> : null}
+    {image ? <meta property="og:image:width" content="1200" /> : null}
+    {image ? <meta property="og:image:height" content="630" /> : null}
+    {image ? <meta property="og:image:alt" content={imageAlt} /> : null}
+    {image ? <meta name="twitter:image" content={image} /> : null}
     <title>{title}</title>
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -239,6 +252,8 @@ const currentPath = Astro.url.pathname;
         }
       }
     </style>
+    {jsonLd ? <script type="application/ld+json">{jsonLd}</script> : null}
+    {image ? <link rel="preload" as="image" href={image} /> : null}
   </head>
 
   <body>
