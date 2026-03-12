@@ -205,12 +205,12 @@ a:focus {
   /* horizontal line above the final note */
   /* más espacio arriba y abajo para dar aire entre el contenido */
   margin: 6rem auto 3rem;
-  width: 60px;
+  width: 100px;
   height: 1px;
   border: none;
-  /* degradado sutil de izquierda a derecha */
-  background: linear-gradient(to right, var(--color-border) 0%, rgba(31, 58, 95, 0) 100%);
-  opacity: 0.5;
+  /* degradado desde el color de acento hacia transparente */
+  background: linear-gradient(to right, var(--color-accent) 0%, rgba(31, 58, 95, 0) 100%);
+  opacity: 0.6;
 }
 
 .page-note {
