@@ -203,10 +203,13 @@ a:focus {
 /* Página: nota al pie en formación */
 .page-note-separator {
   /* horizontal line above the final note */
-  margin: 4rem auto 1.5rem;
-  border: none;
-  border-top: 1px solid var(--color-border);
+  /* más espacio arriba y abajo para dar aire entre el contenido */
+  margin: 6rem auto 3rem;
   width: 60px;
+  height: 1px;
+  border: none;
+  /* degradado sutil de izquierda a derecha */
+  background: linear-gradient(to right, var(--color-border) 0%, rgba(31, 58, 95, 0) 100%);
   opacity: 0.5;
 }
 
