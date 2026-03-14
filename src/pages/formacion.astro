@@ -24,26 +24,16 @@ const credentials = [
   "Postgrado en Psicología"
 ];
 
-const jsonLd = JSON.stringify({
-  "@context": "https://schema.org",
-  "@type": "Person",
-  "name": "Víctor Cazorla Fernández",
-  "hasCredential": credentials.map((c) => ({
-    "@type": "EducationalOccupationalCredential",
-    "name": c
-  }))
-});
 ---
 
-<BaseLayout title={title} jsonLd={jsonLd} image="/images/og/formacion.svg" imageAlt="Formación — Víctor Cazorla Fernández" >
+<BaseLayout title={title} image="/images/og/formacion.svg" imageAlt="Formación — Víctor Cazorla Fernández" >
   <main class="container narrow">
 
-    <!-- Header -->
+
     <section class="page-header">
       <h1>La formación como <em>consecuencia</em></h1>
     </section>
 
-    <!-- Introducción -->
     <section class="page-content">
       <header class="page-intro">
         <p>
@@ -89,7 +79,6 @@ const jsonLd = JSON.stringify({
         </ul>
       </section>
 
-      <!-- Nota institucional -->
       <hr class="page-note-separator" aria-hidden="true" />
       <footer class="page-note">
         <p> <em>
