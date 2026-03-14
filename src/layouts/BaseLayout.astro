@@ -21,6 +21,7 @@ const currentPath = Astro.url.pathname;
     <meta property="og:url" content={currentPath} />
     {image ? <meta property="og:image" content={image} /> : null}
     <title>{title}</title>
+    <link rel="canonical" href={Astro.url.href} />
 
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&display=swap"
