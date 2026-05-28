@@ -143,6 +143,7 @@ const alternateHref = (() => {
         display: inline-flex;
         justify-content: center;
         align-items: center;
+        gap: 0.55rem;
         padding: 0.45rem 0.9rem;
         border-radius: 999px;
         border: 1px solid var(--border-soft);
@@ -150,6 +151,19 @@ const alternateHref = (() => {
         text-decoration: none;
         font-size: 0.82rem;
         transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      }
+
+      .lang-switch .flag-icon {
+        display: inline-flex;
+        width: 1.1rem;
+        height: 0.85rem;
+        min-width: 1.1rem;
+      }
+
+      .lang-switch svg {
+        width: 100%;
+        height: auto;
+        display: block;
       }
 
       .lang-switch:hover {
@@ -311,6 +325,15 @@ const alternateHref = (() => {
           ))}
         </nav>
         <a class="lang-switch" href={alternateHref}>
+          <span class="flag-icon" aria-hidden="true">
+            <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Union Jack" focusable="false">
+              <rect width="60" height="30" fill="#012169" />
+              <path d="M0 0 L60 30 M60 0 L0 30" stroke="#fff" stroke-width="6" />
+              <path d="M0 0 L60 30 M60 0 L0 30" stroke="#C8102E" stroke-width="4" />
+              <path d="M30 0 L30 30 M0 15 L60 15" stroke="#fff" stroke-width="10" />
+              <path d="M30 0 L30 30 M0 15 L60 15" stroke="#C8102E" stroke-width="6" />
+            </svg>
+          </span>
           {alternateLabel}
         </a>
       </div>
