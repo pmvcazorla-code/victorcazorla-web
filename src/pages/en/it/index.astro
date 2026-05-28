@@ -1,0 +1,69 @@
+---
+import BaseLayout from "../../../layouts/BaseLayout.astro";
+import { navItems, alternateLabel } from "../../../data/i18n";
+---
+
+<BaseLayout
+  title="IT Management and Governance - Víctor Cazorla Fernández"
+  lang="en"
+  navItems={navItems.en}
+  alternateLabel={alternateLabel.en}
+>
+  <main class="container">
+
+    <h1>IT Management and Governance - Víctor Cazorla Fernández</h1>
+
+    <section class="page-header"></section>
+
+    <div
+      style="
+        margin: 2.8rem auto 3.6rem;
+        max-width: 320px;
+        text-align: center;
+      "
+    >
+      <img
+        src="/img/Foto_perfil.jpeg"
+        alt="Víctor Cazorla Fernández"
+        style="
+          width: 100%;
+          height: auto;
+          border-radius: 14px;
+          border: 1px solid rgba(212, 175, 55, 0.45);
+          box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+        "
+      />
+    </div>
+
+    <section>
+      <p>
+        My interest in technology arises from my professional career, as the <em>device</em> that structures processes and decisions within organizations. I know that technical systems facilitate operations, but I also recognize that they delimit decision-making margins by introducing their own logic and shaping how organizations think, act, and take responsibility for their actions. For that reason, I assert that technology is not neutral.
+      </p>
+
+      <p>
+        From the place where technology sustains critical processes, human teams, and decision-making, IT management must be a mediating figure between organizational needs and the technical conditions of operations.
+      </p>
+
+      <p>
+        I believe that technology governance cannot be reduced to a set of formal processes nor to the uncritical application of reference frameworks. Its ultimate meaning does not lie solely in ensuring efficiency or control; it must responsibly order technical power: deciding who decides, with what information, under what criteria, and with what assumed consequences. Governing technology means recognizing that not every technically possible decision is organizationally appropriate or ethically defensible.
+      </p>
+
+      <p>
+        I approach technological innovation with technical training, managerial experience, and analytic philosophy. I conceive IT governance as a space where human and organizational needs are translated into consolidated technical architectures to offer solutions to the challenges of technological modernization and digital transformation, always considering the operational, legal, and ethical constraints that cross the business fabric.
+      </p>
+
+    </section>
+
+    <section>
+      <h2>IT Certifications</h2>
+      <ul>
+        <li>Google Cloud Platform - Professional Cloud Architect</li>
+        <li>Amazon Web Services - CloudOps Engineer</li>
+        <li>Microsoft - Azure Administrator</li>
+        <li>Apple - IT Professional, Deployment and Management</li>
+        <li>FinOps Foundation - FinOps Practitioner</li>
+      </ul>
+    </section>
+
+  </main>
+</BaseLayout>

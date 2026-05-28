@@ -1,10 +1,9 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import { navItems, alternateLabel } from "../data/i18n";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { navItems, alternateLabel } from "../../data/i18n";
 
-const title = "Formación Académica";
+const title = "Academic Education";
 const credentials = [
-  // list of credentials mirrored from page content
   "Máster en Dirección y Gestión de Tecnologías de la Información",
   "Máster en Dirección de Operaciones, Calidad y Proyectos",
   "Máster en Logística, Transporte, Cadena de Suministro y Estrategia Operativa",
@@ -25,34 +24,33 @@ const credentials = [
   "Formación Profesional en la rama Sanitaria",
   "Formación Profesional en Sistemas Informáticos"
 ];
-
 ---
 
 <BaseLayout
   title={title}
   image="/images/og/formacion.svg"
   imageAlt="Formación — Víctor Cazorla Fernández"
-  lang="es"
-  navItems={navItems.es}
-  alternateLabel={alternateLabel.es}
+  lang="en"
+  navItems={navItems.en}
+  alternateLabel={alternateLabel.en}
 >
   <main class="container narrow">
 
-    <h1>Formación Académica - Víctor Cazorla Fernández</h1>
+    <h1>Academic Education - Víctor Cazorla Fernández</h1>
 
     <section class="page-header">
-      <h2>La formación como <em>consecuencia</em></h2>
+      <h2>Education as <em>a consequence</em></h2>
     </section>
 
     <section class="page-content">
       <header class="page-intro">
         <p>
-          <em>Hay una manera de estar en el mundo que no se extingue con el paso del tiempo; la de quien persevera en la pregunta incluso cuando las respuestas parecen dadas. Esa curiosidad, más próxima al gesto infantil de desmontar lo que funciona que a la seguridad del experto que lo da por sabido, conduce a atravesar disciplinas, a habitar lenguajes distintos y a desconfiar de las certezas prematuras. La formación, por tanto, no es el objeto en sí del conocimiento, sino el efecto inevitable de una mirada que se resiste a acostumbrarse a ver el mundo que le es dado.</em>
+          <em>There is a way of being in the world that does not disappear with time; that of the person who perseveres in the question even when answers appear given. That curiosity, closer to the childlike gesture of dismantling what works than to the confidence of the expert who takes it for granted, leads to crossing disciplines, inhabiting different languages, and distrusting premature certainties. Education, therefore, is not the object of knowledge itself, but the inevitable effect of a gaze that refuses to get used to seeing the world as it is given to it.</em>
         </p>
       </header>
 
-      <section id="formacion-direccion" class="formation-block" aria-labelledby="h-direccion">
-        <h2 id="h-direccion">Formación Universitaria en Dirección Tecnológica, Empresarial y Financiera</h2>
+      <section id="education-management" class="formation-block" aria-labelledby="h-management">
+        <h2 id="h-management">University education in Technological, Business and Financial Management</h2>
         <ul>
           <li><span class="degree">Máster en Dirección Internacional Contable y Financiera</span></li>
           <li><span class="degree">Máster en Dirección y Gestión de Tecnologías de la Información</span></li>
@@ -67,9 +65,9 @@ const credentials = [
       </section>
 
       <section class="formation-block">
-        <h2 id="h-medioambiente">Formación Universitaria en Ciencias del Medio Ambiente</h2>
+        <h2 id="h-environment">University education in Environmental Sciences</h2>
       </section>
-      <section id="formacion-medioambiente" class="formation-block" aria-labelledby="h-medioambiente">
+      <section id="education-environment" class="formation-block" aria-labelledby="h-environment">
         <ul>
           <li><span class="degree">Máster en Gestión del Medioambiente y Economía de la Energía</span></li>
           <li><span class="degree">Postgrado en Derecho Medioambiental</span></li>
@@ -83,15 +81,15 @@ const credentials = [
         </ul>
       </section>
 
-      <section id="formacion-humanidades" class="formation-block" aria-labelledby="h-humanidades">
-        <h2 id="h-humanidades">Formación Universitaria en Humanidades</h2>
+      <section id="education-humanities" class="formation-block" aria-labelledby="h-humanities">
+        <h2 id="h-humanities">University education in the Humanities</h2>
         <ul>
           <li><span class="degree">Máster de Investigación en Filosofía</span></li>
         </ul>
       </section>
 
-      <section id="formacion-salud" class="formation-block" aria-labelledby="h-salud">
-        <h2 id="h-salud">Formación Universitaria en Ciencias de la Salud</h2>
+      <section id="education-health" class="formation-block" aria-labelledby="h-health">
+        <h2 id="h-health">University education in Health Sciences</h2>
         <ul>
           <li><span class="degree">Postgrado en Psicopatología</span></li>
           <li><span class="degree">Formación Profesional - rama sanitaria</span></li>
@@ -100,13 +98,15 @@ const credentials = [
 
       <hr class="page-note-separator" aria-hidden="true" />
       <footer class="page-note">
-        <p> <em>
-          Todas las titulaciones de postgrado mencionadas corresponden a titulaciones universitarias debidamente acreditadas, impartidas por universidades españolas —entre ellas la UNED, la UNIR y la URJC—, conforme a los criterios de calidad y reconocimiento establecidos por
-          <a href="https://www.aneca.es" target="_blank" rel="noopener noreferrer">ANECA</a>
-          y la
-          <a href="https://www.crue.org" target="_blank" rel="noopener noreferrer">CRUE</a>,
-          incluyendo Diplomas de Experto Universitario, Máster Universitario y Máster de Formación Permanente Universitaria.
-        </p> </em>
+        <p>
+          <em>
+            All postgraduate degrees listed correspond to accredited university qualifications offered by Spanish universities — including UNED, UNIR, and URJC — in accordance with the quality and recognition criteria established by
+            <a href="https://www.aneca.es" target="_blank" rel="noopener noreferrer">ANECA</a>
+            and
+            <a href="https://www.crue.org" target="_blank" rel="noopener noreferrer">CRUE</a>,
+            including University Expert Diplomas, University Master's degrees and Continuing Education Master's degrees.
+          </em>
+        </p>
       </footer>
 
     </section>

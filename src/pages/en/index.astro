@@ -1,20 +1,20 @@
 ---
-import BaseLayout from "../layouts/BaseLayout.astro";
-import { navItems, alternateLabel } from "../data/i18n";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { navItems, alternateLabel } from "../../data/i18n";
 
-const title = "Víctor Cazorla Fernández - Dirección IT, Gestión Ambiental y Ética Profesional";
-const description = "Dirección IT · Gestión Ambiental · Ética profesional";
+const title = "Víctor Cazorla Fernández — IT Management, Environmental Management and Professional Ethics";
+const description = "IT management · Environmental management · Professional ethics";
 ---
 
 <BaseLayout
   title={title}
   description={description}
-  lang="es"
-  navItems={navItems.es}
-  alternateLabel={alternateLabel.es}
+  lang="en"
+  navItems={navItems.en}
+  alternateLabel={alternateLabel.en}
 >
-  <h1>Víctor Cazorla Fernández - Dirección IT, Gestión Ambiental y Ética Profesional</h1>
-  <section id="sobre-mi">
+  <h1>Víctor Cazorla Fernández — IT Management, Environmental Management and Professional Ethics</h1>
+  <section id="about-me">
     <div
       style="
         margin: 2rem 0;
@@ -24,7 +24,7 @@ const description = "Dirección IT · Gestión Ambiental · Ética profesional";
     >
       <img
         src="/images/portada.jpg"
-        alt="Portada"
+        alt="Cover"
         style="
           width: 100%;
           max-width: 700px;
@@ -34,11 +34,12 @@ const description = "Dirección IT · Gestión Ambiental · Ética profesional";
         "
       />
     </div>
-    <h2>Sobre mí | Víctor Cazorla Fernández</h2>
-	<p>
-Profesional de la gestión tecnológica y ambiental, investigador en ciencias naturales y filosofía jurídica, perito judicial en materia ambiental y presidente del Comité de Ética y Deontología del COAMB.
+    <h2>About me | Víctor Cazorla Fernández</h2>
     <p>
-Este espacio nace con la intención de compartir y aportar valor a partir de mi recorrido. Aquí recojo reflexiones propias, artículos publicados, intervenciones en medios y materiales vinculados a mi actividad profesional. Por tanto, este lugar no pretende sustituir una presentación profesional convencional ni ofrecer una síntesis curricular; el <em>qué</em> de mi trayectoria puede consultarse en mi Linkedin. Esta web, en cambio, se sitúa deliberadamente en el plano del <em>cómo</em>: el modo en que pienso los problemas, los criterios desde los que interpreto mi práctica y los marcos conceptuales que orientan mis decisiones.
+      Professional in technology and environmental management, researcher in natural sciences and legal philosophy, environmental expert witness, and president of the Ethics and Deontology Committee at COAMB.
+    </p>
+    <p>
+      This space was created to share and contribute value from my professional journey. Here I collect my own reflections, published articles, media interventions, and materials linked to my professional activity. Therefore, this site is not intended to replace a conventional professional presentation or provide a curriculum summary; the <em>what</em> of my career can be found on my LinkedIn. This website, instead, is deliberately positioned on the <em>how</em>: the way I think about problems, the criteria from which I interpret my practice, and the conceptual frameworks that guide my decisions.
     </p>
 
     <div
@@ -92,7 +93,7 @@ Este espacio nace con la intención de compartir y aportar valor a partir de mi 
               color: rgba(255, 255, 255, 0.85);
             "
           >
-            Puedes seguir mi actividad profesional y mis publicaciones en LinkedIn.
+            You can follow my professional activity and publications on LinkedIn.
           </p>
         </div>
       </a>

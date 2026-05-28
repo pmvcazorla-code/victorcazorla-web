@@ -1,16 +1,41 @@
 ---
+type NavItem = {
+  href: string;
+  label: string;
+};
+
+type BaseLayoutProps = {
+  title?: string;
+  description?: string;
+  image?: string | null;
+  imageAlt?: string;
+  lang?: string;
+  navItems?: NavItem[];
+  alternateLabel?: string;
+};
+
 const {
   title = "Víctor Cazorla Fernández",
   description = "Dirección IT · Gestión Ambiental · Ética profesional",
   image = null,
-  imageAlt = ""
-} = Astro.props;
+  imageAlt = "",
+  lang = "es",
+  navItems = [],
+  alternateLabel = "English"
+} = Astro.props as BaseLayoutProps;
 
 const currentPath = Astro.url.pathname;
+const normalizedPath = currentPath.endsWith("/") && currentPath !== "/" ? currentPath.slice(0, -1) : currentPath;
+const alternateHref = (() => {
+  if (normalizedPath === "/") return "/en";
+  if (normalizedPath === "/en") return "/";
+  if (normalizedPath.startsWith("/en/")) return normalizedPath.slice(3);
+  return "/en" + normalizedPath;
+})();
 ---
 
 <!DOCTYPE html>
-<html lang="es">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -111,6 +136,26 @@ const currentPath = Astro.url.pathname;
         background: rgba(255, 255, 255, 0.03);
         white-space: nowrap;
         transition: all 0.3s cubic-bezier(0.23, 1, 0.320, 1);
+      }
+
+      .lang-switch {
+        margin-top: 1rem;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        border: 1px solid var(--border-soft);
+        color: var(--accent);
+        text-decoration: none;
+        font-size: 0.82rem;
+        transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+      }
+
+      .lang-switch:hover {
+        border-color: var(--accent-gold);
+        background: rgba(212, 175, 55, 0.08);
+        transform: translateY(-1px);
       }
 
       nav a:hover {
@@ -256,29 +301,18 @@ const currentPath = Astro.url.pathname;
           Dirección IT · Gestión Ambiental · Ética profesional
         </div>
         <nav>
-          <a href="/" class={currentPath === "/" ? "active" : ""}>Inicio</a>
-          <a href="/it" class={currentPath.startsWith("/it") ? "active" : ""}>
-            Dirección y Gobernanza de IT
-          </a>
-          <a
-            href="/cienciasambientales"
-            class={currentPath.startsWith("/cienciasambientales") ? "active" : ""}
-          >
-            Gestión Ambiental
-          </a>
-          <a
-            href="/deontologia"
-            class={currentPath.startsWith("/deontologia") ? "active" : ""}
-          >
-            Deontología
-          </a>
-          <a
-            href="/formacion"
-            class={currentPath.startsWith("/formacion") ? "active" : ""}
-          >
-            Formación
-          </a>
+          {navItems.map((item) => (
+            <a
+              href={item.href}
+              class={currentPath === item.href || currentPath.startsWith(item.href + "/") ? "active" : ""}
+            >
+              {item.label}
+            </a>
+          ))}
         </nav>
+        <a class="lang-switch" href={alternateHref}>
+          {alternateLabel}
+        </a>
       </div>
     </header>
 

@@ -1,8 +1,14 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
+import { navItems, alternateLabel } from "../../data/i18n";
 ---
 
-<BaseLayout title="Dirección y Gobernanza de IT - Víctor Cazorla Fernández">
+<BaseLayout
+  title="Dirección y Gobernanza de IT - Víctor Cazorla Fernández"
+  lang="es"
+  navItems={navItems.es}
+  alternateLabel={alternateLabel.es}
+>
   <main class="container">
 
     <h1>Dirección y Gobernanza de IT - Víctor Cazorla Fernández</h1>
