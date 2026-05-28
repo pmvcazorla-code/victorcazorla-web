@@ -1,0 +1,110 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { navItems } from "../../data/i18n";
+
+const title = "Víctor Cazorla Fernández — Direcció IT, Gestió Ambiental i Ètica Professional";
+const description = "Direcció IT · Gestió Ambiental · Ètica professional";
+---
+
+<BaseLayout title={title} description={description} lang="ca" navItems={navItems.ca}>
+  <h1>Víctor Cazorla Fernández — Direcció IT, Gestió Ambiental i Ètica Professional</h1>
+  <section id="sobre-mi">
+    <div
+      style="
+        margin: 2rem 0;
+        display: flex;
+        justify-content: center;
+      "
+    >
+      <img
+        src="/images/portada.jpg"
+        alt="Portada"
+        style="
+          width: 100%;
+          max-width: 700px;
+          height: auto;
+          border-radius: 8px;
+          box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        "
+      />
+    </div>
+    <h2>Sobre mi | Víctor Cazorla Fernández</h2>
+    <p>
+      Professional de la gestió tecnològica i ambiental, investigador en ciències naturals i filosofia jurídica, perit judicial en matèria ambiental i president del Comitè d'Ètica i Deontologia del COAMB.
+    </p>
+    <p>
+      Aquest espai neix amb la intenció de compartir i aportar valor a partir del meu recorregut. Aquí recullo reflexions pròpies, articles publicats, intervencions als mitjans i materials vinculats a la meva activitat professional. Per tant, aquest lloc no pretén substituir una presentació professional convencional ni oferir una síntesi curricular; el <em>què</em> de la meva trajectòria es pot consultar al meu LinkedIn. Aquesta web, en canvi, es situa deliberadament en el terreny del <em>com</em>: el mode en què penso els problemes, els criteris des dels quals interpreto la meva pràctica i els marcs conceptuals que orienten les meves decisions.
+    </p>
+
+    <div
+      style="
+        margin: 3rem 0;
+        padding: 1.4rem 1.6rem;
+        max-width: 680px;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 14px;
+        background: linear-gradient(
+          180deg,
+          rgba(255, 255, 255, 0.04),
+          rgba(255, 255, 255, 0.015)
+        );
+      "
+    >
+      <a
+        href="https://www.linkedin.com/in/victorcazorla-f/"
+        target="_blank"
+        rel="noopener noreferrer"
+        style="
+          display: flex;
+          align-items: center;
+          gap: 1.4rem;
+          text-decoration: none;
+          color: inherit;
+        "
+      >
+        <img
+          src="/img/linkedin_face.jpg"
+          alt="Víctor Cazorla Fernández"
+          style="
+            width: 160px;
+            height: 160px;
+            max-width: 160px;
+            max-height: 160px;
+            object-fit: cover;
+            border-radius: 50%;
+            flex-shrink: 0;
+            display: block;
+            border: 1px solid rgba(212, 175, 55, 0.6);
+          "
+        />
+
+        <div>
+          <p
+            style="
+              margin: 0;
+              font-size: 0.95rem;
+              line-height: 1.55;
+              color: rgba(255, 255, 255, 0.85);
+            "
+          >
+            Pots seguir la meva activitat professional i les meves publicacions a LinkedIn.
+          </p>
+        </div>
+      </a>
+    </div>
+
+    <div
+      aria-hidden="true"
+      style="
+        margin: 3.8rem 0 3.2rem;
+        height: 1px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          rgba(255, 255, 255, 0.18),
+          transparent
+        );
+      "
+    ></div>
+  </section>
+</BaseLayout>

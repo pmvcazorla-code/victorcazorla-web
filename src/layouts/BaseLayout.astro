@@ -11,7 +11,7 @@ type BaseLayoutProps = {
   description?: string;
   image?: string | null;
   imageAlt?: string;
-  lang?: "es" | "en" | "fr";
+  lang?: "es" | "en" | "fr" | "ca";
   navItems?: NavItem[];
 };
 
@@ -30,12 +30,13 @@ const currentRoute = routes.find((route) =>
   Object.values(route.slugs).includes(normalizedPath)
 ) ?? routes[0];
 
-const languageHref = (code: "es" | "en" | "fr") => currentRoute.slugs[code];
+const languageHref = (code: "es" | "en" | "fr" | "ca") => currentRoute.slugs[code];
 const siteUrl = typeof Astro.site === "string" ? Astro.site.replace(/\/$/, "") : Astro.url.origin;
 const localeMap = {
   es: "es_ES",
   en: "en_US",
   fr: "fr_FR",
+  ca: "ca_ES",
 };
 const fullUrl = (path: string) => `${siteUrl}${path}`;
 ---
@@ -55,6 +56,7 @@ const fullUrl = (path: string) => `${siteUrl}${path}`;
     <link rel="alternate" hrefLang="es" href={fullUrl(currentRoute.slugs.es)} />
     <link rel="alternate" hrefLang="en" href={fullUrl(currentRoute.slugs.en)} />
     <link rel="alternate" hrefLang="fr" href={fullUrl(currentRoute.slugs.fr)} />
+    <link rel="alternate" hrefLang="ca" href={fullUrl(currentRoute.slugs.ca)} />
     <link rel="alternate" hrefLang="x-default" href={fullUrl(currentRoute.slugs.es)} />
     {image ? <meta property="og:image" content={image} /> : null}
     <title>{title}</title>
@@ -375,11 +377,16 @@ const fullUrl = (path: string) => `${siteUrl}${path}`;
                     <path d="M30 0 L30 30 M0 15 L60 15" stroke="#fff" stroke-width="10" />
                     <path d="M30 0 L30 30 M0 15 L60 15" stroke="#C8102E" stroke-width="6" />
                   </svg>
-                ) : (
+                ) : language.code === "fr" ? (
                   <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Drapeau français" focusable="false">
                     <rect width="20" height="30" fill="#0055A4" />
                     <rect x="20" width="20" height="30" fill="#FFFFFF" />
                     <rect x="40" width="20" height="30" fill="#EF4135" />
+                  </svg>
+                ) : (
+                  <svg viewBox="0 0 60 30" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Senyera catalana" focusable="false">
+                    <rect width="60" height="30" fill="#FFCE00" />
+                    <path d="M0 3 H60 M0 10 H60 M0 17 H60 M0 24 H60" stroke="#D52B1E" stroke-width="4" />
                   </svg>
                 )}
               </span>
