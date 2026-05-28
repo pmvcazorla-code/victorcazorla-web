@@ -51,8 +51,11 @@ const fullUrl = (path: string) => `${siteUrl}${path}`;
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <meta property="og:locale" content={localeMap[lang]} />
-    <meta property="og:url" content={currentPath} />
-    <link rel="canonical" href={Astro.url.href} />
+    <meta property="og:url" content={fullUrl(currentPath)} />
+    <link rel="canonical" href={fullUrl(currentPath)} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <meta name="theme-color" content="#070b14" />
     <link rel="alternate" hrefLang="es" href={fullUrl(currentRoute.slugs.es)} />
     <link rel="alternate" hrefLang="en" href={fullUrl(currentRoute.slugs.en)} />
     <link rel="alternate" hrefLang="fr" href={fullUrl(currentRoute.slugs.fr)} />
@@ -60,6 +63,30 @@ const fullUrl = (path: string) => `${siteUrl}${path}`;
     <link rel="alternate" hrefLang="x-default" href={fullUrl(currentRoute.slugs.es)} />
     {image ? <meta property="og:image" content={image} /> : null}
     <title>{title}</title>
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      name: "Víctor Cazorla Fernández",
+      url: siteUrl,
+      email: "info@victorcazorla.es",
+      image: `${siteUrl}/img/linkedin_face.jpg`,
+      jobTitle: "IT Management · Environmental Science · Professional Ethics",
+      worksFor: {
+        "@type": "Organization",
+        name: "Independent Professional",
+      },
+      sameAs: [
+        "https://www.linkedin.com/in/victorcazorla-f/",
+        "https://orcid.org/0009-0009-7976-9691",
+      ],
+      knowsAbout: [
+        "IT Management",
+        "Environmental Science",
+        "Professional Ethics",
+        "Cloud Architecture",
+        "Digital Transformation",
+      ],
+    })} />
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:wght@500;600;700&display=swap"
       rel="stylesheet"
