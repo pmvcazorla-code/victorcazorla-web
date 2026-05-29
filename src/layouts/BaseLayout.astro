@@ -547,6 +547,68 @@ const fullUrl = (path: string) => `${siteUrl}${path}`;
           flex: 0 0 auto;
         }
 
+        .nav-wrap {
+          position: relative;
+          display: flex;
+          align-items: center;
+        }
+
+        .nav-wrap::after,
+        .nav-wrap::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          bottom: 0;
+          width: 2.4rem;
+          pointer-events: none;
+          display: none;
+        }
+
+        .nav-wrap::after {
+          right: 0;
+          background: linear-gradient(90deg, rgba(7,11,20,0), var(--bg-header));
+        }
+
+        .nav-wrap::before {
+          left: 0;
+          background: linear-gradient(90deg, rgba(7,11,20,0), var(--bg-header));
+          transform: rotate(180deg);
+        }
+
+        .nav-scroll {
+          position: absolute;
+          top: 50%;
+          transform: translateY(-50%);
+          border: none;
+          background: rgba(0,0,0,0.35);
+          color: var(--text-main);
+          width: 2.1rem;
+          height: 2.1rem;
+          border-radius: 999px;
+          display: none;
+          align-items: center;
+          justify-content: center;
+          cursor: pointer;
+          font-size: 1.1rem;
+        }
+
+        .nav-scroll:focus {
+          outline: 2px solid var(--accent);
+          outline-offset: 2px;
+        }
+
+        .nav-scroll-left { left: 6px; }
+        .nav-scroll-right { right: 6px; }
+
+        .nav-wrap.has-overflow::after,
+        .nav-wrap.has-overflow::before {
+          display: block;
+        }
+
+        .nav-wrap.has-overflow .nav-scroll {
+          display: flex;
+        }
+
         main {
           padding: 1rem 0.8rem 2rem;
         }
@@ -577,24 +639,28 @@ const fullUrl = (path: string) => `${siteUrl}${path}`;
         <div class="subtitle">
           Dirección IT · Gestión Ambiental · Ética profesional
         </div>
-        <nav>
-          {navItems.map((item) => (
-            <a
-              href={item.href}
-              class={
-                item.href === "/"
-                  ? currentPath === item.href
+        <div class="nav-wrap">
+          <button class="nav-scroll nav-scroll-left" aria-label="Scroll left">‹</button>
+          <nav>
+            {navItems.map((item) => (
+              <a
+                href={item.href}
+                class={
+                  item.href === "/"
+                    ? currentPath === item.href
+                      ? "active"
+                      : ""
+                    : currentPath === item.href || currentPath.startsWith(item.href + "/")
                     ? "active"
                     : ""
-                  : currentPath === item.href || currentPath.startsWith(item.href + "/")
-                  ? "active"
-                  : ""
-              }
-            >
-              {item.label}
-            </a>
-          ))}
-        </nav>
+                }
+              >
+                {item.label}
+              </a>
+            ))}
+          </nav>
+          <button class="nav-scroll nav-scroll-right" aria-label="Scroll right">›</button>
+        </div>
         <div class="lang-switch-group" role="navigation" aria-label="Language selector">
           {languages.map((language: LanguageOption) => (
             <a
@@ -643,5 +709,45 @@ const fullUrl = (path: string) => `${siteUrl}${path}`;
     <footer>
       © 2026 · Víctor Cazorla Fernández
     </footer>
+
+    <script>
+      (function(){
+        function setupNavScroll(){
+          const wrap = document.querySelector('.nav-wrap');
+          if(!wrap) return;
+          const nav = wrap.querySelector('nav');
+          const left = wrap.querySelector('.nav-scroll-left');
+          const right = wrap.querySelector('.nav-scroll-right');
+
+          function update(){
+            if(nav.scrollWidth > nav.clientWidth + 2){
+              wrap.classList.add('has-overflow');
+              const max = nav.scrollWidth - nav.clientWidth - 2;
+              left.style.display = nav.scrollLeft > 5 ? 'flex' : 'none';
+              right.style.display = nav.scrollLeft < max - 5 ? 'flex' : 'none';
+            } else {
+              wrap.classList.remove('has-overflow');
+              left.style.display = right.style.display = 'none';
+            }
+          }
+
+          let raf;
+          nav.addEventListener('scroll', function(){
+            if(raf) cancelAnimationFrame(raf);
+            raf = requestAnimationFrame(update);
+          }, {passive:true});
+
+          left.addEventListener('click', function(){ nav.scrollBy({ left: -120, behavior: 'smooth' }); });
+          right.addEventListener('click', function(){ nav.scrollBy({ left: 120, behavior: 'smooth' }); });
+
+          window.addEventListener('resize', update);
+          // initial
+          setTimeout(update, 60);
+        }
+
+        if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', setupNavScroll);
+        else setupNavScroll();
+      })();
+    </script>
   </body>
 </html>
