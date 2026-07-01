@@ -150,23 +150,34 @@ p {
 
 .credential-logos {
   margin: 1.25rem 0 2.5rem;
-  padding: 1rem 0;
+  padding: 0.75rem 0;
 }
 
 .credential-logos__row {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0.8rem;
   align-items: center;
-  justify-content: center;
-  gap: 0.95rem 1.2rem;
-  padding: 0.8rem 0;
 }
 
-.credential-logos__row img {
-  width: 92px;
-  height: 36px;
+.credential-logo-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 56px;
+  padding: 0.7rem 0.8rem;
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(31, 58, 95, 0.12);
+  border-radius: 14px;
+  box-shadow: 0 8px 20px rgba(15, 35, 64, 0.06);
+}
+
+.credential-logo-badge img {
+  width: 100%;
+  max-width: 84px;
+  height: 28px;
   object-fit: contain;
-  opacity: 0.94;
+  opacity: 0.95;
   filter: saturate(0.95);
   display: block;
 }
@@ -381,11 +392,17 @@ footer {
   }
 
   .credential-logos__row {
-    gap: 0.7rem 0.8rem;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0.7rem;
   }
 
-  .credential-logos__row img {
-    width: 74px;
-    height: 30px;
+  .credential-logo-badge {
+    min-height: 50px;
+    padding: 0.6rem 0.7rem;
+  }
+
+  .credential-logo-badge img {
+    max-width: 72px;
+    height: 24px;
   }
 }
