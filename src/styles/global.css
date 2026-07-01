@@ -163,12 +163,12 @@ p {
 }
 
 .credential-logos__row img {
-  height: 44px;
-  width: auto;
-  max-width: 100%;
+  width: 92px;
+  height: 36px;
   object-fit: contain;
   opacity: 0.94;
   filter: saturate(0.95);
+  display: block;
 }
 
 em {
@@ -385,6 +385,7 @@ footer {
   }
 
   .credential-logos__row img {
-    height: 34px;
+    width: 74px;
+    height: 30px;
   }
 }
