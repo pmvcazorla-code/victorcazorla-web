@@ -3,33 +3,10 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { navItems } from "../../data/i18n";
 
 const title = "Formation académique";
-const credentials = [
-  "Máster en Dirección Internacional Contable y Financiera",
-  "Máster en Dirección y Gestión de Tecnologías de la Información",
-  "Máster en Dirección de Operaciones, Calidad y Proyectos",
-  "Máster en Logística, Transporte, Cadena de Suministro y Estrategia Operativa",
-  "Postgrado en Administración y Dirección de Empresas",
-  "Postgrado en Bolsa y Mercados Financieros",
-  "Postgrado en Lean Management y Sistemas de Calidad ISO 9001",
-  "Postgrado en Sostenibilidad, Seguridad e Innovación Tecnológica",
-  "Máster en Gestión del Medioambiente y Economía de la Energía",
-  "Postgrado en Derecho Medioambiental",
-  "Postgrado en Gestión de Proyectos",
-  "Postgrado en Auditoría Ambiental",
-  "Postgrado en Sistemas Energéticos y Gestión de Residuos",
-  "Postgrado en Entomología",
-  "Postgrado en Virología",
-  "Postgrado en Estadística",
-  "Grado en Ciencias Ambientales",
-  "Máster de Investigación en Filosofía (especialidad en Lógica Aplicada a la Teoría del Derecho)",
-  "Formación Profesional en la rama Sanitaria",
-  "Formación Profesional en Sistemas Informáticos"
-];
 ---
 
 <BaseLayout title={title} image="/images/og/formacion.svg" imageAlt="Formation — Víctor Cazorla Fernández" lang="fr" navItems={navItems.fr}>
   <main class="container narrow">
-
     <h1>Formation académique</h1>
 
     <section class="page-header">
@@ -39,69 +16,177 @@ const credentials = [
     <section class="page-content">
       <header class="page-intro">
         <p>
-          <em>Il existe une manière d'être au monde qui ne disparaît pas avec le temps ; celle de celui qui persévère dans la question même lorsque les réponses semblent acquises. Cette curiosité, plus proche du geste enfantin de démonter ce qui fonctionne que de la certitude de l'expert qui le tient pour acquis, conduit à traverser les disciplines, à habiter des langages différents et à se méfier des certitudes prématurées. La formation, par conséquent, n'est pas l'objet lui-même du savoir, mais l'effet inévitable d'un regard qui refuse de s'habituer à voir le monde tel qu'il lui est donné.</em>
+          <em>Il existe une manière d'être au monde qui ne s'efface pas avec le temps : celle de la personne qui continue de poser des questions, même lorsque les réponses semblent déjà données. Cette curiosité, plus proche du geste enfantin de démonter ce qui fonctionne que de la certitude de l'expert qui le tient pour acquis, conduit à traverser les disciplines, à habiter des langages différents et à se méfier des certitudes prématurées. La formation n'est donc pas l'objet de la connaissance en soi, mais l'effet inévitable d'un regard qui refuse de s'habituer à voir le monde tel qu'il lui est donné.</em>
         </p>
       </header>
 
-      <section id="formation-direction" class="formation-block" aria-labelledby="h-direction">
-        <h2 id="h-direction">Formation universitaire en gestion technologique, d'entreprise et financière</h2>
-        <ul>
-          <li><span class="degree">Master en direction internationale comptable et financière</span></li>
-          <li><span class="degree">Master en gestion des technologies de l'information</span></li>
-          <li><span class="degree">Master en direction des opérations, qualité et projets</span></li>
-          <li><span class="degree">Master en logistique, transport, chaîne d'approvisionnement et stratégie opérationnelle</span></li>
-          <li><span class="degree">Master en prévention des risques professionnels</span></li>
-          <li><span class="degree">Postgrade en administration et direction des entreprises</span></li>
-          <li><span class="degree">Postgrade en bourse et marchés financiers</span></li>
-          <li><span class="degree">Postgrade en Lean Management et systèmes de qualité ISO 9001</span></li>
-          <li><span class="degree">Postgrade en durabilité, sécurité et innovation technologique</span></li>
-          <li><span class="degree">Formation professionnelle en systèmes informatiques</span></li>
-        </ul>
+      <section class="credential-logos" aria-label="Universités de référence pour cette formation">
+        <div class="credential-logos__row">
+          <div class="credential-logo-badge"><img src="/images/logos/uned_logo.png" alt="UNED" loading="lazy" /></div>
+          <div class="credential-logo-badge"><img src="/images/logos/unir_logo.png" alt="UNIR" loading="lazy" /></div>
+          <div class="credential-logo-badge"><img src="/images/logos/urjc_logo.png" alt="URJC" loading="lazy" /></div>
+          <div class="credential-logo-badge"><img src="/images/logos/uclm_logo.png" alt="UCLM" loading="lazy" /></div>
+          <div class="credential-logo-badge"><img src="/images/logos/ucma_logo.png" alt="UCMA" loading="lazy" /></div>
+        </div>
       </section>
 
-      <section class="formation-block">
-        <h2 id="h-environnement">Formation universitaire en sciences de l'environnement</h2>
+      <section id="formation-direction" class="formation-block" aria-labelledby="h-direction">
+        <h2 id="h-direction">Direction technologique, entrepreneuriale et financière</h2>
+
+        <div class="credential-cards">
+          <article class="credential-card">
+            <h3>Gestion financière, comptabilité et marchés</h3>
+            <div class="credential-card__item">
+              <strong>Master en direction comptable et financière internationale</strong>
+              <span>Université Rey Juan Carlos · Faculté d'économie et d'administration des entreprises</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Postgrade en bourse et marchés financiers</strong>
+              <span>UNED · Faculté d'économie et d'administration des entreprises</span>
+            </div>
+          </article>
+
+          <article class="credential-card">
+            <h3>Direction d'entreprise, opérations et projets</h3>
+            <div class="credential-card__item">
+              <strong>Postgrade en administration et direction des entreprises</strong>
+              <span>UNED · Faculté d'économie et d'administration des entreprises</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Master en direction des opérations, qualité et projets</strong>
+              <span>UNED · Faculté d'économie et d'administration des entreprises</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Master en logistique, transport, chaîne d'approvisionnement et stratégie opérationnelle</strong>
+              <span>UNED · Faculté d'économie et d'administration des entreprises</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Postgrade en Lean Management et systèmes de qualité ISO 9001</strong>
+              <span>UNED · Faculté d'économie et d'administration des entreprises</span>
+            </div>
+          </article>
+
+          <article class="credential-card">
+            <h3>Technologie, innovation et transformation numérique</h3>
+            <div class="credential-card__item">
+              <strong>Master en gestion des technologies de l'information</strong>
+              <span>UNIR · École supérieure d'ingénierie et de technologie</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Postgrade en durabilité, sécurité et innovation technologique</strong>
+              <span>UNED · Faculté d'économie et d'administration des entreprises</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Formation professionnelle en systèmes informatiques</strong>
+            </div>
+          </article>
+
+          <article class="credential-card">
+            <h3>Prévention, sécurité et gestion des risques</h3>
+            <div class="credential-card__item">
+              <strong>Master en prévention des risques professionnels</strong>
+              <span>Université de Castille-La Manche · Centre d'études de troisième cycle</span>
+            </div>
+          </article>
+        </div>
       </section>
+
       <section id="formation-environnement" class="formation-block" aria-labelledby="h-environnement">
-        <ul>
-          <li><span class="degree">Master en gestion de l'environnement et économie de l'énergie</span></li>
-          <li><span class="degree">Postgrade en droit de l'environnement</span></li>
-          <li><span class="degree">Postgrade en gestion de projets</span></li>
-          <li><span class="degree">Postgrade en audit environnemental</span></li>
-          <li><span class="degree">Postgrade en systèmes énergétiques et gestion des déchets</span></li>
-          <li><span class="degree">Postgrade en entomologie</span></li>
-          <li><span class="degree">Postgrade en virologie</span></li>
-          <li><span class="degree">Postgrade en statistique</span></li>
-          <li><span class="degree">Licence en sciences de l'environnement</span></li>
-        </ul>
+        <h2 id="h-environnement">Sciences de l'environnement</h2>
+
+        <div class="credential-cards">
+          <article class="credential-card">
+            <h3>Environnement, énergie et durabilité</h3>
+            <div class="credential-card__item">
+              <strong>Licence en sciences de l'environnement</strong>
+              <span>UCMA · Faculté des sciences</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Master en gestion de l'environnement et économie de l'énergie</strong>
+              <span>UNED · Faculté d'économie et d'administration des entreprises</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Postgrade en audit environnemental</strong>
+              <span>UNED · Faculté d'économie et d'administration des entreprises</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Postgrade en systèmes énergétiques et gestion des déchets</strong>
+              <span>UNED · Faculté d'économie et d'administration des entreprises</span>
+            </div>
+          </article>
+
+          <article class="credential-card">
+            <h3>Droit et réglementation environnementaux</h3>
+            <div class="credential-card__item">
+              <strong>Postgrade en droit de l'environnement</strong>
+              <span>UNED · Faculté de droit</span>
+            </div>
+          </article>
+
+          <article class="credential-card">
+            <h3>Sciences biologiques appliquées</h3>
+            <div class="credential-card__item">
+              <strong>Postgrade en entomologie</strong>
+              <span>UNED · Faculté des sciences</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Postgrade en virologie</strong>
+              <span>UNED · Faculté des sciences</span>
+            </div>
+          </article>
+
+          <article class="credential-card">
+            <h3>Analyse des données et méthodologie quantitative</h3>
+            <div class="credential-card__item">
+              <strong>Postgrade en statistique avancée</strong>
+              <span>UNED · Faculté des sciences</span>
+            </div>
+          </article>
+        </div>
       </section>
 
       <section id="formation-humanites" class="formation-block" aria-labelledby="h-humanites">
-        <h2 id="h-humanites">Formation universitaire en sciences humaines</h2>
-        <ul>
-          <li><span class="degree">Master de recherche en philosophie</span></li>
-        </ul>
+        <h2 id="h-humanites">Humanités</h2>
+        <div class="credential-cards">
+          <article class="credential-card">
+            <h3>Philosophie analytique</h3>
+            <div class="credential-card__item">
+              <strong>Master de recherche en philosophie (spécialisation en logique appliquée à la théorie du droit)</strong>
+              <span>UNED · Faculté de philosophie</span>
+            </div>
+          </article>
+        </div>
       </section>
 
       <section id="formation-sante" class="formation-block" aria-labelledby="h-sante">
-        <h2 id="h-sante">Formation universitaire en sciences de la santé</h2>
-        <ul>
-          <li><span class="degree">Postgrade en psychopathologie</span></li>
-          <li><span class="degree">Formation professionnelle - branche santé</span></li>
-        </ul>
+        <h2 id="h-sante">Sciences de la santé</h2>
+        <div class="credential-cards">
+          <article class="credential-card">
+            <h3>Psychologie et santé mentale</h3>
+            <div class="credential-card__item">
+              <strong>Postgrade en psychopathologie</strong>
+              <span>UNED · Faculté de psychologie</span>
+            </div>
+          </article>
+          <article class="credential-card">
+            <h3>Formation professionnelle dans le secteur de la santé</h3>
+            <div class="credential-card__item">
+              <strong>Formation professionnelle dans le secteur sanitaire</strong>
+            </div>
+          </article>
+        </div>
       </section>
 
       <hr class="page-note-separator" aria-hidden="true" />
       <footer class="page-note">
         <p>
-          <em>Toutes les formations de troisième cycle mentionnées correspondent à des diplômes universitaires accrédités, dispensés par des universités espagnoles — dont l'UNED, l'UNIR et l'URJC — conformément aux critères de qualité et de reconnaissance établis par
+          <em>Toutes les formations de troisième cycle mentionnées correspondent à des diplômes universitaires accrédités, dispensés par des universités espagnoles — dont l'UNED, l'UNIR, l'URJC, la UCLM et la UCMA — conformément aux critères de qualité et de reconnaissance établis par
           <a href="https://www.aneca.es" target="_blank" rel="noopener noreferrer">ANECA</a>
           et
           <a href="https://www.crue.org" target="_blank" rel="noopener noreferrer">CRUE</a>,
           incluant des diplômes d'expert universitaire, des masters universitaires et des masters de formation continue.</em>
         </p>
       </footer>
-
     </section>
   </main>
 </BaseLayout>

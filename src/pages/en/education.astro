@@ -3,38 +3,16 @@ import BaseLayout from "../../layouts/BaseLayout.astro";
 import { navItems } from "../../data/i18n";
 
 const title = "Academic Education";
-const credentials = [
-  "Máster en Dirección y Gestión de Tecnologías de la Información",
-  "Máster en Dirección de Operaciones, Calidad y Proyectos",
-  "Máster en Logística, Transporte, Cadena de Suministro y Estrategia Operativa",
-  "Postgrado en Administración y Dirección de Empresas",
-  "Postgrado en Bolsa y Mercados Financieros",
-  "Postgrado en Lean Management y Sistemas de Calidad ISO 9001",
-  "Postgrado en Sostenibilidad, Seguridad e Innovación Tecnológica",
-  "Máster en Gestión del Medioambiente y Economía de la Energía",
-  "Postgrado en Derecho Medioambiental",
-  "Postgrado en Gestión de Proyectos",
-  "Postgrado en Auditoría Ambiental",
-  "Postgrado en Sistemas Energéticos y Gestión de Residuos",
-  "Postgrado en Entomología",
-  "Postgrado en Virología",
-  "Postgrado en Estadística",
-  "Grado en Ciencias Ambientales",
-  "Máster de Investigación en Filosofía (especialidad en Lógica Aplicada a la Teoría del Derecho)",
-  "Formación Profesional en la rama Sanitaria",
-  "Formación Profesional en Sistemas Informáticos"
-];
 ---
 
 <BaseLayout
   title={title}
   image="/images/og/formacion.svg"
-  imageAlt="Formación — Víctor Cazorla Fernández"
+  imageAlt="Education — Víctor Cazorla Fernández"
   lang="en"
   navItems={navItems.en}
 >
   <main class="container narrow">
-
     <h1>Academic Education</h1>
 
     <section class="page-header">
@@ -44,71 +22,179 @@ const credentials = [
     <section class="page-content">
       <header class="page-intro">
         <p>
-          <em>There is a way of being in the world that does not disappear with time; that of the person who perseveres in the question even when answers appear given. That curiosity, closer to the childlike gesture of dismantling what works than to the confidence of the expert who takes it for granted, leads to crossing disciplines, inhabiting different languages, and distrusting premature certainties. Education, therefore, is not the object of knowledge itself, but the inevitable effect of a gaze that refuses to get used to seeing the world as it is given to it.</em>
+          <em>There is a way of being in the world that does not fade with time: the one adopted by the person who keeps asking questions even when the answers already seem settled. That curiosity, closer to the childlike gesture of taking apart what works than to the certainty of the expert who takes it for granted, leads us to cross disciplines, inhabit different languages and distrust premature certainties. Education, then, is not the object of knowledge in itself, but the inevitable effect of a gaze that refuses to grow accustomed to seeing the world as it is given.</em>
         </p>
       </header>
 
-      <section id="education-management" class="formation-block" aria-labelledby="h-management">
-        <h2 id="h-management">University education in Technological, Business and Financial Management</h2>
-        <ul>
-          <li><span class="degree">Master in International Accounting and Financial Management</span></li>
-          <li><span class="degree">Master in IT Management and Governance</span></li>
-          <li><span class="degree">Master in Operations, Quality and Project Management</span></li>
-          <li><span class="degree">Master in Logistics, Transport, Supply Chain and Operational Strategy</span></li>
-          <li><span class="degree">Master in Occupational Risk Prevention</span></li>
-          <li><span class="degree">Postgraduate in Business Administration and Management</span></li>
-          <li><span class="degree">Postgraduate in Stock Markets and Financial Markets</span></li>
-          <li><span class="degree">Postgraduate in Lean Management and ISO 9001 Quality Systems</span></li>
-          <li><span class="degree">Postgraduate in Sustainability, Security and Technological Innovation</span></li>
-          <li><span class="degree">Vocational Training in Computer Systems</span></li>
-        </ul>
+      <section class="credential-logos" aria-label="Reference universities for this education">
+        <div class="credential-logos__row">
+          <div class="credential-logo-badge"><img src="/images/logos/uned_logo.png" alt="UNED" loading="lazy" /></div>
+          <div class="credential-logo-badge"><img src="/images/logos/unir_logo.png" alt="UNIR" loading="lazy" /></div>
+          <div class="credential-logo-badge"><img src="/images/logos/urjc_logo.png" alt="URJC" loading="lazy" /></div>
+          <div class="credential-logo-badge"><img src="/images/logos/uclm_logo.png" alt="UCLM" loading="lazy" /></div>
+          <div class="credential-logo-badge"><img src="/images/logos/ucma_logo.png" alt="UCMA" loading="lazy" /></div>
+        </div>
       </section>
 
-      <section class="formation-block">
-        <h2 id="h-environment">University education in Environmental Sciences</h2>
+      <section id="education-management" class="formation-block" aria-labelledby="h-management">
+        <h2 id="h-management">Technological, Business and Financial Management</h2>
+
+        <div class="credential-cards">
+          <article class="credential-card">
+            <h3>Financial management, accounting and markets</h3>
+            <div class="credential-card__item">
+              <strong>Master in International Accounting and Financial Management</strong>
+              <span>Rey Juan Carlos University · Faculty of Economics and Business Sciences</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Postgraduate in Stock Markets and Financial Markets</strong>
+              <span>UNED · Faculty of Economics and Business Sciences</span>
+            </div>
+          </article>
+
+          <article class="credential-card">
+            <h3>Business, operations and project management</h3>
+            <div class="credential-card__item">
+              <strong>Postgraduate in Business Administration and Management</strong>
+              <span>UNED · Faculty of Economics and Business Sciences</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Master in Operations, Quality and Project Management</strong>
+              <span>UNED · Faculty of Economics and Business Sciences</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Master in Logistics, Transport, Supply Chain and Operational Strategy</strong>
+              <span>UNED · Faculty of Economics and Business Sciences</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Postgraduate in Lean Management and ISO 9001 Quality Systems</strong>
+              <span>UNED · Faculty of Economics and Business Sciences</span>
+            </div>
+          </article>
+
+          <article class="credential-card">
+            <h3>Technology, innovation and digital transformation</h3>
+            <div class="credential-card__item">
+              <strong>Master in Information Technology Management and Governance</strong>
+              <span>UNIR · School of Engineering and Technology</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Postgraduate in Sustainability, Security and Technological Innovation</strong>
+              <span>UNED · Faculty of Economics and Business Sciences</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Vocational Training in Computer Systems</strong>
+            </div>
+          </article>
+
+          <article class="credential-card">
+            <h3>Prevention, safety and risk management</h3>
+            <div class="credential-card__item">
+              <strong>Master in Occupational Risk Prevention</strong>
+              <span>University of Castilla-La Mancha · Graduate Studies Centre</span>
+            </div>
+          </article>
+        </div>
       </section>
+
       <section id="education-environment" class="formation-block" aria-labelledby="h-environment">
-        <ul>
-          <li><span class="degree">Master in Environmental Management and Energy Economics</span></li>
-          <li><span class="degree">Postgraduate in Environmental Law</span></li>
-          <li><span class="degree">Postgraduate in Project Management</span></li>
-          <li><span class="degree">Postgraduate in Environmental Auditing</span></li>
-          <li><span class="degree">Postgraduate in Energy Systems and Waste Management</span></li>
-          <li><span class="degree">Postgraduate in Entomology</span></li>
-          <li><span class="degree">Postgraduate in Virology</span></li>
-          <li><span class="degree">Postgraduate in Statistics</span></li>
-          <li><span class="degree">Bachelor's Degree in Environmental Sciences</span></li>
-        </ul>
+        <h2 id="h-environment">Environmental Sciences</h2>
+
+        <div class="credential-cards">
+          <article class="credential-card">
+            <h3>Environment, energy and sustainability</h3>
+            <div class="credential-card__item">
+              <strong>Bachelor's Degree in Environmental Sciences</strong>
+              <span>UCMA · Faculty of Sciences</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Master in Environmental Management and Energy Economics</strong>
+              <span>UNED · Faculty of Economics and Business Sciences</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Postgraduate in Environmental Auditing</strong>
+              <span>UNED · Faculty of Economics and Business Sciences</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Postgraduate in Energy Systems and Waste Management</strong>
+              <span>UNED · Faculty of Economics and Business Sciences</span>
+            </div>
+          </article>
+
+          <article class="credential-card">
+            <h3>Environmental law and regulation</h3>
+            <div class="credential-card__item">
+              <strong>Postgraduate in Environmental Law</strong>
+              <span>UNED · Faculty of Law</span>
+            </div>
+          </article>
+
+          <article class="credential-card">
+            <h3>Applied biological sciences</h3>
+            <div class="credential-card__item">
+              <strong>Postgraduate in Entomology</strong>
+              <span>UNED · Faculty of Sciences</span>
+            </div>
+            <div class="credential-card__item">
+              <strong>Postgraduate in Virology</strong>
+              <span>UNED · Faculty of Sciences</span>
+            </div>
+          </article>
+
+          <article class="credential-card">
+            <h3>Data analysis and quantitative methodology</h3>
+            <div class="credential-card__item">
+              <strong>Postgraduate in Advanced Statistics</strong>
+              <span>UNED · Faculty of Sciences</span>
+            </div>
+          </article>
+        </div>
       </section>
 
       <section id="education-humanities" class="formation-block" aria-labelledby="h-humanities">
-        <h2 id="h-humanities">University education in the Humanities</h2>
-        <ul>
-          <li><span class="degree">Research Master's in Philosophy</span></li>
-        </ul>
+        <h2 id="h-humanities">Humanities</h2>
+        <div class="credential-cards">
+          <article class="credential-card">
+            <h3>Analytical philosophy</h3>
+            <div class="credential-card__item">
+              <strong>Research Master's in Philosophy (specialisation in Logic Applied to Legal Theory)</strong>
+              <span>UNED · Faculty of Philosophy</span>
+            </div>
+          </article>
+        </div>
       </section>
 
       <section id="education-health" class="formation-block" aria-labelledby="h-health">
-        <h2 id="h-health">University education in Health Sciences</h2>
-        <ul>
-          <li><span class="degree">Postgraduate in Psychopathology</span></li>
-          <li><span class="degree">Vocational Training - Health branch</span></li>
-        </ul>
+        <h2 id="h-health">Health Sciences</h2>
+        <div class="credential-cards">
+          <article class="credential-card">
+            <h3>Psychology and mental health</h3>
+            <div class="credential-card__item">
+              <strong>Postgraduate in Psychopathology</strong>
+              <span>UNED · Faculty of Psychology</span>
+            </div>
+          </article>
+          <article class="credential-card">
+            <h3>Vocational training in the health sector</h3>
+            <div class="credential-card__item">
+              <strong>Vocational Training in the Health Sector</strong>
+            </div>
+          </article>
+        </div>
       </section>
 
       <hr class="page-note-separator" aria-hidden="true" />
       <footer class="page-note">
         <p>
           <em>
-            All postgraduate degrees listed correspond to accredited university qualifications offered by Spanish universities — including UNED, UNIR, and URJC — in accordance with the quality and recognition criteria established by
+            All the postgraduate qualifications listed correspond to accredited university degrees taught by Spanish universities — including UNED, UNIR, URJC, UCLM and UCMA — in accordance with the quality and recognition criteria established by
             <a href="https://www.aneca.es" target="_blank" rel="noopener noreferrer">ANECA</a>
             and
             <a href="https://www.crue.org" target="_blank" rel="noopener noreferrer">CRUE</a>,
-            including University Expert Diplomas, University Master's degrees and Continuing Education Master's degrees.
+            including University Expert Diplomas, University Master's degrees and University Continuing Education Master's degrees.
           </em>
         </p>
       </footer>
-
     </section>
   </main>
 </BaseLayout>
