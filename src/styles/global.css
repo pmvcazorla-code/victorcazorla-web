@@ -148,6 +148,29 @@ p {
   line-height: 1.75;
 }
 
+.credential-logos {
+  margin: 1.25rem 0 2.5rem;
+  padding: 1rem 0;
+}
+
+.credential-logos__row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.95rem 1.2rem;
+  padding: 0.8rem 0;
+}
+
+.credential-logos__row img {
+  height: 44px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  opacity: 0.94;
+  filter: saturate(0.95);
+}
+
 em {
   font-style: italic;
   color: var(--color-accent);
@@ -351,5 +374,17 @@ footer {
 
   p {
     font-size: 1rem;
+  }
+
+  .credential-logos {
+    margin: 0.75rem 0 1.75rem;
+  }
+
+  .credential-logos__row {
+    gap: 0.7rem 0.8rem;
+  }
+
+  .credential-logos__row img {
+    height: 34px;
   }
 }
