@@ -25,3 +25,6 @@ pnpm-debug.log*
 
 # Local Netlify folder
 .netlify
+
+# leftover files pending manual deletion (bridge cannot unlink)
+public/_to_delete/
