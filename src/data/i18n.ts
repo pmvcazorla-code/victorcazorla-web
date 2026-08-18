@@ -49,7 +49,7 @@ export const routes: RouteDef[] = [
       ca: "/ca/cienciesambientals",
     },
     labels: {
-      es: "Gestión Ambiental",
+      es: "Ciencias Ambientales",
       en: "Environmental Science",
       fr: "Sciences de l'environnement",
       ca: "Ciències Ambientals",

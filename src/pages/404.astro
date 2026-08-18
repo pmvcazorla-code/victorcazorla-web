@@ -1,0 +1,26 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { navItems } from "../data/i18n";
+---
+
+<BaseLayout
+  title="Página no encontrada - Víctor Cazorla Fernández"
+  description="La página que buscas no existe o se ha movido."
+  lang="es"
+  navItems={navItems.es}
+>
+  <main class="container">
+    <section class="page-header">
+      <h1>Página no encontrada</h1>
+    </section>
+
+    <section>
+      <p>
+        El enlace al que has llegado no corresponde a ninguna página de este sitio, o puede que se haya movido. Puedes volver al inicio y continuar la navegación desde allí.
+      </p>
+      <p>
+        <a href="/">&larr; Volver al inicio</a>
+      </p>
+    </section>
+  </main>
+</BaseLayout>
