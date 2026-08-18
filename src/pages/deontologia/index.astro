@@ -12,8 +12,18 @@ import { navItems } from "../../data/i18n";
 
     <h1>Deontología y Ética Profesional</h1>
 
-    <section class="page-header">
-      <h2>Presidente del Comité de Ética y Deontología</h2>
+    <section class="career">
+      <div class="career-card">
+        <div class="career-card__header">
+          <img class="career-card__logo" src="/logos/coamb.jpeg" alt="COAMB logo" loading="lazy" />
+          <div class="career-card__company">
+            <strong>Presidente del Comité de Ética y Deontología</strong>
+          </div>
+        </div>
+        <div class="career-card__role">
+          <span class="career-card__specialty">Col·legi d'Ambientòlegs de Catalunya</span>
+        </div>
+      </div>
     </section>
 
     <section class="editorial-text">
@@ -103,6 +113,63 @@ import { navItems } from "../../data/i18n";
       </div>
 
     </section>
+
+    <style>
+      .career {
+        margin-top: 1.5rem;
+      }
+
+      .career-card {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        padding: 1.25rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.02);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      .career-card__header {
+        display: flex;
+        align-items: center;
+        gap: 0.9rem;
+        padding-bottom: 0.8rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .career-card__logo {
+        width: 56px;
+        height: 56px;
+        object-fit: contain;
+        border-radius: 12px;
+        padding: 0.5rem;
+        background: rgba(255, 255, 255, 0.03);
+      }
+
+      .career-card__company {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+      }
+
+      .career-card__company strong {
+        font-size: 1rem;
+        line-height: 1.35;
+      }
+
+      .career-card__role {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+      }
+
+      .career-card__specialty {
+        font-size: 0.83rem;
+        opacity: 0.8;
+        line-height: 1.5;
+      }
+    </style>
 
     <section class="cards-grid">
 
