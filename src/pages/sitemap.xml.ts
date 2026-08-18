@@ -1,7 +1,7 @@
 import { routes, languages } from "../data/i18n";
 
 export const prerender = true;
-const siteUrl = "https://victorcazorla.es";
+const siteUrl = "https://victorcazorla.com";
 
 const escapeXml = (value: string) =>
   value

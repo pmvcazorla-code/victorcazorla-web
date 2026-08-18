@@ -1,7 +1,5 @@
 User-agent: *
 Allow: /
-Host: https://victorcazorla.es
+Host: https://victorcazorla.com
 
-Sitemap: https://victorcazorla.es/sitemap.xml
-
-Sitemap: https://victorcazorla.es/sitemap.xml
+Sitemap: https://victorcazorla.com/sitemap.xml
