@@ -8,12 +8,20 @@
   --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
   --font-serif: "Source Serif 4", serif;
 
-  --color-text: #1a1a1a;
-  --color-muted: #5a5a5a;
-  --color-border: #e5e5e5;
-  --color-bg: #ffffff;
-  --color-soft: #f7f7f7;
-  --color-accent: #1f3a5f; /* azul institucional */
+  /* Paleta alineada con el tema oscuro editorial de BaseLayout.astro
+     (--text-main, --text-muted, --border-soft, --accent) */
+  --color-text: #e6e9ef;
+  --color-muted: #b6bcc8;
+  --color-border: rgba(255, 255, 255, 0.1);
+  --color-bg: #070b14;
+  --color-soft: rgba(255, 255, 255, 0.03);
+  --color-accent: #8fb3ff;
+
+  /* Chip claro reservado para logotipos de terceros con fondo opaco
+     (universidades, colegios profesionales), a modo de sello discreto */
+  --chip-bg: #f4f5f7;
+  --chip-border: rgba(15, 23, 42, 0.08);
+  --chip-shadow: 0 6px 16px rgba(0, 0, 0, 0.35);
 }
 
 /* ================================
@@ -152,10 +160,10 @@ p {
 .credential-logos {
   margin: 1.4rem 0 2.8rem;
   padding: 1rem 1.1rem;
-  background: #f5f6f9;
-  border: 1px solid #e1e6ee;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
   border-radius: 18px;
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.9), 0 8px 20px rgba(15, 35, 64, 0.05);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
 .credential-logos__row {
@@ -171,10 +179,10 @@ p {
   justify-content: center;
   min-height: 64px;
   padding: 0.8rem 0.95rem;
-  background: #ffffff;
-  border: 1px solid #dde3eb;
+  background: var(--chip-bg);
+  border: 1px solid var(--chip-border);
   border-radius: 14px;
-  box-shadow: 0 3px 8px rgba(15, 35, 64, 0.05);
+  box-shadow: var(--chip-shadow);
 }
 
 .credential-logo-badge img {
@@ -197,6 +205,7 @@ p {
   border: 1px solid var(--color-border);
   border-radius: 14px;
   background: var(--color-soft);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.18);
 }
 
 .credential-card h3 {
@@ -210,7 +219,7 @@ p {
   flex-direction: column;
   gap: 0.2rem;
   padding: 0.55rem 0;
-  border-top: 1px solid rgba(31, 58, 95, 0.08);
+  border-top: 1px solid var(--color-border);
 }
 
 .credential-card__item:first-of-type {
@@ -291,14 +300,14 @@ a:focus {
   height: 1px;
   border: none;
   /* degradado desde el color de acento hacia transparente */
-  background: linear-gradient(to right, var(--color-accent) 0%, rgba(31, 58, 95, 0) 100%);
+  background: linear-gradient(to right, var(--color-accent) 0%, rgba(143, 179, 255, 0) 100%);
   opacity: 0.6;
 }
 
 .page-note {
   margin-top: 4rem;
   padding-top: 1.5rem;
-  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  border-top: 1px solid var(--color-border);
 }
 
 .page-note p {
@@ -311,13 +320,13 @@ a:focus {
 .page-note a {
   color: var(--color-accent);
   text-decoration: none;
-  border-bottom: 1px dotted rgba(31, 58, 95, 0.25);
+  border-bottom: 1px dotted rgba(143, 179, 255, 0.35);
 }
 
 .page-note a:hover,
 .page-note a:focus {
-  color: #0f2340;
-  border-bottom-color: rgba(31, 58, 95, 0.6);
+  color: var(--color-text);
+  border-bottom-color: rgba(143, 179, 255, 0.7);
 }
 
 /* Reglas de impresión básicas */
