@@ -12,6 +12,50 @@ import { navItems } from "../../../data/i18n";
 
     <h1>Environmental Science | Certified Environmental Scientist</h1>
 
+    <section class="career">
+      <h2>Professional journey</h2>
+      <div class="career-grid">
+        <article class="career-card">
+          <div class="career-card__header">
+            <img class="career-card__logo" src="/logos/gencat.jpeg" alt="Generalitat de Catalunya logo" loading="lazy" />
+            <div class="career-card__company">
+              <strong>Generalitat de Catalunya</strong>
+            </div>
+          </div>
+          <div class="career-card__role">
+            <span class="career-card__title">Environmental Expert Witness</span>
+            <span class="career-card__specialty">Department of Justice and Democratic Quality</span>
+          </div>
+        </article>
+
+        <article class="career-card">
+          <div class="career-card__header">
+            <img class="career-card__logo" src="/logos/aqua.jpeg" alt="AQUA logo" loading="lazy" />
+            <div class="career-card__company">
+              <strong>Agency for University Quality of Andorra</strong>
+            </div>
+          </div>
+          <div class="career-card__role">
+            <span class="career-card__title">Member of the Register of Expert Persons</span>
+            <span class="career-card__specialty">External evaluation of university science programmes</span>
+          </div>
+        </article>
+
+        <article class="career-card">
+          <div class="career-card__header">
+            <img class="career-card__logo" src="/logos/coamb.jpeg" alt="COAMB logo" loading="lazy" />
+            <div class="career-card__company">
+              <strong>Official Association of Environmental Scientists of Catalonia</strong>
+            </div>
+          </div>
+          <div class="career-card__role">
+            <span class="career-card__title">Collaborating lecturer</span>
+            <span class="career-card__specialty">Training and evaluation of environmental professionals</span>
+          </div>
+        </article>
+      </div>
+    </section>
+
     <section class="editorial-text">
       <h2 class="section-subtitle">
         Professional practice and commitment to the public sphere
@@ -206,6 +250,86 @@ import { navItems } from "../../../data/i18n";
         a dedicated space focused on technical intervention, expert report preparation, and specialized advisory services in administrative and judicial contexts.
       </p>
     </section>
+
+    <style>
+      .career {
+        margin-top: 2.5rem;
+      }
+
+      .career h2 {
+        margin: 0 0 1rem;
+      }
+
+      .career-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.2rem;
+        margin-top: 1.2rem;
+      }
+
+      .career-card {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        min-height: 100%;
+        padding: 1.25rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.02);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      .career-card__header {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.9rem;
+        padding-bottom: 0.8rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .career-card__logo {
+        width: 64px;
+        height: 64px;
+        object-fit: contain;
+        border-radius: 12px;
+        padding: 0.5rem;
+        background: rgba(255, 255, 255, 0.03);
+        flex-shrink: 0;
+      }
+
+      .career-card__company {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        justify-content: center;
+      }
+
+      .career-card__company strong {
+        font-size: 1.05rem;
+        line-height: 1.35;
+        font-weight: 700;
+      }
+
+      .career-card__role {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        justify-content: center;
+      }
+
+      .career-card__title {
+        font-size: 1.04rem;
+        font-weight: 700;
+        line-height: 1.4;
+      }
+
+      .career-card__specialty {
+        font-size: 0.82rem;
+        opacity: 0.8;
+        line-height: 1.5;
+        letter-spacing: 0.01em;
+      }
+    </style>
 
   </main>
 </BaseLayout>

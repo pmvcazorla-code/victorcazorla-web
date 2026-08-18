@@ -12,8 +12,18 @@ import { navItems } from "../../../data/i18n";
 
     <h1>Ethics and Professional Deontology</h1>
 
-    <section class="page-header">
-      <h2>President of the Ethics and Deontology Committee</h2>
+    <section class="career">
+      <div class="career-card">
+        <div class="career-card__header">
+          <img class="career-card__logo" src="/logos/coamb.jpeg" alt="COAMB logo" loading="lazy" />
+          <div class="career-card__company">
+            <strong>President of the Ethics and Deontology Committee</strong>
+          </div>
+        </div>
+        <div class="career-card__role">
+          <span class="career-card__specialty">Col·legi d'Ambientòlegs de Catalunya</span>
+        </div>
+      </div>
     </section>
 
     <section class="editorial-text">
@@ -93,6 +103,69 @@ import { navItems } from "../../../data/i18n";
         </div>
       </div>
     </section>
+
+    <style>
+      .career {
+        margin-top: 1.5rem;
+      }
+
+      .career-card {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        min-height: 100%;
+        padding: 1.25rem;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.02);
+        box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+      }
+
+      .career-card__header {
+        display: flex;
+        align-items: flex-start;
+        gap: 0.9rem;
+        padding-bottom: 0.8rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .career-card__logo {
+        width: 64px;
+        height: 64px;
+        object-fit: contain;
+        border-radius: 12px;
+        padding: 0.5rem;
+        background: rgba(255, 255, 255, 0.03);
+        flex-shrink: 0;
+      }
+
+      .career-card__company {
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        justify-content: center;
+      }
+
+      .career-card__company strong {
+        font-size: 1.05rem;
+        line-height: 1.35;
+        font-weight: 700;
+      }
+
+      .career-card__role {
+        display: flex;
+        flex-direction: column;
+        gap: 0.35rem;
+        justify-content: center;
+      }
+
+      .career-card__specialty {
+        font-size: 0.82rem;
+        opacity: 0.8;
+        line-height: 1.5;
+        letter-spacing: 0.01em;
+      }
+    </style>
 
     <section class="cards-grid">
       <h2>Interviews and public appearances</h2>
