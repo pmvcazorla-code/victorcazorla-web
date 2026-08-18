@@ -401,3 +401,199 @@ footer {
     height: 24px;
   }
 }
+
+/* ================================
+   BLOQUES REUTILIZABLES
+   (antes definidos como estilos en línea
+   duplicados en varias páginas / idiomas)
+================================ */
+
+/* Insignias de certificación (página IT) */
+.cert-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.2rem;
+  margin-top: 1.6rem;
+  max-width: 100%;
+}
+
+.cert-badge {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.02);
+  text-decoration: none;
+  color: inherit;
+}
+
+.cert-badge__icon {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.cert-badge__title {
+  margin: 0;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.cert-badge__subtitle {
+  margin: 0.2rem 0 0 0;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+/* Publicaciones científicas (página Ciencias Ambientales) */
+.publication-item {
+  margin-bottom: 1.8rem;
+  padding: 1rem;
+  border-left: 3px solid var(--accent, var(--color-accent));
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.publication-item__title {
+  margin: 0 0 0.4rem 0;
+  line-height: 1.6;
+}
+
+.publication-item__meta {
+  margin: 0;
+  font-style: italic;
+  color: rgba(255, 255, 255, 0.75);
+  font-size: 0.95rem;
+}
+
+/* Subtítulo de sección, tamaño reducido */
+.section-heading-sm {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.section-subtitle--spaced {
+  margin-top: 3.4rem;
+}
+
+/* Caja "gradient-box": ORCID y enlace de LinkedIn */
+.gradient-box {
+  padding: 1.4rem 1.6rem;
+  max-width: 680px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 14px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.015)
+  );
+}
+
+.gradient-box--orcid {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+.gradient-box--linkedin {
+  margin: 3rem 0;
+}
+
+.gradient-box__link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.gradient-box__lead {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.gradient-box__note {
+  margin: 0.4rem 0 0 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.orcid-link {
+  color: var(--accent, var(--color-accent));
+  text-decoration: none;
+  font-weight: 500;
+}
+
+/* Banner de la Escola de Formació del COAMB */
+.coamb-banner {
+  margin-top: 2rem;
+  padding: 0.9rem 1.1rem;
+  max-width: 520px;
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.03),
+    rgba(255, 255, 255, 0.01)
+  );
+}
+
+.coamb-banner__link {
+  display: block;
+  flex-shrink: 0;
+  padding: 0.5rem 0.7rem;
+  background: var(--chip-bg);
+  border: 1px solid var(--chip-border);
+  border-radius: 10px;
+  box-shadow: var(--chip-shadow);
+}
+
+.coamb-banner__img {
+  width: 120px;
+  height: auto;
+  max-height: 60px;
+  object-fit: contain;
+  display: block;
+}
+
+.coamb-banner__text {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  opacity: 0.8;
+}
+
+/* Nota de ejercicio independiente (peritoambiental.es) */
+.practice-note {
+  margin-top: 5rem;
+  padding-top: 2.4rem;
+  border-top: 1px solid var(--border-soft, var(--color-border));
+}
+
+.practice-note__text {
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-muted, var(--color-muted));
+  max-width: 640px;
+}
+
+.practice-note__link {
+  color: var(--accent, var(--color-accent));
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* Utilidades puntuales */
+.no-margin-top {
+  margin-top: 0;
+}
+
+.page-note--narrow {
+  max-width: 720px;
+}

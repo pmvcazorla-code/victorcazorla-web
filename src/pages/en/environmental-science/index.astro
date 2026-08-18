@@ -80,66 +80,33 @@ import { navItems } from "../../../data/i18n";
       </p>
 
       <div
-        style="
-          margin-top: 2rem;
-          padding: 0.9rem 1.1rem;
-          max-width: 520px;
-          display: flex;
-          align-items: center;
-          gap: 1.2rem;
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          border-radius: 12px;
-          background: linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0.03),
-            rgba(255, 255, 255, 0.01)
-          );
-        "
+        class="coamb-banner"
       >
         <a
           href="https://www.coamb.cat/formacio/lescola-de-formacio-del-coamb/"
           target="_blank"
           rel="noopener noreferrer"
-          style="
-            display: block;
-            flex-shrink: 0;
-            padding: 0.5rem 0.7rem;
-            background: var(--chip-bg);
-            border: 1px solid var(--chip-border);
-            border-radius: 10px;
-            box-shadow: var(--chip-shadow);
-          "
+          class="coamb-banner__link"
         >
           <img
             src="/img/banner-coamb.jpg"
             alt="Training school of the Official Association of Environmental Scientists of Catalonia"
             width="300"
             height="212"
-            style="
-              width: 120px;
-              height: auto;
-              max-height: 60px;
-              object-fit: contain;
-              display: block;
-            "
+            class="coamb-banner__img"
           />
         </a>
 
         <p
-          style="
-            margin: 0;
-            font-size: 0.85rem;
-            line-height: 1.4;
-            opacity: 0.8;
-          "
+          class="coamb-banner__text"
         >
           Training school of the Official Association of Environmental Scientists of Catalonia
         </p>
       </div>
 
       <h3
-        class="section-subtitle"
-        style="margin-top: 3.4rem;"
+        class="section-subtitle section-subtitle--spaced"
+        
       >
         Environmental Expert Witness
       </h3>
@@ -156,57 +123,39 @@ import { navItems } from "../../../data/i18n";
         I maintain several active research lines in the field of biological and environmental sciences such as marine ecology, microbiology, and population dynamics of invasive exotic species.
       </p>
 
-      <h3 style="margin-top: 2rem; margin-bottom: 1rem; font-size: 1rem; font-weight: 600;">Published articles</h3>
+      <h3 class="section-heading-sm">Published articles</h3>
 
-      <div style="margin-bottom: 1.8rem; padding: 1rem; border-left: 3px solid var(--accent); background: rgba(255, 255, 255, 0.02);">
-        <p style="margin: 0 0 0.4rem 0; line-height: 1.6;">
+      <div class="publication-item">
+        <p class="publication-item__title">
           <strong>Biomass dynamics of <em>Caulerpa prolifera</em> under warming, acidification and eutrophication in a mesocosm system.</strong>
         </p>
-        <p style="margin: 0; font-style: italic; color: rgba(255, 255, 255, 0.75); font-size: 0.95rem;">
+        <p class="publication-item__meta">
           Cazorla Fernández, V. (in press). <em>Ecologia Mediterranea</em>, 52(1).
         </p>
       </div>
 
-      <div style="margin-bottom: 1.8rem; padding: 1rem; border-left: 3px solid var(--accent); background: rgba(255, 255, 255, 0.02);">
-        <p style="margin: 0 0 0.4rem 0; line-height: 1.6;">
+      <div class="publication-item">
+        <p class="publication-item__title">
           <strong>Interannual persistence of alien freshwater chelonians in a periurban agricultural pond in Vallès Occidental (NE Iberian Peninsula).</strong>
         </p>
-        <p style="margin: 0; font-style: italic; color: rgba(255, 255, 255, 0.75); font-size: 0.95rem;">
+        <p class="publication-item__meta">
           Cazorla Fernández, V. (in press). <em>Bulletin of the Spanish Herpetological Association</em>.
         </p>
       </div>
 
       <div
-        style="
-          margin-top: 2rem;
-          padding: 1.4rem 1.6rem;
-          max-width: 680px;
-          border: 1px solid rgba(255, 255, 255, 0.12);
-          border-radius: 14px;
-          background: linear-gradient(
-            180deg,
-            rgba(255, 255, 255, 0.04),
-            rgba(255, 255, 255, 0.015)
-          );
-          display: flex;
-          flex-direction: column;
-          gap: 1.2rem;
-        "
+        class="gradient-box gradient-box--orcid"
       >
         <div>
           <a
             href="https://orcid.org/0009-0009-7976-9691"
             target="_blank"
             rel="noopener noreferrer"
-            style="
-              color: var(--accent);
-              text-decoration: none;
-              font-weight: 500;
-            "
+            class="orcid-link"
           >
             ORCID: 0009-0009-7976-9691
           </a>
-          <p style="margin: 0.4rem 0 0 0; font-size: 0.9rem; opacity: 0.8;">
+          <p class="gradient-box__note">
             Unique researcher identifier in global scientific repositories
           </p>
         </div>
@@ -229,30 +178,17 @@ import { navItems } from "../../../data/i18n";
     </section>
 
     <section
-      style="
-        margin-top: 5rem;
-        padding-top: 2.4rem;
-        border-top: 1px solid var(--border-soft);
-      "
+      class="practice-note"
     >
       <p
-        style="
-          font-size: 0.9rem;
-          line-height: 1.6;
-          color: var(--text-muted);
-          max-width: 640px;
-        "
+        class="practice-note__text"
       >
         Expert witness practice and professional environmental services are carried out independently through
         <a
           href="https://www.peritoambiental.es"
           target="_blank"
           rel="noopener noreferrer"
-          style="
-            color: var(--accent);
-            text-decoration: none;
-            white-space: nowrap;
-          "
+          class="practice-note__link"
         >
           peritoambiental.es
         </a>,

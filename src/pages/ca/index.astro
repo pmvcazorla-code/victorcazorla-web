@@ -9,7 +9,7 @@ const description = "Direcció IT · Gestió Ambiental · Ètica professional";
 <BaseLayout title={title} description={description} image="/images/og/home.svg" imageAlt="Víctor Cazorla Fernández" lang="ca" navItems={navItems.ca}>
   <section id="sobre-mi">
     <h2>Sobre mi</h2>
-    <h3 style="margin-top:0;"><strong>Víctor Cazorla Fernández</strong></h3>
+    <h3 class="no-margin-top"><strong>Víctor Cazorla Fernández</strong></h3>
     <p>
       Víctor Cazorla Fernández és científic ambiental, investigador i responsable d'operacions tecnològiques en entorns internacionals. La seva activitat professional i acadèmica se centra en les ciències ambientals, la filosofia del dret i la gestió d'organitzacions tecnològiques.
     </p>
@@ -27,35 +27,16 @@ const description = "Direcció IT · Gestió Ambiental · Ètica professional";
     </p>
 
     <div
-      style="
-        margin: 3rem 0;
-        padding: 1.4rem 1.6rem;
-        max-width: 680px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        border-radius: 14px;
-        background: linear-gradient(
-          180deg,
-          rgba(255, 255, 255, 0.04),
-          rgba(255, 255, 255, 0.015)
-        );
-      "
+      class="gradient-box gradient-box--linkedin"
     >
       <a
         href="https://www.linkedin.com/in/victorcazorla-f/"
         target="_blank"
         rel="noopener noreferrer"
-        style="
-          text-decoration: none;
-          color: inherit;
-        "
+        class="gradient-box__link"
       >
         <p
-          style="
-            margin: 0;
-            font-size: 0.95rem;
-            line-height: 1.55;
-            color: rgba(255, 255, 255, 0.85);
-          "
+          class="gradient-box__lead"
         >
           Pots seguir la meva activitat professional i les meves publicacions a LinkedIn.
         </p>
@@ -63,7 +44,7 @@ const description = "Direcció IT · Gestió Ambiental · Ètica professional";
     </div>
 
     <hr class="page-note-separator" aria-hidden="true" />
-    <footer class="page-note" style="max-width:720px;">
+    <footer class="page-note page-note--narrow" >
       <div style="
         padding: 1rem 1.2rem;
         border: 1px solid rgba(255,255,255,0.08);
