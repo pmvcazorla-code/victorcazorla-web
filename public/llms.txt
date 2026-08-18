@@ -1,0 +1,36 @@
+# Víctor Cazorla Fernández
+
+> Científico ambiental, investigador y responsable de operaciones tecnológicas en entornos internacionales. Su actividad profesional y académica se centra en las ciencias ambientales, la filosofía del derecho y la gestión de organizaciones tecnológicas.
+
+## Datos clave
+
+- Nombre completo: Víctor Cazorla Fernández
+- ORCID: https://orcid.org/0009-0009-7976-9691
+- LinkedIn: https://www.linkedin.com/in/victorcazorla-f/
+- Sitio web: https://victorcazorla.com
+
+## Roles y actividad profesional
+
+- Presidente del Comité de Ética y Deontología del Col·legi d'Ambientòlegs de Catalunya (COAMB), desde 2025.
+- Perito judicial en materia ambiental del Departament de Justícia i Qualitat Democràtica de la Generalitat de Catalunya.
+- Docente colaborador del Col·legi d'Ambientòlegs de Catalunya (COAMB).
+- Miembro de la Bolsa de Personas Expertas de la Agencia de Calidad Universitaria de Andorra (AQUA), en evaluación externa de titulaciones de Ciencias Ambientales y Ciencias de la Tierra.
+- Dirección de operaciones y gobierno de servicios tecnológicos: arquitectura e ingeniería cloud y on-premise, ciberseguridad y gestión de grandes cuentas enterprise.
+
+## Investigación y publicaciones
+
+Autor publicado en revistas científicas indexadas en Scopus, Web of Science, FECYT y ERIH PLUS, en los ámbitos de la filosofía jurídica, la lógica normativa, el derecho administrativo, la ecología marina y otras especialidades de las ciencias biológicas, incluyendo una publicación en una revista científica internacional en lengua francesa.
+
+## Formación académica
+
+Formación universitaria de nivel MECES 3 (EQF 7) cursada en universidades españolas (UNED, UNIR, URJC, UCLM, UCMA), con másteres y posgrados en dirección de tecnologías de la información, ciencias ambientales, derecho ambiental y filosofía (lógica aplicada a la teoría del derecho). Relación completa en /formacion.
+
+## Páginas del sitio
+
+- / — Perfil general y presentación
+- /it — Dirección y Gobernanza de IT
+- /cienciasambientales — Ciencias Ambientales
+- /deontologia — Deontología y Ética Profesional
+- /formacion — Formación Académica
+
+Disponible también en inglés (/en), francés (/fr) y catalán (/ca).

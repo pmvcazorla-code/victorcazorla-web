@@ -2,11 +2,12 @@
    FUENTES Y VARIABLES
 ================================ */
 
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Source+Serif+4:wght@400;600&display=swap");
+/* Inter y Playfair Display ya se cargan una única vez desde
+   BaseLayout.astro; no se vuelven a solicitar aquí para evitar
+   peticiones duplicadas a Google Fonts. */
 
 :root {
   --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-serif: "Source Serif 4", serif;
 
   /* Paleta alineada con el tema oscuro editorial de BaseLayout.astro
      (--text-main, --text-muted, --border-soft, --accent) */
@@ -44,69 +45,6 @@ html, body {
 }
 
 /* ================================
-   HEADER / IDENTIDAD
-================================ */
-
-.site-header {
-  border-bottom: 1px solid var(--color-border);
-  background: white;
-}
-
-.header-inner {
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 3rem 1.5rem 2rem;
-  text-align: center;
-}
-
-.site-title {
-  margin: 0;
-  font-family: var(--font-serif);
-  font-size: 2.6rem;
-  font-weight: 600;
-}
-
-.site-subtitle {
-  margin-top: 0.75rem;
-  color: var(--color-muted);
-  font-size: 1.05rem;
-}
-
-/* ================================
-   NAVEGACIÓN
-================================ */
-
-.main-nav {
-  margin-top: 2.5rem;
-}
-
-.main-nav a {
-  margin: 0 1.1rem;
-  text-decoration: none;
-  color: var(--color-text);
-  font-weight: 500;
-  position: relative;
-}
-
-.main-nav a:hover {
-  color: var(--color-accent);
-}
-
-.main-nav a.active {
-  color: var(--color-accent);
-}
-
-.main-nav a.active::after {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: -6px;
-  height: 2px;
-  background: var(--color-accent);
-}
-
-/* ================================
    CONTENEDOR PRINCIPAL
 ================================ */
 
@@ -132,12 +70,6 @@ section {
   margin-bottom: 2rem;
   padding-bottom: 1.5rem;
   border-bottom: 1px solid var(--color-border);
-}
-
-.page-header h1 {
-  font-family: var(--font-serif);
-  font-size: 3.1rem;
-  margin: 0 0 1rem;
 }
 
 .page-intro {
@@ -338,21 +270,6 @@ em {
 }
 
 /* ================================
-   BLOQUES DESTACADOS
-================================ */
-
-.bloque-futuro {
-  padding: 3rem;
-  background: var(--color-soft);
-  border-left: 4px solid var(--color-accent);
-}
-
-.bloque-futuro h2 {
-  margin-top: 0;
-  font-family: var(--font-serif);
-}
-
-/* ================================
    LISTAS LIMPIAS
 ================================ */
 
@@ -431,52 +348,6 @@ a:focus {
 }
 
 /* ================================
-   GRID DE ESPECIALIZACIONES
-================================ */
-
-.ambitos-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 2rem;
-  margin-top: 3rem;
-}
-
-.ambito {
-  display: block;
-  text-decoration: none;
-  background: white;
-  border: 1px solid var(--color-border);
-  border-radius: 6px;
-  overflow: hidden;
-  transition: transform 0.3s cubic-bezier(0.23, 1, 0.320, 1), 
-              box-shadow 0.3s ease,
-              border-color 0.25s ease;
-}
-
-.ambito:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.12);
-  border-color: var(--color-accent);
-}
-
-.ambito img {
-  width: 100%;
-  display: block;
-  transition: transform 0.3s ease;
-}
-
-.ambito:hover img {
-  transform: scale(1.02);
-}
-
-.ambito span {
-  display: block;
-  padding: 1.2rem;
-  font-weight: 500;
-  color: var(--color-text);
-}
-
-/* ================================
    FOOTER (SI LO USAS)
 ================================ */
 
@@ -502,35 +373,8 @@ footer {
     padding-bottom: 1.5rem;
   }
 
-  .page-header h1 {
-    font-size: 1.5rem;
-    margin: 0 0 0.8rem;
-    line-height: 1.25;
-  }
-
   section {
     margin-bottom: 2.5rem;
-  }
-
-  .site-header {
-    padding: 1.5rem 1rem;
-  }
-
-  .site-title {
-    font-size: 1.8rem;
-  }
-
-  .site-subtitle {
-    font-size: 0.9rem;
-  }
-
-  .main-nav {
-    margin-top: 1.2rem;
-  }
-
-  .main-nav a {
-    margin: 0 0.6rem;
-    font-size: 0.85rem;
   }
 
   p {
