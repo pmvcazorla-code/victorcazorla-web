@@ -80,9 +80,23 @@ const fullUrl = (path: string) => `${siteUrl}${path}`;
         "@type": "Organization",
         name: "Independent Professional",
       },
+      alumniOf: [
+        { "@type": "CollegeOrUniversity", name: "UNED (Universidad Nacional de Educación a Distancia)" },
+        { "@type": "CollegeOrUniversity", name: "UNIR (Universidad Internacional de La Rioja)" },
+        { "@type": "CollegeOrUniversity", name: "URJC (Universidad Rey Juan Carlos)" },
+        { "@type": "CollegeOrUniversity", name: "UCLM (Universidad de Castilla-La Mancha)" },
+        { "@type": "CollegeOrUniversity", name: "UCMA (Universidad Camilo José Cela)" },
+      ],
+      memberOf: {
+        "@type": "Organization",
+        name: "Col·legi d'Ambientòlegs de Catalunya (COAMB)",
+        url: "https://www.coamb.cat",
+      },
+      knowsLanguage: ["es", "en", "fr", "ca"],
       sameAs: [
         "https://www.linkedin.com/in/victorcazorla-f/",
         "https://orcid.org/0009-0009-7976-9691",
+        "https://www.credly.com/users/victor-cazorla-fernandez/badges",
       ],
       knowsAbout: [
         "IT Management",
