@@ -500,20 +500,83 @@ footer {
   gap: 1.2rem;
 }
 
-.gradient-box--linkedin {
+/* Tarjeta de LinkedIn */
+.linkedin-card {
+  display: flex;
+  align-items: center;
+  gap: 1.3rem;
   margin: 3rem 0;
-}
-
-.gradient-box__link {
+  padding: 1.2rem 1.5rem;
+  max-width: 560px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.015)
+  );
   text-decoration: none;
   color: inherit;
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
 }
 
-.gradient-box__lead {
+.linkedin-card:hover {
+  border-color: rgba(212, 175, 55, 0.4);
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+.linkedin-card__photo {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid rgba(212, 175, 55, 0.6);
+}
+
+.linkedin-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.linkedin-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+}
+
+.linkedin-card__badge svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.linkedin-card__lead {
   margin: 0;
-  font-size: 0.95rem;
-  line-height: 1.55;
+  font-size: 0.93rem;
+  line-height: 1.5;
   color: rgba(255, 255, 255, 0.85);
+}
+
+@media (max-width: 480px) {
+  .linkedin-card {
+    gap: 1rem;
+    padding: 1rem 1.1rem;
+  }
+
+  .linkedin-card__photo {
+    width: 52px;
+    height: 52px;
+  }
 }
 
 .gradient-box__note {
