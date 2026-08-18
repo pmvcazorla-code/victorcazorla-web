@@ -314,11 +314,11 @@ const fullUrl = (path: string) => `${siteUrl}${path}`;
       }
 
       /* ===== CARD/GRID OPTIMIZATION ===== */
-      a[style*="display: flex; align-items: center"][style*="padding: 1.2rem"] {
+      .cert-badge {
         transition: all 0.25s ease;
       }
 
-      a[style*="display: flex; align-items: center"][style*="padding: 1.2rem"]:hover {
+      .cert-badge:hover {
         background: rgba(255, 255, 255, 0.05) !important;
         border-color: rgba(212, 175, 55, 0.4) !important;
         transform: translateY(-2px);
@@ -326,17 +326,18 @@ const fullUrl = (path: string) => `${siteUrl}${path}`;
 
       /* Responsive card padding */
       @media (max-width: 480px) {
-        a[style*="display: flex; align-items: center"][style*="padding: 1.2rem"] {
+        .cert-badge {
           padding: 0.9rem !important;
           gap: 0.8rem !important;
         }
 
-        a[style*="display: flex; align-items: center"][style*="padding: 1.2rem"] img {
+        .cert-badge .cert-badge__icon {
           width: 40px !important;
           height: 40px !important;
         }
 
-        a[style*="display: flex; align-items: center"][style*="padding: 1.2rem"] p {
+        .cert-badge .cert-badge__title,
+        .cert-badge .cert-badge__subtitle {
           font-size: 0.8rem !important;
         }
       }
