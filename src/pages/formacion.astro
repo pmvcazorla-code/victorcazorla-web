@@ -2,7 +2,8 @@
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { navItems } from "../data/i18n";
 
-const title = "Formación Académica";
+const title = "Formación Académica - Víctor Cazorla Fernández";
+const description = "Formación académica universitaria en dirección de IT, ciencias ambientales, derecho ambiental y filosofía: másteres y posgrados cursados en universidades españolas.";
 const credentials = [
   // list of credentials mirrored from page content
   "Máster en Dirección y Gestión de Tecnologías de la Información",
@@ -31,6 +32,7 @@ const credentials = [
 
 <BaseLayout
   title={title}
+  description={description}
   image="/images/og/formacion.svg"
   imageAlt="Formación — Víctor Cazorla Fernández"
   lang="es"

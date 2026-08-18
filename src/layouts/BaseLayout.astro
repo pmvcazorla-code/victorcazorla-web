@@ -63,7 +63,10 @@ const fullUrl = (path: string) => `${siteUrl}${path}`;
     <link rel="alternate" hrefLang="fr" href={fullUrl(currentRoute.slugs.fr)} />
     <link rel="alternate" hrefLang="ca" href={fullUrl(currentRoute.slugs.ca)} />
     <link rel="alternate" hrefLang="x-default" href={fullUrl(currentRoute.slugs.es)} />
-    {image ? <meta property="og:image" content={image} /> : null}
+    {image ? <meta property="og:image" content={fullUrl(image)} /> : null}
+    {image ? <meta name="twitter:card" content="summary_large_image" /> : null}
+    {image ? <meta name="twitter:image" content={fullUrl(image)} /> : null}
+    {image && imageAlt ? <meta property="og:image:alt" content={imageAlt} /> : null}
     <title>{title}</title>
     <script type="application/ld+json" set:html={JSON.stringify({
       "@context": "https://schema.org",
