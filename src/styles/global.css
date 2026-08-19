@@ -2,9 +2,9 @@
    FUENTES Y VARIABLES
 ================================ */
 
-/* Inter y Playfair Display ya se cargan una única vez desde
-   BaseLayout.astro; no se vuelven a solicitar aquí para evitar
-   peticiones duplicadas a Google Fonts. */
+/* Inter y Playfair Display se autoalojan (public/fonts/) y se
+   declaran una única vez vía @font-face en BaseLayout.astro; no se
+   vuelven a solicitar aquí. */
 
 :root {
   --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
