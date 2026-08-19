@@ -816,17 +816,9 @@ const isActiveHref = (href: string) =>
       © 2026 · Víctor Cazorla Fernández
     </footer>
 
-    <script>
-      const menuBtn = document.getElementById("mobile-menu-btn");
-      const menuPanel = document.getElementById("mobile-menu-panel");
-
-      if (menuBtn && menuPanel) {
-        menuBtn.addEventListener("click", () => {
-          const isOpen = menuPanel.classList.toggle("open");
-          menuBtn.classList.toggle("open", isOpen);
-          menuBtn.setAttribute("aria-expanded", isOpen ? "true" : "false");
-        });
-      }
-    </script>
+    <!-- Como archivo externo (no inline) para cumplir la CSP
+         "script-src 'self'" de public/_headers sin tener que
+         añadir 'unsafe-inline'. -->
+    <script src="/scripts/mobile-menu.js" defer></script>
   </body>
 </html>
