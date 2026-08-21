@@ -658,6 +658,16 @@ footer {
   margin-top: 0;
 }
 
+/* Línea de nombre bajo el H2 "Sobre mí" / "About me" / etc.
+   Antes era un <h3> que duplicaba literalmente el texto del <h1>
+   del header (encabezados H repetidos, señalado por auditoría SEO).
+   Se usa <p> + esta clase para conservar el peso visual sin repetir
+   la jerarquía de encabezados. */
+.name-lead {
+  font-size: 1.15rem;
+  margin-bottom: 1.6rem;
+}
+
 .page-note--narrow {
   max-width: 720px;
 }

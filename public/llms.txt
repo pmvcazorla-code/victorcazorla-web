@@ -23,14 +23,18 @@ Autor publicado en revistas científicas indexadas en Scopus, Web of Science, FE
 
 ## Formación académica
 
-Formación universitaria de nivel MECES 3 (EQF 7) cursada en universidades españolas (UNED, UNIR, URJC, UCLM, UCMA), con másteres y posgrados en dirección de tecnologías de la información, ciencias ambientales, derecho ambiental y filosofía (lógica aplicada a la teoría del derecho). Relación completa en /formacion.
+Formación universitaria de nivel MECES 3 (EQF 7) cursada en universidades españolas (UNED, UNIR, URJC, UCLM, UCMA), con másteres y posgrados en dirección de tecnologías de la información, ciencias ambientales, derecho ambiental y filosofía (lógica aplicada a la teoría del derecho). Relación completa en [Formación](https://victorcazorla.com/formacion).
 
 ## Páginas del sitio
 
-- / — Perfil general y presentación
-- /it — Dirección y Gobernanza de IT
-- /cienciasambientales — Ciencias Ambientales
-- /deontologia — Deontología y Ética Profesional
-- /formacion — Formación Académica
+- [Perfil general](https://victorcazorla.com/): Presentación y trayectoria profesional
+- [Dirección y Gobernanza de IT](https://victorcazorla.com/it): Dirección de operaciones y gobierno de servicios tecnológicos
+- [Ciencias Ambientales](https://victorcazorla.com/cienciasambientales): Actividad científica, docente y pericial en materia ambiental
+- [Deontología y Ética Profesional](https://victorcazorla.com/deontologia): Ética profesional y deontología aplicada
+- [Formación Académica](https://victorcazorla.com/formacion): Relación completa de titulaciones y estudios de especialización
 
-Disponible también en inglés (/en), francés (/fr) y catalán (/ca).
+## Optional
+
+- [English](https://victorcazorla.com/en): Site in English
+- [Français](https://victorcazorla.com/fr): Site en français
+- [Català](https://victorcazorla.com/ca): Lloc en català
