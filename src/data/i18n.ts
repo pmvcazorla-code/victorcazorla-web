@@ -27,12 +27,12 @@ export type RouteDef = {
 export const routes: RouteDef[] = [
   {
     key: "home",
-    slugs: { es: "/", en: "/en", fr: "/fr", ca: "/ca" },
+    slugs: { es: "/", en: "/en/", fr: "/fr/", ca: "/ca/" },
     labels: { es: "Inicio", en: "Home", fr: "Accueil", ca: "Inici" },
   },
   {
     key: "it",
-    slugs: { es: "/it", en: "/en/it", fr: "/fr/it", ca: "/ca/it" },
+    slugs: { es: "/it/", en: "/en/it/", fr: "/fr/it/", ca: "/ca/it/" },
     labels: {
       es: "Dirección y Gobernanza de IT",
       en: "IT Management & Governance",
@@ -43,10 +43,10 @@ export const routes: RouteDef[] = [
   {
     key: "environmentalScience",
     slugs: {
-      es: "/cienciasambientales",
-      en: "/en/environmental-science",
-      fr: "/fr/sciences-environnement",
-      ca: "/ca/cienciesambientals",
+      es: "/cienciasambientales/",
+      en: "/en/environmental-science/",
+      fr: "/fr/sciences-environnement/",
+      ca: "/ca/cienciesambientals/",
     },
     labels: {
       es: "Ciencias Ambientales",
@@ -58,10 +58,10 @@ export const routes: RouteDef[] = [
   {
     key: "ethics",
     slugs: {
-      es: "/deontologia",
-      en: "/en/ethics",
-      fr: "/fr/ethique",
-      ca: "/ca/deontologia",
+      es: "/deontologia/",
+      en: "/en/ethics/",
+      fr: "/fr/ethique/",
+      ca: "/ca/deontologia/",
     },
     labels: {
       es: "Deontología",
@@ -72,7 +72,7 @@ export const routes: RouteDef[] = [
   },
   {
     key: "education",
-    slugs: { es: "/formacion", en: "/en/education", fr: "/fr/formation", ca: "/ca/formacio" },
+    slugs: { es: "/formacion/", en: "/en/education/", fr: "/fr/formation/", ca: "/ca/formacio/" },
     labels: {
       es: "Formación",
       en: "Education",

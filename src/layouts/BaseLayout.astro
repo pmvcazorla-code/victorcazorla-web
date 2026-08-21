@@ -27,9 +27,13 @@ const {
 } = Astro.props as BaseLayoutProps;
 
 const currentPath = Astro.url.pathname;
-const normalizedPath = currentPath.endsWith("/") && currentPath !== "/" ? currentPath.slice(0, -1) : currentPath;
+// Compare ignoring a trailing slash so this keeps matching regardless of
+// whether route.slugs (or the incoming URL) carries one.
+const stripSlash = (path: string) =>
+  path.endsWith("/") && path !== "/" ? path.slice(0, -1) : path;
+const normalizedPath = stripSlash(currentPath);
 const currentRoute = routes.find((route) =>
-  Object.values(route.slugs).includes(normalizedPath)
+  Object.values(route.slugs).some((slug) => stripSlash(slug) === normalizedPath)
 ) ?? routes[0];
 
 const languageHref = (code: "es" | "en" | "fr" | "ca") => currentRoute.slugs[code];
@@ -51,10 +55,7 @@ const menuWord: Record<"es" | "en" | "fr" | "ca", string> = {
   ca: "Menú",
 };
 
-const isActiveHref = (href: string) =>
-  href === "/"
-    ? currentPath === href
-    : currentPath === href || currentPath.startsWith(href + "/");
+const isActiveHref = (href: string) => stripSlash(currentPath) === stripSlash(href);
 ---
 
 <!DOCTYPE html>
@@ -712,18 +713,7 @@ const isActiveHref = (href: string) =>
         </div>
         <nav>
           {navItems.map((item) => (
-            <a
-              href={item.href}
-              class={
-                item.href === "/"
-                  ? currentPath === item.href
-                    ? "active"
-                    : ""
-                  : currentPath === item.href || currentPath.startsWith(item.href + "/")
-                  ? "active"
-                  : ""
-              }
-            >
+            <a href={item.href} class={isActiveHref(item.href) ? "active" : ""}>
               {item.label}
             </a>
           ))}

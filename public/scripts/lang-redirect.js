@@ -1,6 +1,6 @@
 (function () {
   var STORAGE_KEY = "vcf_lang_seen";
-  var HOME_BY_LANG = { en: "/en", fr: "/fr", ca: "/ca" };
+  var HOME_BY_LANG = { en: "/en/", fr: "/fr/", ca: "/ca/" };
 
   try {
     if (localStorage.getItem(STORAGE_KEY)) {
@@ -36,7 +36,7 @@
     }
 
     if (target) {
-      localStorage.setItem(STORAGE_KEY, target.slice(1));
+      localStorage.setItem(STORAGE_KEY, target.replace(/\//g, ""));
       window.location.replace(target);
     } else {
       localStorage.setItem(STORAGE_KEY, "es");
