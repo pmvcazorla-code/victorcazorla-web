@@ -21,7 +21,3 @@
   Cache-Control: public, max-age=2592000
 /logos/*
   Cache-Control: public, max-age=2592000
-
-# Única imagen que vive fuera de /img, /images o /logos.
-/entrevista-coamb-victor-cazorla.webp
-  Cache-Control: public, max-age=2592000
