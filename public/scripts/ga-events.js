@@ -1,49 +1,123 @@
 /**
- * Google Analytics 4 Custom Events
- * Tracks clicks on external links, PDFs, and important resources
+ * Google Analytics 4 - eventos personalizados
+ * Delegación de clics sobre document.body: cubre descargas de archivos,
+ * clics de contacto (mailto), enlaces salientes (perfiles profesionales
+ * y otros dominios externos) y cambios de idioma.
  */
 (function () {
-  // Esperar a que gtag esté disponible
+  var DOWNLOAD_EXTENSIONS = ["pdf", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "zip"];
+  var PROFESSIONAL_DOMAINS = [
+    "linkedin.com",
+    "orcid.org",
+    "credly.com",
+    "researchgate.net",
+    "scholar.google",
+    "doi.org",
+    "arxiv.org",
+  ];
+
+  function fileExtension(pathname) {
+    var match = pathname.match(/\.([a-z0-9]+)$/i);
+    return match ? match[1].toLowerCase() : "";
+  }
+
+  function fileName(pathname) {
+    return pathname.substring(pathname.lastIndexOf("/") + 1) || pathname;
+  }
+
+  function classify(href, hostname) {
+    if (href.indexOf("mailto:") === 0) {
+      return { type: "contact" };
+    }
+
+    var url;
+    try {
+      url = new URL(href, window.location.href);
+    } catch (e) {
+      return null;
+    }
+
+    var ext = fileExtension(url.pathname);
+    if (DOWNLOAD_EXTENSIONS.indexOf(ext) !== -1) {
+      return { type: "download", ext: ext };
+    }
+
+    if (url.hostname && url.hostname !== hostname) {
+      var isProfessional = PROFESSIONAL_DOMAINS.some(function (domain) {
+        return url.hostname.indexOf(domain) !== -1;
+      });
+      return { type: "outbound", hostname: url.hostname, professional: isProfessional };
+    }
+
+    return null;
+  }
+
+  function send(name, params) {
+    if (typeof window.gtag === "function") {
+      window.gtag("event", name, params);
+    }
+  }
+
   function trackLinkClicks() {
-    const links = document.querySelectorAll('a[href]');
-    const currentDomain = window.location.hostname;
+    var hostname = window.location.hostname;
 
-    links.forEach((link) => {
-      link.addEventListener('click', function (e) {
-        const href = this.getAttribute('href');
-        if (!href) return;
+    document.body.addEventListener("click", function (event) {
+      var link = event.target.closest ? event.target.closest("a[href]") : null;
+      if (!link) return;
 
-        // Ignorar enlaces internos (del mismo dominio) que no sean PDFs/recursos especiales
-        const isExternal = !href.includes(currentDomain) && href.startsWith('http');
-        const isPdf = href.toLowerCase().endsWith('.pdf');
-        const isResource =
-          href.includes('linkedin.com') ||
-          href.includes('orcid.org') ||
-          href.includes('credly.com') ||
-          href.includes('researchgate') ||
-          href.includes('arxiv') ||
-          href.includes('doi.org') ||
-          href.includes('scholar.google');
+      var href = link.getAttribute("href");
+      if (!href) return;
 
-        if (isExternal || isPdf || isResource) {
-          const linkText = this.textContent.trim() || this.getAttribute('title') || href;
-          const eventLabel = isPdf ? `PDF: ${linkText}` : `Link: ${linkText}`;
+      var info = classify(href, hostname);
+      if (!info) return;
 
-          gtag('event', 'link_click', {
-            link_url: href,
-            link_text: eventLabel,
-            event_category: isPdf ? 'pdf' : isExternal ? 'external_link' : 'resource',
-            timestamp: new Date().toISOString(),
-          });
-        }
+      var linkText = link.textContent.trim() || link.getAttribute("title") || href;
+
+      if (info.type === "download") {
+        send("file_download", {
+          file_extension: info.ext,
+          file_name: fileName(href.split("?")[0].split("#")[0]),
+          link_url: href,
+          link_text: linkText,
+        });
+      } else if (info.type === "contact") {
+        send("contact_click", {
+          method: "email",
+          link_text: linkText,
+          page_location: window.location.href,
+        });
+      } else if (info.type === "outbound") {
+        send("click", {
+          link_url: href,
+          link_domain: info.hostname,
+          link_text: linkText,
+          outbound: true,
+          event_category: info.professional ? "professional_profile" : "external_link",
+        });
+      }
+    });
+  }
+
+  function trackLanguageSwitch() {
+    document.querySelectorAll(".lang-switch, .flag-btn").forEach(function (el) {
+      el.addEventListener("click", function () {
+        send("language_switch", {
+          target_language: (el.textContent || "").trim(),
+          target_url: el.getAttribute("href") || "",
+          page_location: window.location.href,
+        });
       });
     });
   }
 
-  // Ejecutar cuando el DOM esté listo
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', trackLinkClicks);
-  } else {
+  function init() {
     trackLinkClicks();
+    trackLanguageSwitch();
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
   }
 })();
