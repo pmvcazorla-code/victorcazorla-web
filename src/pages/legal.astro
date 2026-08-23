@@ -30,7 +30,8 @@ const jsonLd = {
         "highContrastDisplay",
       ],
       accessibilityHazard: "none",
-      accessibilitySummary: "conforme a WCAG 2.1, nivel AA.",
+      accessibilitySummary:
+        "conforme al estándar WCAG 2.1, nivel AA (ISO/IEC 40500).",
       accessMode: ["textual", "visual"],
       accessModeSufficient: ["textual"],
     },
@@ -69,27 +70,18 @@ const jsonLd = {
         </p>
       </section>
 
-      <nav aria-label="Índice de contenidos de la página legal">
-        <ul>
-          <li><a href="#accesibilidad">Accesibilidad</a></li>
-          <li><a href="#privacidad">Privacidad y protección de datos (RGPD)</a></li>
-          <li><a href="#aviso-legal">Aviso legal</a></li>
-        </ul>
-      </nav>
-
       <!-- ============================================
            ACCESIBILIDAD (prioridad 1)
       ============================================ -->
       <section id="accesibilidad" aria-labelledby="accesibilidad-title">
-        <h2 id="accesibilidad-title">Accesibilidad</h2>
+        <h2 id="accesibilidad-title">Accesibilidad (web accesible para personas con discapacidad)</h2>
 
         <p>
-          Este sitio se ha diseñado conforme a las pautas WCAG 2.1, nivel AA.
-          Es un compromiso activo: se revisa y ajusta de forma periódica, no
-          un estado ya cerrado.
+          Este sitio cumple el estándar WCAG 2.1, nivel AA (ISO/IEC 40500),
+          del World Wide Web Consortium (W3C).
         </p>
 
-        <h3>Características implementadas</h3>
+        <h3>Medidas de accesibilidad implementadas</h3>
         <ul>
           <li><strong>Enlaces de salto:</strong> acceso directo al contenido, sin pasar por cabecera ni menú.</li>
           <li><strong>Navegación por teclado:</strong> todo el sitio es operable sin ratón, con foco visible.</li>
@@ -99,11 +91,12 @@ const jsonLd = {
           <li><strong>Diseño adaptable:</strong> funciona en cualquier tamaño de pantalla y con zoom de texto.</li>
         </ul>
 
-        <h3>Reportar un problema</h3>
+        <h3>Reporte de incidencias</h3>
         <p>
-          Si encuentras una barrera de accesibilidad, escribe a{" "}
-          <a href={`mailto:${contactEmail}`}>{contactEmail}</a> indicando la
-          página y el problema concreto. Se corrige lo antes posible.
+          Las incidencias de accesibilidad se comunican a{" "}
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>, indicando la
+          página y el problema detectado. Compromiso de resolución: 72 horas
+          desde la recepción del aviso.
         </p>
       </section>
 
@@ -118,24 +111,29 @@ const jsonLd = {
           <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
         </p>
 
-        <h3>Qué se trata</h3>
+        <h3>Datos tratados</h3>
         <p>
-          Datos de uso agregados vía Google Analytics 4, de forma
-          anonimizada. No hay formularios propios: solo se tratan los datos
-          que el usuario envía voluntariamente por correo.
+          Datos de uso agregados y anonimizados, mediante Google Analytics 4.
         </p>
         <p>
-          Las cookies de GA4 son de medición, no de publicidad ni de
-          seguimiento entre sitios.
+          No existen formularios propios. Los únicos datos personales
+          tratados son los facilitados por el usuario al contactar por
+          correo electrónico, con la finalidad exclusiva de gestionar dicha
+          comunicación.
+        </p>
+        <p>
+          Las cookies de Google Analytics 4 tienen finalidad de medición, no
+          publicitaria ni de seguimiento entre sitios.
         </p>
 
         <h3>Derechos</h3>
         <p>
-          Acceso, rectificación, supresión y portabilidad, ejercitables en{" "}
+          Derecho de acceso, rectificación, supresión y portabilidad,
+          ejercitables mediante solicitud a{" "}
           <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
         </p>
         <p>
-          Reclamaciones ante la agencia española de protección de datos:{" "}
+          Reclamaciones ante la Agencia Española de Protección de Datos:{" "}
           <a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer">aepd.es</a>.
         </p>
       </section>
@@ -148,21 +146,22 @@ const jsonLd = {
 
         <h3>Uso permitido</h3>
         <p>
-          Uso personal y académico permitido, citando la fuente. No se
-          autoriza redistribución comercial ni modificación sin permiso.
+          Se autoriza el uso personal y académico de los contenidos, con
+          cita de la fuente. Queda prohibida su redistribución comercial y
+          su modificación sin autorización expresa.
         </p>
 
         <h3>Propiedad intelectual</h3>
         <p>
-          Los contenidos originales son de Víctor Cazorla Fernández. Los
-          logotipos de terceros citados pertenecen a sus respectivos
-          titulares.
+          Los contenidos originales son titularidad de Víctor Cazorla
+          Fernández. Los logotipos de terceros citados pertenecen a sus
+          respectivos titulares.
         </p>
 
         <h3>Responsabilidad</h3>
         <p>
-          Los enlaces a sitios de terceros no están bajo control del
-          responsable, que no asume responsabilidad sobre su contenido.
+          Los enlaces a sitios de terceros no están bajo el control del
+          responsable, quien no asume responsabilidad por su contenido.
         </p>
       </section>
 
