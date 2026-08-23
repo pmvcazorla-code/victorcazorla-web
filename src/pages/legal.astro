@@ -1,0 +1,309 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { navItems } from "../data/i18n";
+
+const siteUrl = "https://victorcazorla.com";
+const pageUrl = `${siteUrl}/legal/`;
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${pageUrl}#webpage`,
+      url: pageUrl,
+      name: "Información Legal y Accesibilidad | Victor Cazorla",
+      description:
+        "Aviso legal, RGPD, política de privacidad y declaración de accesibilidad de victorcazorla.com",
+      inLanguage: "es",
+      isPartOf: {
+        "@type": "WebSite",
+        url: siteUrl,
+        name: "Víctor Cazorla Fernández",
+      },
+      accessibilityFeature: [
+        "alternativeText",
+        "readingOrder",
+        "structuralNavigation",
+        "skipLink",
+        "highContrastDisplay",
+      ],
+      accessibilityHazard: "none",
+      accessibilitySummary:
+        "Sitio diseñado conforme a las Pautas de Accesibilidad para el Contenido Web (WCAG) 2.1, nivel AA.",
+      accessMode: ["textual", "visual"],
+      accessModeSufficient: ["textual"],
+    },
+    {
+      "@type": "LegalDocument",
+      "@id": `${pageUrl}#legaldocument`,
+      name: "Aviso Legal y Política de Privacidad de victorcazorla.com",
+      url: pageUrl,
+      inLanguage: "es",
+      about: "Aviso legal, propiedad intelectual y protección de datos (RGPD)",
+      author: {
+        "@type": "Person",
+        name: "Víctor Cazorla Fernández",
+        url: siteUrl,
+      },
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title="Información Legal y Accesibilidad | Victor Cazorla"
+  description="Aviso legal, RGPD, política de privacidad y declaración de accesibilidad de victorcazorla.com"
+  lang="es"
+  navItems={navItems.es}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <div class="container">
+    <article aria-labelledby="legal-title">
+      <section class="page-header">
+        <h1 id="legal-title">Información Legal y Accesibilidad</h1>
+        <p class="page-intro">
+          Esta página reúne el aviso legal, la política de privacidad y la
+          declaración de accesibilidad de <strong>victorcazorla.com</strong>,
+          redactados con un lenguaje lo más claro posible para que puedan
+          entenderse sin necesidad de formación jurídica previa.
+        </p>
+      </section>
+
+      <nav aria-label="Índice de contenidos de la página legal">
+        <ul>
+          <li><a href="#aviso-legal">Aviso Legal y Términos de Uso</a></li>
+          <li><a href="#privacidad">Política de Privacidad y RGPD</a></li>
+          <li><a href="#accesibilidad">Declaración de Accesibilidad</a></li>
+        </ul>
+      </nav>
+
+      <!-- ============================================
+           AVISO LEGAL / TÉRMINOS DE USO
+      ============================================ -->
+      <section id="aviso-legal" aria-labelledby="aviso-legal-title">
+        <h2 id="aviso-legal-title">Aviso Legal y Términos de Uso</h2>
+
+        <p>
+          victorcazorla.com es un sitio web personal y académico de carácter
+          divulgativo, gestionado por Víctor Cazorla Fernández, dedicado a
+          presentar su trayectoria profesional en dirección de TI, ciencias
+          ambientales y ética profesional. El acceso y uso de este sitio
+          atribuye la condición de usuario e implica la aceptación de las
+          condiciones aquí descritas.
+        </p>
+
+        <h3>Responsabilidad del sitio</h3>
+        <p>
+          Se procura que la información publicada sea exacta y esté
+          actualizada, pero no se ofrece garantía alguna sobre su exhaustividad
+          o vigencia permanente. El titular del sitio no será responsable de
+          las decisiones tomadas a partir de la información aquí contenida ni
+          de los daños derivados del uso indebido del sitio, de
+          interrupciones del servicio o de contenidos alojados en sitios de
+          terceros enlazados desde estas páginas, sobre los que no se ejerce
+          ningún tipo de control.
+        </p>
+
+        <h3>Propiedad intelectual</h3>
+        <p>
+          Los textos, artículos, imágenes, logotipos y demás contenidos
+          originales publicados en este sitio son propiedad de Víctor
+          Cazorla Fernández, salvo que se indique lo contrario (por ejemplo,
+          logotipos de instituciones o colegios profesionales citados a
+          título informativo, cuya titularidad corresponde a sus respectivos
+          propietarios). Queda reservada la explotación de dichos contenidos
+          conforme a la normativa de propiedad intelectual vigente.
+        </p>
+
+        <h3>Limitaciones de uso</h3>
+        <p>
+          Se permite la consulta y la cita de los contenidos con fines
+          académicos o divulgativos, citando la fuente y, cuando proceda,
+          enlazando a la página original. No se autoriza la reproducción
+          total, la redistribución comercial ni la modificación de los
+          contenidos sin el consentimiento previo del titular. Está
+          prohibido cualquier uso del sitio que pueda dañar su
+          funcionamiento, sobrecargar su infraestructura o vulnerar los
+          derechos de terceros.
+        </p>
+      </section>
+
+      <!-- ============================================
+           POLÍTICA DE PRIVACIDAD / RGPD
+      ============================================ -->
+      <section id="privacidad" aria-labelledby="privacidad-title">
+        <h2 id="privacidad-title">Política de Privacidad y RGPD</h2>
+
+        <p>
+          El tratamiento de datos personales realizado a través de este
+          sitio se rige por el Reglamento (UE) 2016/679 General de
+          Protección de Datos (RGPD) y por la Ley Orgánica 3/2018, de
+          Protección de Datos Personales y garantía de los derechos
+          digitales (LOPDGDD). El responsable del tratamiento es Víctor
+          Cazorla Fernández, contactable en{" "}
+          <a href="mailto:info@victorcazorla.com">info@victorcazorla.com</a>.
+        </p>
+
+        <h3>Qué datos se recopilan</h3>
+        <p>Este sitio trata únicamente dos categorías de datos personales:</p>
+        <ul>
+          <li>
+            <strong>Datos de navegación (Google Analytics):</strong> mediante
+            Google Analytics 4 se recogen datos estadísticos anonimizados o
+            pseudonimizados sobre el uso del sitio (páginas visitadas,
+            duración de la sesión, tipo de dispositivo, origen geográfico
+            aproximado), con el fin de comprender cómo se utiliza el sitio y
+            mejorarlo. Estos datos son tratados por Google como
+            encargado del tratamiento conforme a sus propias políticas de
+            privacidad.
+          </li>
+          <li>
+            <strong>Datos de contacto por correo electrónico:</strong> si el
+            usuario escribe voluntariamente a alguna de las direcciones de
+            correo publicadas en el sitio, se tratará la dirección de correo
+            electrónico y el contenido del mensaje exclusivamente para
+            responder a la consulta planteada.
+          </li>
+        </ul>
+        <p>
+          No se recopilan datos a través de formularios propios del sitio,
+          ni se ceden datos a terceros salvo el encargado del tratamiento
+          citado (Google) para el análisis de uso.
+        </p>
+
+        <h3>Derechos del usuario</h3>
+        <p>
+          Cualquier usuario cuyos datos sean tratados puede ejercer, en
+          cualquier momento y de forma gratuita, sus derechos de:
+        </p>
+        <ul>
+          <li><strong>Acceso:</strong> conocer qué datos personales se tratan.</li>
+          <li><strong>Rectificación:</strong> corregir datos inexactos o incompletos.</li>
+          <li><strong>Supresión:</strong> solicitar la eliminación de los datos cuando ya no sean necesarios para la finalidad que motivó su tratamiento.</li>
+          <li><strong>Oposición y limitación:</strong> oponerse al tratamiento o solicitar que se limite en determinadas circunstancias.</li>
+          <li><strong>Portabilidad:</strong> recibir los datos facilitados en un formato estructurado y de uso común.</li>
+        </ul>
+        <p>
+          Estos derechos pueden ejercerse escribiendo a{" "}
+          <a href="mailto:info@victorcazorla.com">info@victorcazorla.com</a>,
+          indicando el derecho que se desea ejercer. Asimismo, el usuario
+          tiene derecho a presentar una reclamación ante la Agencia Española
+          de Protección de Datos (<a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer">aepd.es</a>)
+          si considera que sus derechos no han sido atendidos correctamente.
+        </p>
+
+        <h3>Cookies</h3>
+        <p>
+          Este sitio utiliza únicamente las cookies necesarias para el
+          funcionamiento de Google Analytics, que permiten distinguir
+          sesiones de navegación de forma anonimizada con fines
+          estadísticos. No se emplean cookies de publicidad ni de
+          seguimiento entre sitios (cross-site tracking). El usuario puede
+          bloquear o eliminar estas cookies en cualquier momento desde la
+          configuración de su navegador, sin que ello afecte a la
+          funcionalidad esencial del sitio.
+        </p>
+
+        <h3>Cumplimiento RGPD</h3>
+        <p>
+          El tratamiento de datos se limita a lo estrictamente necesario
+          para las finalidades descritas (principio de minimización), se
+          conserva únicamente durante el tiempo necesario para dichas
+          finalidades y no se realizan decisiones automatizadas ni
+          elaboración de perfiles con efectos jurídicos sobre los usuarios.
+          Se aplican medidas técnicas y organizativas razonables (como el
+          uso de HTTPS en todo el sitio) para proteger la información
+          tratada.
+        </p>
+      </section>
+
+      <!-- ============================================
+           ACCESSIBILITY STATEMENT
+      ============================================ -->
+      <section id="accesibilidad" aria-labelledby="accesibilidad-title">
+        <h2 id="accesibilidad-title">Declaración de Accesibilidad</h2>
+
+        <h3>Compromiso con la accesibilidad</h3>
+        <p>
+          victorcazorla.com se ha diseñado y desarrollado con el objetivo de
+          cumplir las <strong>Pautas de Accesibilidad para el Contenido Web
+          (WCAG) 2.1, nivel AA</strong>, elaboradas por el World Wide Web
+          Consortium (W3C). Este compromiso se entiende como un proceso
+          continuo de mejora, no como un estado definitivo: el sitio se
+          revisa y ajusta de forma periódica a medida que se identifican
+          nuevas oportunidades de mejora.
+        </p>
+
+        <h3>Características de accesibilidad implementadas</h3>
+        <ul>
+          <li>
+            <strong>Enlaces de salto de bloque (skip links):</strong> un
+            enlace "Saltar al contenido", visible al recibir el foco del
+            teclado, permite omitir la cabecera y el menú de navegación en
+            cada página.
+          </li>
+          <li>
+            <strong>Navegación por teclado:</strong> todos los elementos
+            interactivos (menú, selector de idioma, enlaces) son operables
+            sin ratón, con un orden de tabulación lógico y un indicador de
+            foco visible en todo momento.
+          </li>
+          <li>
+            <strong>Contraste de color:</strong> la combinación de colores
+            del sitio se ha definido para cumplir las ratios de contraste
+            mínimas exigidas por WCAG 2.1 AA entre el texto y su fondo.
+          </li>
+          <li>
+            <strong>HTML semántico:</strong> el contenido se estructura con
+            elementos semánticos (<code>header</code>, <code>nav</code>,
+            <code>main</code>, <code>article</code>, <code>section</code>,
+            <code>footer</code>) y una jerarquía de encabezados coherente,
+            lo que facilita la navegación con lectores de pantalla.
+          </li>
+          <li>
+            <strong>Texto alternativo:</strong> las imágenes con contenido
+            informativo incluyen atributos <code>alt</code> descriptivos;
+            los elementos puramente decorativos se marcan como tales para no
+            interferir con la navegación asistida.
+          </li>
+          <li>
+            <strong>Diseño adaptable (responsive):</strong> el sitio se
+            adapta a distintos tamaños de pantalla y permite ampliar el
+            tamaño del texto sin pérdida de contenido ni de funcionalidad.
+          </li>
+        </ul>
+
+        <h3>Cómo reportar un problema de accesibilidad</h3>
+        <p>
+          Si al navegar por este sitio encuentras alguna barrera de
+          accesibilidad —contenido que no puedas percibir, operar o
+          entender correctamente con tu tecnología de asistencia—, tu
+          reporte es bienvenido y se atenderá con prioridad. Al describir el
+          problema, resulta útil indicar la página concreta, el navegador o
+          lector de pantalla utilizado y una breve descripción de la
+          dificultad encontrada.
+        </p>
+
+        <h3>Contacto para cuestiones de accesibilidad</h3>
+        <p>
+          Cualquier consulta o incidencia relacionada con la accesibilidad
+          de este sitio puede dirigirse a{" "}
+          <a href="mailto:info@victorcazorla.com">info@victorcazorla.com</a>.
+          Se procurará responder y, en su caso, corregir la incidencia
+          reportada en un plazo razonable.
+        </p>
+      </section>
+
+      <p class="page-note-separator" role="none"></p>
+      <div class="page-note">
+        <p>
+          Para cualquier otra consulta puedes volver a la{" "}
+          <a href="/">página de inicio</a> o escribir directamente a{" "}
+          <a href="mailto:info@victorcazorla.com">info@victorcazorla.com</a>.
+        </p>
+      </div>
+    </article>
+  </div>
+</BaseLayout>
