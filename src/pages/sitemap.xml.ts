@@ -3,7 +3,7 @@ import { routes, languages } from "../data/i18n";
 export const prerender = true;
 const siteUrl = "https://victorcazorla.com";
 
-const escapeXml = (value: string) =>
+export const escapeXml = (value: string) =>
   value
     .replace(/&/g, "&amp;")
     .replace(/</g, "&lt;")
