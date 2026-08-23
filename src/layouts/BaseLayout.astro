@@ -15,6 +15,7 @@ type BaseLayoutProps = {
   imageAlt?: string;
   lang?: "es" | "en" | "fr" | "ca";
   navItems?: NavItem[];
+  noindex?: boolean;
 };
 
 const {
@@ -24,6 +25,7 @@ const {
   imageAlt = "",
   lang = "es",
   navItems = [],
+  noindex = false,
 } = Astro.props as BaseLayoutProps;
 
 const currentPath = Astro.url.pathname;
@@ -32,9 +34,14 @@ const currentPath = Astro.url.pathname;
 const stripSlash = (path: string) =>
   path.endsWith("/") && path !== "/" ? path.slice(0, -1) : path;
 const normalizedPath = stripSlash(currentPath);
-const currentRoute = routes.find((route) =>
+// undefined para rutas sin match (p. ej. la 404): currentRoute cae a
+// home como fallback razonable para hreflang/canonical, pero isHome y
+// el breadcrumb comprueban matchedRoute directamente para no tratar
+// una página desconocida como si fuera la home.
+const matchedRoute = routes.find((route) =>
   Object.values(route.slugs).some((slug) => stripSlash(slug) === normalizedPath)
-) ?? routes[0];
+);
+const currentRoute = matchedRoute ?? routes[0];
 
 const languageHref = (code: "es" | "en" | "fr" | "ca") => currentRoute.slugs[code];
 const siteUrl = typeof Astro.site === "string" ? Astro.site.replace(/\/$/, "") : Astro.url.origin;
@@ -55,12 +62,47 @@ const menuWord: Record<"es" | "en" | "fr" | "ca", string> = {
   ca: "Menú",
 };
 
+const skipLinkLabel: Record<"es" | "en" | "fr" | "ca", string> = {
+  es: "Saltar al contenido",
+  en: "Skip to content",
+  fr: "Aller au contenu",
+  ca: "Saltar al contingut",
+};
+
 const isActiveHref = (href: string) => stripSlash(currentPath) === stripSlash(href);
+
+const homeRoute = routes[0];
+const isHome = matchedRoute?.key === "home";
+
+const breadcrumbJsonLd = !matchedRoute || isHome
+  ? null
+  : {
+      "@context": "https://schema.org",
+      "@type": "BreadcrumbList",
+      itemListElement: [
+        {
+          "@type": "ListItem",
+          position: 1,
+          name: homeRoute.labels[lang],
+          item: fullUrl(homeRoute.slugs[lang]),
+        },
+        {
+          "@type": "ListItem",
+          position: 2,
+          name: currentLabel,
+          item: fullUrl(currentPath),
+        },
+      ],
+    };
 ---
 
 <!DOCTYPE html>
 <html lang={lang}>
   <head>
+    <!-- Debe ser el primer elemento de <head> (spec HTML5 / validador
+         W3C): garantiza que el navegador decodifica el resto del
+         documento como UTF-8 antes de parsear ningún otro byte. -->
+    <meta charset="utf-8" />
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQEMTYB7S"></script>
     <script is:inline>
@@ -69,13 +111,13 @@ const isActiveHref = (href: string) => stripSlash(currentPath) === stripSlash(hr
       gtag('js', new Date());
       gtag('config', 'G-3GQEMTYB7S');
     </script>
-    <meta charset="utf-8" />
     <!-- Se coloca lo antes posible para minimizar el parpadeo en
          visitantes que van a ser redirigidos a su idioma. Archivo
          externo (no inline) por la CSP de public/_headers. -->
     <script is:inline src="/scripts/lang-redirect.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    {noindex ? <meta name="robots" content="noindex, follow" /> : null}
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
@@ -93,6 +135,9 @@ const isActiveHref = (href: string) => stripSlash(currentPath) === stripSlash(hr
     <link rel="alternate" hreflang="ca" href={fullUrl(currentRoute.slugs.ca)} />
     <link rel="alternate" hreflang="x-default" href={fullUrl(currentRoute.slugs.es)} />
     {image ? <meta property="og:image" content={fullUrl(image)} /> : null}
+    {image ? <meta property="og:image:type" content="image/png" /> : null}
+    {image ? <meta property="og:image:width" content="1200" /> : null}
+    {image ? <meta property="og:image:height" content="630" /> : null}
     {image ? <meta name="twitter:card" content="summary_large_image" /> : null}
     {image ? <meta name="twitter:image" content={fullUrl(image)} /> : null}
     {image && imageAlt ? <meta property="og:image:alt" content={imageAlt} /> : null}
@@ -135,6 +180,9 @@ const isActiveHref = (href: string) => stripSlash(currentPath) === stripSlash(hr
         "Digital Transformation",
       ],
     })} />
+    {breadcrumbJsonLd ? (
+      <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
+    ) : null}
     <!-- Fuentes autoalojadas (antes se pedían a Google Fonts en cada
          visita: 2 dominios externos + una petición CSS bloqueante antes
          de saber siquiera qué archivos de fuente pedir). Son variables
@@ -228,11 +276,30 @@ const isActiveHref = (href: string) => stripSlash(currentPath) === stripSlash(hr
         text-align: center;
       }
 
-      header h1 {
+      header .site-title {
         font-family: "Playfair Display", serif;
         font-size: clamp(2.1rem, 4vw, 3.4rem);
         margin: 0;
         letter-spacing: 0.02em;
+      }
+
+      .skip-link {
+        position: absolute;
+        top: -3rem;
+        left: 0.75rem;
+        z-index: 1000;
+        padding: 0.6rem 1rem;
+        background: var(--bg-main);
+        color: var(--text-main);
+        border: 1px solid var(--accent-gold);
+        border-radius: 8px;
+        text-decoration: none;
+        font-size: 0.85rem;
+        transition: top 0.2s ease;
+      }
+
+      .skip-link:focus {
+        top: 0.75rem;
       }
 
       .subtitle {
@@ -713,9 +780,14 @@ const isActiveHref = (href: string) => stripSlash(currentPath) === stripSlash(hr
   </head>
 
   <body>
+    <a href="#main-content" class="skip-link">{skipLinkLabel[lang]}</a>
     <header>
       <div class="header-inner">
-        <h1>Víctor Cazorla Fernández</h1>
+        {isHome ? (
+          <h1 class="site-title">Víctor Cazorla Fernández</h1>
+        ) : (
+          <p class="site-title">Víctor Cazorla Fernández</p>
+        )}
         <div class="subtitle">
           Dirección IT · Ciencias Ambientales · Ética profesional
         </div>
@@ -846,7 +918,7 @@ const isActiveHref = (href: string) => stripSlash(currentPath) === stripSlash(hr
       </div>
     </header>
 
-    <main>
+    <main id="main-content" tabindex="-1">
       <slot />
     </main>
 
