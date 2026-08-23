@@ -20,10 +20,18 @@ describe("GET /sitemap.xml", () => {
     expect(response.headers.get("Content-Type")).toBe("application/xml; charset=utf-8");
   });
 
-  it("includes exactly one <url> entry per route/language combination", async () => {
+  it("includes exactly one <url> entry per route/language combination, plus static pages", async () => {
     const body = await bodyPromise;
     const urlCount = (body.match(/<url>/g) ?? []).length;
-    expect(urlCount).toBe(routes.length * languages.length);
+    // +1 for /legal/, a static page outside `routes` (no i18n alternates).
+    expect(urlCount).toBe(routes.length * languages.length + 1);
+  });
+
+  it("includes the /legal/ page without language alternates", async () => {
+    const body = await bodyPromise;
+    expect(body).toContain("<loc>https://victorcazorla.com/legal/</loc>");
+    const legalEntry = body.split("<loc>https://victorcazorla.com/legal/</loc>")[1]?.split("</url>")[0];
+    expect(legalEntry).not.toContain("hreflang");
   });
 
   it("includes every route slug, for every language, as an absolute URL", async () => {
