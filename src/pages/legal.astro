@@ -74,7 +74,17 @@ const jsonLd = {
            ACCESIBILIDAD (prioridad 1)
       ============================================ -->
       <section id="accesibilidad" aria-labelledby="accesibilidad-title">
-        <h2 id="accesibilidad-title">Accesibilidad (web accesible para personas con discapacidad)</h2>
+        <div class="a11y-header">
+          <h2 id="accesibilidad-title">Accesibilidad (web accesible para personas con discapacidad)</h2>
+          <img
+            src="/logos/accesibilidad-discapacidad-visual.jpg"
+            alt="Pictograma internacional de accesibilidad para personas con discapacidad visual"
+            width="64"
+            height="64"
+            loading="lazy"
+            class="a11y-icon"
+          />
+        </div>
 
         <p>
           Este sitio cumple el estándar WCAG 2.1, nivel AA (ISO/IEC 40500),
@@ -174,4 +184,24 @@ const jsonLd = {
       </div>
     </article>
   </div>
+
+  <style>
+    .a11y-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .a11y-header h2 {
+      margin: 0;
+      flex: 1 1 auto;
+    }
+
+    .a11y-icon {
+      flex-shrink: 0;
+      border-radius: 10px;
+      object-fit: contain;
+    }
+  </style>
 </BaseLayout>
