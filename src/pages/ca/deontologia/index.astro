@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ObfuscatedEmail from "../../../components/ObfuscatedEmail.astro";
 import { navItems } from "../../../data/i18n";
 ---
 
@@ -120,7 +121,7 @@ import { navItems } from "../../../data/i18n";
     </section>
 
     <p class="contact-line">
-      Per a consultes acadèmiques sobre filosofia jurídica i lògica normativa, escriu a <a href="mailto:investigacion@victorcazorla.com">investigacion@victorcazorla.com</a>.
+      Per a consultes acadèmiques sobre filosofia jurídica i lògica normativa, escriu a <ObfuscatedEmail address="investigacion@victorcazorla.com" />.
     </p>
   </div>
 </BaseLayout>

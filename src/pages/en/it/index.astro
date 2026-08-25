@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ObfuscatedEmail from "../../../components/ObfuscatedEmail.astro";
 import { navItems } from "../../../data/i18n";
 ---
 
@@ -134,7 +135,7 @@ import { navItems } from "../../../data/i18n";
     </section>
 
     <p class="contact-line">
-      Have a professional inquiry or an IT management opportunity? Write to <a href="mailto:oportunidades@victorcazorla.com">oportunidades@victorcazorla.com</a>.
+      Have a professional inquiry or an IT management opportunity? Write to <ObfuscatedEmail address="oportunidades@victorcazorla.com" />.
     </p>
 
   </div>

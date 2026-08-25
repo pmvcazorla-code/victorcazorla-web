@@ -685,3 +685,123 @@ footer {
 .contact-line a {
   color: var(--color-accent);
 }
+
+/* ================================
+   FORMULARIO DE CONTACTO
+================================ */
+
+.contact-form {
+  margin-top: 2rem;
+  max-width: 640px;
+}
+
+.contact-form__field {
+  margin-bottom: 1.4rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.contact-form__field label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.contact-form__field input[type="text"],
+.contact-form__field input[type="email"],
+.contact-form__field textarea {
+  font: inherit;
+  color: var(--color-text);
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  border-radius: 10px;
+  padding: 0.7rem 0.9rem;
+  resize: vertical;
+}
+
+.contact-form__field input:focus,
+.contact-form__field textarea:focus {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+  border-color: var(--color-accent);
+}
+
+.contact-form__field--checkbox {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.contact-form__field--checkbox input {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex-shrink: 0;
+}
+
+.contact-form__field--checkbox label {
+  font-weight: 400;
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}
+
+.contact-form__field-error {
+  min-height: 1.1em;
+  font-size: 0.82rem;
+  color: #ff9b9b;
+}
+
+/* Campo señuelo anti-bot: fuera de pantalla, no display:none, para que
+   un bot que lea el DOM/CSSOM sin ejecutar CSS avanzado lo vea igual. */
+.contact-form__honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.contact-form button[type="submit"] {
+  font: inherit;
+  font-weight: 600;
+  color: var(--color-bg);
+  background: var(--color-accent);
+  border: none;
+  border-radius: 999px;
+  padding: 0.7rem 1.6rem;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.contact-form button[type="submit"]:hover:not(:disabled) {
+  opacity: 0.88;
+  transform: translateY(-1px);
+}
+
+.contact-form button[type="submit"]:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.contact-form__status {
+  min-height: 1.4em;
+  margin: 1rem 0 0;
+  font-size: 0.92rem;
+}
+
+.contact-form__status--success {
+  color: #8fe0a8;
+}
+
+.contact-form__status--error {
+  color: #ff9b9b;
+}
+
+.contact-form__direct {
+  margin-top: 2.4rem;
+  padding-top: 1.4rem;
+  border-top: 1px solid var(--color-border);
+  font-size: 0.9rem;
+  color: var(--color-muted);
+}

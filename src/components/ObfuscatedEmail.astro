@@ -1,0 +1,19 @@
+---
+import { toHtmlEntities } from "../utils/obfuscate";
+
+type Props = {
+  address: string;
+  label?: string;
+};
+
+const { address, label = address } = Astro.props as Props;
+
+// Construye el <a> como HTML crudo: si el href pasara por un atributo
+// {expresión} normal, Astro escaparía el "&" de cada "&#099;" a
+// "&amp;#099;" y el navegador ya no lo decodificaría a la letra
+// original. set:html evita ese doble escapado.
+const hrefEntities = toHtmlEntities(`mailto:${address}`);
+const labelEntities = toHtmlEntities(label);
+const html = `<a href="${hrefEntities}">${labelEntities}</a>`;
+---
+<Fragment set:html={html} />

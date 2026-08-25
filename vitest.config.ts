@@ -11,7 +11,11 @@ export default defineConfig({
       include: [
         "src/data/i18n.ts",
         "src/pages/sitemap.xml.ts",
+        "src/utils/obfuscate.ts",
         "public/scripts/lib/click-classify.js",
+        "public/scripts/lib/contact-form-validate.js",
+        "functions/_lib/contact.ts",
+        "functions/api/contact.ts",
       ],
     },
   },

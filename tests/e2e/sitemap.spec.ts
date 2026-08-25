@@ -8,7 +8,7 @@ test.describe("Sitemap", () => {
 
     const body = await response.text();
     const urlCount = (body.match(/<url>/g) ?? []).length;
-    expect(urlCount).toBe(20); // 5 routes x 4 languages
+    expect(urlCount).toBe(25); // 6 routes x 4 languages, +1 for /legal/ (no i18n alternates)
     expect(body).toContain("<loc>https://victorcazorla.com/</loc>");
   });
 

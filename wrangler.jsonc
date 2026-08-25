@@ -1,0 +1,25 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  "name": "victorcazorla-web",
+  // Igual que el compatibility_date con el que ya despliega el proyecto
+  // (ver Settings > Builds en el dashboard) para no cambiar el
+  // comportamiento del runtime de golpe.
+  "compatibility_date": "2026-01-15",
+  // Necesario para que Cloudflare Pages use este archivo como
+  // configuración de producción en vez de solo para desarrollo local.
+  // https://developers.cloudflare.com/pages/functions/wrangler-configuration/
+  "pages_build_output_dir": "./dist",
+  "kv_namespaces": [
+    {
+      "binding": "CONTACT_RATE_LIMIT",
+      "id": "ab2a109039ae40639b48e5bdcc75401f"
+    }
+  ],
+  "vars": {
+    // No son secretos (ya son públicos como enlaces mailto en el propio
+    // sitio); la clave de Resend (RESEND_API_KEY) sí lo es y se
+    // configura aparte, como variable de entorno cifrada, nunca aquí.
+    "CONTACT_TO_EMAIL": "contacto@victorcazorla.com",
+    "CONTACT_FROM_EMAIL": "web@victorcazorla.com"
+  }
+}

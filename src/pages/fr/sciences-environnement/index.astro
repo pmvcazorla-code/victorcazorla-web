@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ObfuscatedEmail from "../../../components/ObfuscatedEmail.astro";
 import { navItems } from "../../../data/i18n";
 ---
 
@@ -203,7 +204,7 @@ import { navItems } from "../../../data/i18n";
     </section>
 
     <p class="contact-line">
-      Pour toute question de recherche, correspondance avec des revues scientifiques ou collaboration académique, écrivez à <a href="mailto:investigacion@victorcazorla.com">investigacion@victorcazorla.com</a>.
+      Pour toute question de recherche, correspondance avec des revues scientifiques ou collaboration académique, écrivez à <ObfuscatedEmail address="investigacion@victorcazorla.com" />.
     </p>
 
   </div>

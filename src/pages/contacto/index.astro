@@ -1,0 +1,16 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import ContactForm from "../../components/ContactForm.astro";
+import { navItems, contactCopy } from "../../data/i18n";
+
+const copy = contactCopy.es;
+const title = "Contacto - Víctor Cazorla Fernández";
+const description = "Formulario de contacto de Víctor Cazorla Fernández: dirección IT, ciencias ambientales y ética profesional.";
+---
+<BaseLayout title={title} description={description} lang="es" navItems={navItems.es}>
+  <div class="container narrow">
+    <h1>{copy.heading}</h1>
+    <p class="page-intro">{copy.intro}</p>
+    <ContactForm copy={copy} directEmail="contacto@victorcazorla.com" />
+  </div>
+</BaseLayout>

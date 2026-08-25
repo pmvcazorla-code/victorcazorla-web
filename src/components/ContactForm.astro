@@ -1,0 +1,68 @@
+---
+import ObfuscatedEmail from "./ObfuscatedEmail.astro";
+import type { ContactCopy } from "../data/i18n";
+
+type Props = {
+  copy: ContactCopy;
+  directEmail: string;
+};
+
+const { copy, directEmail } = Astro.props as Props;
+---
+<form class="contact-form" method="post" action="/api/contact" data-contact-form novalidate>
+  <div class="contact-form__field">
+    <label for="contact-name">{copy.nameLabel}</label>
+    <input id="contact-name" name="name" type="text" autocomplete="name" required maxlength="120" />
+    <span class="contact-form__field-error" data-error-for="name" data-message={copy.errorNameRequired}></span>
+  </div>
+
+  <div class="contact-form__field">
+    <label for="contact-email">{copy.emailLabel}</label>
+    <input id="contact-email" name="email" type="email" autocomplete="email" required maxlength="254" />
+    <span class="contact-form__field-error" data-error-for="email" data-message={copy.errorEmailInvalid}></span>
+  </div>
+
+  <div class="contact-form__field">
+    <label for="contact-message">{copy.messageLabel}</label>
+    <textarea id="contact-message" name="message" rows="6" required minlength="10" maxlength="5000"></textarea>
+    <span class="contact-form__field-error" data-error-for="message" data-message={copy.errorMessageTooShort}></span>
+  </div>
+
+  <div class="contact-form__field contact-form__field--checkbox">
+    <input id="contact-consent" name="consent" type="checkbox" required />
+    <label for="contact-consent">
+      {copy.consentLabel} <a href="/legal/">{copy.privacyLinkLabel}</a>.
+    </label>
+    <span class="contact-form__field-error" data-error-for="consent" data-message={copy.errorConsentRequired}></span>
+  </div>
+
+  <!-- Campo señuelo: invisible para personas (fuera de pantalla, sin
+       tabindex, oculto a lectores de pantalla), pero visible en el HTML
+       para un bot que rellene todos los <input>. functions/api/contact.ts
+       descarta en silencio cualquier envío que lo traiga relleno. -->
+  <div class="contact-form__honeypot" aria-hidden="true">
+    <label for="contact-company">Company website</label>
+    <input id="contact-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+  </div>
+
+  <input type="hidden" name="ts" value="" />
+
+  <button type="submit" data-sending-label={copy.sendingLabel}>{copy.submitLabel}</button>
+
+  <p
+    class="contact-form__status"
+    data-contact-status
+    role="status"
+    aria-live="polite"
+    data-success-message={copy.successMessage}
+    data-error-message={copy.errorGeneric}
+    data-rate-limited-message={copy.errorRateLimited}
+    data-validation-message={copy.errorValidation}
+  ></p>
+
+  <p class="contact-form__direct">
+    {copy.directEmailIntro} <ObfuscatedEmail address={directEmail} />
+  </p>
+</form>
+
+<script is:inline type="module" src="/scripts/contact-form.js"></script>

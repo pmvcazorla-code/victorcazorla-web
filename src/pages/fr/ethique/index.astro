@@ -1,5 +1,6 @@
 ---
 import BaseLayout from "../../../layouts/BaseLayout.astro";
+import ObfuscatedEmail from "../../../components/ObfuscatedEmail.astro";
 import { navItems } from "../../../data/i18n";
 ---
 
@@ -122,7 +123,7 @@ import { navItems } from "../../../data/i18n";
     </section>
 
     <p class="contact-line">
-      Pour toute question académique sur la philosophie du droit et la logique normative, écrivez à <a href="mailto:investigacion@victorcazorla.com">investigacion@victorcazorla.com</a>.
+      Pour toute question académique sur la philosophie du droit et la logique normative, écrivez à <ObfuscatedEmail address="investigacion@victorcazorla.com" />.
     </p>
 
   </div>
