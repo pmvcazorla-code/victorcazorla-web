@@ -121,7 +121,16 @@ export async function onRequestPost(context: RequestContext): Promise<Response> 
   let body: Record<string, unknown>;
   try {
     body = await parseBody(request);
-  } catch {
+  } catch (error) {
+    console.error(
+      JSON.stringify({
+        event: "contact_form_body_parse_failed",
+        timestamp: new Date().toISOString(),
+        ip,
+        contentType: request.headers.get("content-type"),
+        message: error instanceof Error ? error.message : String(error),
+      })
+    );
     return json({ ok: false, error: "validation", fields: [] }, 400);
   }
 
@@ -146,6 +155,18 @@ export async function onRequestPost(context: RequestContext): Promise<Response> 
       logBlockedAttempt("honeypot", { ip });
       return json({ ok: true });
     }
+    // Diagnóstico, no auditoría de abuso: la gran mayoría de estos son
+    // typos de gente real (un email mal escrito, el "timing" mínimo
+    // saltado al probar a mano), no ataques. Sin este log, un 400 en
+    // producción no da ninguna pista de qué campo lo causó.
+    console.log(
+      JSON.stringify({
+        event: "contact_form_validation_failed",
+        timestamp: new Date().toISOString(),
+        ip,
+        fields: result.errors,
+      })
+    );
     return json({ ok: false, error: "validation", fields: result.errors }, 400);
   }
 
@@ -182,6 +203,19 @@ export async function onRequestPost(context: RequestContext): Promise<Response> 
   const captcha = await verifyCaptcha(captchaToken, { secret: env.HCAPTCHA_SECRET, ip });
   if (!captcha.success) {
     logBlockedAttempt("captcha_failed", { ip, email: data.email });
+    // hasSecret en falso es la pista más común de un despliegue mal
+    // configurado (falta el secret en las variables de entorno de la
+    // Function), que de otro modo se ve idéntico a un token real
+    // inválido: en ambos casos hCaptcha responde success:false.
+    console.warn(
+      JSON.stringify({
+        event: "contact_form_captcha_rejected",
+        timestamp: new Date().toISOString(),
+        ip,
+        hasToken: captchaToken.length > 0,
+        hasSecret: Boolean(env.HCAPTCHA_SECRET),
+      })
+    );
     return json({ ok: false, error: "captcha" }, 422);
   }
 

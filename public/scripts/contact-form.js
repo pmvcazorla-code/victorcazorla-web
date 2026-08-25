@@ -70,9 +70,9 @@ function initContactForm(form) {
           reason: fields.reason,
           message: fields.message,
           consent: fields.consent,
-          company: form.elements.company.value,
+          company: form.elements.company ? form.elements.company.value : "",
           ts: Number(tsField ? tsField.value : Date.now()),
-          lang: form.elements.lang.value,
+          lang: form.elements.lang ? form.elements.lang.value : "",
           "h-captcha-response": fields.captchaToken,
         }),
       });

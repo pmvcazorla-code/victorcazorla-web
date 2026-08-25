@@ -121,6 +121,60 @@ describe("onRequestPost /api/contact", () => {
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
+  it("logs which fields failed on a 400, so it's diagnosable from server logs alone", async () => {
+    const logSpy = vi.spyOn(console, "log").mockImplementation(() => {});
+    const kv = new FakeKV();
+
+    await onRequestPost({
+      request: makeRequest(validBody({ email: "not-an-email", consent: false })),
+      env: { ...ENV_BASE, CONTACT_RATE_LIMIT: kv },
+    });
+
+    expect(logSpy).toHaveBeenCalledTimes(1);
+    const logged = JSON.parse(logSpy.mock.calls[0][0]);
+    expect(logged.event).toBe("contact_form_validation_failed");
+    expect(logged.fields).toEqual(expect.arrayContaining(["email", "consent"]));
+    logSpy.mockRestore();
+  });
+
+  it("logs a parse error (not just a generic 400) when the request body is malformed", async () => {
+    const errorSpy = vi.spyOn(console, "error").mockImplementation(() => {});
+    const kv = new FakeKV();
+    const request = new Request("https://victorcazorla.com/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "CF-Connecting-IP": "203.0.113.1" },
+      body: "{not valid json",
+    });
+
+    const response = await onRequestPost({ request, env: { ...ENV_BASE, CONTACT_RATE_LIMIT: kv } });
+
+    expect(response.status).toBe(400);
+    expect(errorSpy).toHaveBeenCalledTimes(1);
+    const logged = JSON.parse(errorSpy.mock.calls[0][0]);
+    expect(logged.event).toBe("contact_form_body_parse_failed");
+    errorSpy.mockRestore();
+  });
+
+  it("logs whether HCAPTCHA_SECRET was configured when a captcha check fails", async () => {
+    fetchMock = makeFetchMock({ captchaOk: false });
+    vi.stubGlobal("fetch", fetchMock);
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+    const kv = new FakeKV();
+
+    await onRequestPost({
+      request: makeRequest(validBody()),
+      env: { ...ENV_BASE, HCAPTCHA_SECRET: "", CONTACT_RATE_LIMIT: kv },
+    });
+
+    const captchaLog = warnSpy.mock.calls
+      .map(([entry]) => JSON.parse(entry))
+      .find((entry) => entry.event === "contact_form_captcha_rejected");
+    expect(captchaLog).toBeDefined();
+    expect(captchaLog.hasSecret).toBe(false);
+    expect(captchaLog.hasToken).toBe(true);
+    warnSpy.mockRestore();
+  });
+
   it("rejects a submission with a missing or tampered reason value", async () => {
     const kv = new FakeKV();
     const response = await onRequestPost({
