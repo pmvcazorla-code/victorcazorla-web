@@ -10,6 +10,14 @@ export type LanguageOption = {
 
 export type RouteDef = {
   key: "home" | "it" | "environmentalScience" | "ethics" | "education" | "contact";
+  // Fecha (YYYY-MM-DD) del último cambio de contenido real de esta ruta,
+  // usada como <lastmod> en el sitemap. A mano y a propósito: si se
+  // recalculara en cada build (p. ej. con `new Date()`), el sitemap
+  // afirmaría que las 20 páginas cambian en cada despliegue aunque solo
+  // se haya tocado una, lo que devalúa la señal para los rastreadores.
+  // Actualiza esta fecha solo cuando cambies el contenido visible de la
+  // página (en cualquiera de sus idiomas).
+  lastmod: string;
   slugs: {
     es: string;
     en: string;
@@ -27,11 +35,13 @@ export type RouteDef = {
 export const routes: RouteDef[] = [
   {
     key: "home",
+    lastmod: "2026-08-25",
     slugs: { es: "/", en: "/en/", fr: "/fr/", ca: "/ca/" },
     labels: { es: "Inicio", en: "Home", fr: "Accueil", ca: "Inici" },
   },
   {
     key: "it",
+    lastmod: "2026-08-25",
     slugs: { es: "/it/", en: "/en/it/", fr: "/fr/it/", ca: "/ca/it/" },
     labels: {
       es: "Dirección y Gobernanza de IT",
@@ -42,6 +52,7 @@ export const routes: RouteDef[] = [
   },
   {
     key: "environmentalScience",
+    lastmod: "2026-08-25",
     slugs: {
       es: "/cienciasambientales/",
       en: "/en/environmental-science/",
@@ -57,6 +68,7 @@ export const routes: RouteDef[] = [
   },
   {
     key: "ethics",
+    lastmod: "2026-08-25",
     slugs: {
       es: "/deontologia/",
       en: "/en/ethics/",
@@ -72,6 +84,7 @@ export const routes: RouteDef[] = [
   },
   {
     key: "education",
+    lastmod: "2026-08-23",
     slugs: { es: "/formacion/", en: "/en/education/", fr: "/fr/formation/", ca: "/ca/formacio/" },
     labels: {
       es: "Formación",
@@ -82,6 +95,7 @@ export const routes: RouteDef[] = [
   },
   {
     key: "contact",
+    lastmod: "2026-08-25",
     slugs: { es: "/contacto/", en: "/en/contact/", fr: "/fr/contact/", ca: "/ca/contacte/" },
     labels: {
       es: "Contacto",

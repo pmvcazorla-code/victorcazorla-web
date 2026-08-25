@@ -69,6 +69,17 @@ const skipLinkLabel: Record<"es" | "en" | "fr" | "ca", string> = {
   ca: "Saltar al contingut",
 };
 
+// Mismas frases que ya se usan como meta description en cada home
+// localizada (src/pages/{en,fr,ca}/index.astro), reutilizadas aquí para
+// que el subtítulo visible del cabecero coincida con el idioma de la
+// página en vez de mostrarse siempre en español.
+const headerSubtitle: Record<"es" | "en" | "fr" | "ca", string> = {
+  es: "Dirección IT · Ciencias Ambientales · Ética profesional",
+  en: "IT management · Environmental management · Professional ethics",
+  fr: "Gestion des TI · Gestion environnementale · Éthique professionnelle",
+  ca: "Direcció IT · Gestió Ambiental · Ètica professional",
+};
+
 const isActiveHref = (href: string) => stripSlash(currentPath) === stripSlash(href);
 
 const homeRoute = routes[0];
@@ -171,6 +182,8 @@ const breadcrumbJsonLd = !matchedRoute || isHome
         "https://www.linkedin.com/in/victorcazorla-f/",
         "https://orcid.org/0009-0009-7976-9691",
         "https://www.credly.com/users/victor-cazorla-fernandez/badges",
+        "https://scholar.google.com/citations?view_op=list_works&hl=es&hl=es&user=2-WDnroAAAAJ",
+        "https://www.researchgate.net/profile/Victor-Cazorla-Fernandez",
       ],
       knowsAbout: [
         "IT Management",
@@ -789,7 +802,7 @@ const breadcrumbJsonLd = !matchedRoute || isHome
           <p class="site-title">Víctor Cazorla Fernández</p>
         )}
         <div class="subtitle">
-          Dirección IT · Ciencias Ambientales · Ética profesional
+          {headerSubtitle[lang]}
         </div>
         <nav>
           {navItems.map((item) => (

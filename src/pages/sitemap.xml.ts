@@ -11,8 +11,6 @@ export const escapeXml = (value: string) =>
     .replace(/\"/g, "&quot;")
     .replace(/'/g, "&apos;");
 
-const buildDate = new Date().toISOString().split("T")[0];
-
 const routePriority: Record<string, string> = {
   home: "1.0",
   it: "0.8",
@@ -24,7 +22,7 @@ const routePriority: Record<string, string> = {
 const sitemapEntries = routes.flatMap((route) =>
   languages.map((language) => ({
     url: `${siteUrl}${route.slugs[language.code]}`,
-    lastmod: buildDate,
+    lastmod: route.lastmod,
     changefreq: "monthly",
     priority: routePriority[route.key] ?? "0.6",
     alternates: [
@@ -40,7 +38,7 @@ const sitemapEntries = routes.flatMap((route) =>
 // Página sin traducciones (fuera de `routes`), sin alternates de idioma.
 sitemapEntries.push({
   url: `${siteUrl}/legal/`,
-  lastmod: buildDate,
+  lastmod: "2026-08-25",
   changefreq: "yearly",
   priority: "0.3",
   alternates: [],
