@@ -526,13 +526,23 @@ footer {
   transform: translateY(-2px);
 }
 
-.linkedin-card__photo {
+.linkedin-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 64px;
   height: 64px;
-  object-fit: cover;
   border-radius: 50%;
   flex-shrink: 0;
+  background: rgba(212, 175, 55, 0.12);
   border: 1px solid rgba(212, 175, 55, 0.6);
+  color: #d4af37;
+}
+
+.linkedin-card__icon svg {
+  width: 30px;
+  height: 30px;
+  fill: currentColor;
 }
 
 .linkedin-card__body {
@@ -573,9 +583,14 @@ footer {
     padding: 1rem 1.1rem;
   }
 
-  .linkedin-card__photo {
+  .linkedin-card__icon {
     width: 52px;
     height: 52px;
+  }
+
+  .linkedin-card__icon svg {
+    width: 24px;
+    height: 24px;
   }
 }
 
@@ -606,13 +621,23 @@ footer {
   transform: translateY(-2px);
 }
 
-.scholar-card__photo {
+.scholar-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 64px;
   height: 64px;
-  object-fit: cover;
   border-radius: 50%;
   flex-shrink: 0;
+  background: rgba(66, 133, 244, 0.12);
   border: 1px solid rgba(66, 133, 244, 0.6);
+  color: #4285f4;
+}
+
+.scholar-card__icon svg {
+  width: 30px;
+  height: 30px;
+  fill: currentColor;
 }
 
 .scholar-card__body {
@@ -674,13 +699,23 @@ footer {
   transform: translateY(-2px);
 }
 
-.researchgate-card__photo {
+.researchgate-card__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 64px;
   height: 64px;
-  object-fit: cover;
   border-radius: 50%;
   flex-shrink: 0;
+  background: rgba(0, 204, 187, 0.12);
   border: 1px solid rgba(0, 204, 187, 0.6);
+  color: #00ccbb;
+}
+
+.researchgate-card__icon svg {
+  width: 30px;
+  height: 30px;
+  fill: currentColor;
 }
 
 .researchgate-card__body {
@@ -722,10 +757,16 @@ footer {
     padding: 1rem 1.1rem;
   }
 
-  .scholar-card__photo,
-  .researchgate-card__photo {
+  .scholar-card__icon,
+  .researchgate-card__icon {
     width: 52px;
     height: 52px;
+  }
+
+  .scholar-card__icon svg,
+  .researchgate-card__icon svg {
+    width: 24px;
+    height: 24px;
   }
 }
 
