@@ -579,6 +579,156 @@ footer {
   }
 }
 
+/* Tarjeta de Google Scholar (misma estructura que .linkedin-card,
+   acento en el azul de marca de Google) */
+.scholar-card {
+  display: flex;
+  align-items: center;
+  gap: 1.3rem;
+  margin: 3rem 0;
+  padding: 1.2rem 1.5rem;
+  max-width: 560px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.015)
+  );
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+
+.scholar-card:hover {
+  border-color: rgba(66, 133, 244, 0.45);
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+.scholar-card__photo {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid rgba(66, 133, 244, 0.6);
+}
+
+.scholar-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.scholar-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #4285f4;
+}
+
+.scholar-card__badge svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.scholar-card__lead {
+  margin: 0;
+  font-size: 0.93rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+/* Tarjeta de ResearchGate (misma estructura, acento en el verde
+   turquesa de marca de ResearchGate) */
+.researchgate-card {
+  display: flex;
+  align-items: center;
+  gap: 1.3rem;
+  margin: 3rem 0;
+  padding: 1.2rem 1.5rem;
+  max-width: 560px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 16px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.04),
+    rgba(255, 255, 255, 0.015)
+  );
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
+}
+
+.researchgate-card:hover {
+  border-color: rgba(0, 204, 187, 0.45);
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+.researchgate-card__photo {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+  border: 1px solid rgba(0, 204, 187, 0.6);
+}
+
+.researchgate-card__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.researchgate-card__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #00ccbb;
+}
+
+.researchgate-card__badge svg {
+  width: 14px;
+  height: 14px;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
+.researchgate-card__lead {
+  margin: 0;
+  font-size: 0.93rem;
+  line-height: 1.5;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+@media (max-width: 480px) {
+  .scholar-card,
+  .researchgate-card {
+    gap: 1rem;
+    padding: 1rem 1.1rem;
+  }
+
+  .scholar-card__photo,
+  .researchgate-card__photo {
+    width: 52px;
+    height: 52px;
+  }
+}
+
 .gradient-box__note {
   margin: 0.4rem 0 0 0;
   font-size: 0.9rem;
