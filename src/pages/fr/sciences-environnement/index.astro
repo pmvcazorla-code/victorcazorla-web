@@ -2,6 +2,36 @@
 import BaseLayout from "../../../layouts/BaseLayout.astro";
 import ObfuscatedEmail from "../../../components/ObfuscatedEmail.astro";
 import { navItems } from "../../../data/i18n";
+
+// Solo el artículo de quelonios está publicado de verdad (con DOI/URL
+// estable); los "en prensa" no llevan ScholarlyArticle todavía porque
+// su referencia bibliográfica aún puede cambiar. Título en español en
+// las 4 versiones de idioma: es el título real de la publicación, no
+// una traducción de la página que la enlaza.
+const cheloniansArticleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  headline:
+    "Persistencia interanual de quelonios dulceacuícolas alóctonos en balsas agrícolas periurbanas en el Vallès Occidental (NE de la península ibérica)",
+  author: {
+    "@type": "Person",
+    name: "Víctor Cazorla Fernández",
+    url: "https://victorcazorla.com",
+  },
+  datePublished: "2026",
+  isPartOf: {
+    "@type": "PublicationIssue",
+    issueNumber: "37",
+    isPartOf: {
+      "@type": "Periodical",
+      name: "Boletín de la Asociación Herpetológica Española",
+    },
+  },
+  pageStart: "197",
+  pageEnd: "200",
+  url: "https://www.herpetologica.org/BAHE/37/BAHE_37%5BE_3707%5D.pdf",
+  inLanguage: "es",
+};
 ---
 
 <BaseLayout
@@ -155,6 +185,7 @@ import { navItems } from "../../../data/i18n";
         <p class="publication-item__summary">
           Les espèces envahissantes de chéloniens d'eau douce nord-américains représentent une menace croissante pour les zones humides méditerranéennes, mais les données locales sur leur persistance démographique font défaut. Cette étude démontre pour la première fois la présence durable de <em>Trachemys scripta</em> (tortue de Floride) et de <em>Pseudemys concinna</em> dans des bassins agricoles périurbains du Vallès Occidental entre 2021 et 2025, révèle leur capacité de dispersion terrestre entre points d'eau proches, et fournit des données essentielles pour améliorer la gestion de la faune envahissante dans les infrastructures agricoles de la région méditerranéenne ibérique.
         </p>
+        <script type="application/ld+json" set:html={JSON.stringify(cheloniansArticleJsonLd)} />
       </div>
 
       <div

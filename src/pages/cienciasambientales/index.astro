@@ -2,6 +2,36 @@
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ObfuscatedEmail from "../../components/ObfuscatedEmail.astro";
 import { navItems } from "../../data/i18n";
+
+// Solo el artículo de quelonios está publicado de verdad (con DOI/URL
+// estable); los "en prensa" no llevan ScholarlyArticle todavía porque
+// su referencia bibliográfica aún puede cambiar. Título en español en
+// las 4 versiones de idioma: es el título real de la publicación, no
+// una traducción de la página que la enlaza.
+const cheloniansArticleJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "ScholarlyArticle",
+  headline:
+    "Persistencia interanual de quelonios dulceacuícolas alóctonos en balsas agrícolas periurbanas en el Vallès Occidental (NE de la península ibérica)",
+  author: {
+    "@type": "Person",
+    name: "Víctor Cazorla Fernández",
+    url: "https://victorcazorla.com",
+  },
+  datePublished: "2026",
+  isPartOf: {
+    "@type": "PublicationIssue",
+    issueNumber: "37",
+    isPartOf: {
+      "@type": "Periodical",
+      name: "Boletín de la Asociación Herpetológica Española",
+    },
+  },
+  pageStart: "197",
+  pageEnd: "200",
+  url: "https://www.herpetologica.org/BAHE/37/BAHE_37%5BE_3707%5D.pdf",
+  inLanguage: "es",
+};
 ---
 
 <BaseLayout
@@ -103,6 +133,7 @@ import { navItems } from "../../data/i18n";
         <p class="publication-item__summary">
           Las especies invasoras de quelonios dulceacuícolas norteamericanos suponen una amenaza creciente en humedales mediterráneos, pero falta información local sobre su persistencia poblacional. Este estudio demuestra por primera vez la permanencia confirmada de <em>Trachemys scripta</em> (tortuga de Florida) y <em>Pseudemys concinna</em> en balsas agrícolas periurbanas del Vallès Occidental entre 2021-2025, revela su capacidad de dispersión terrestre entre masas de agua próximas, y proporciona evidencia fundamental para mejorar el manejo de fauna invasora en infraestructuras agrícolas de la región mediterránea ibérica.
         </p>
+        <script type="application/ld+json" set:html={JSON.stringify(cheloniansArticleJsonLd)} />
       </div>
 
       <div
