@@ -25,6 +25,7 @@ test.describe("Contact form", () => {
     await page.click("button[type=submit]");
     await expect(page.locator("[data-error-for=name]")).not.toHaveText("");
     await expect(page.locator("[data-error-for=email]")).not.toHaveText("");
+    await expect(page.locator("[data-error-for=reason]")).not.toHaveText("");
     await expect(page.locator("[data-error-for=message]")).not.toHaveText("");
     await expect(page.locator("[data-error-for=consent]")).not.toHaveText("");
     await expect(page.locator("[data-contact-status]")).not.toHaveText("");
@@ -37,11 +38,13 @@ test.describe("Contact form", () => {
 
     await page.fill("#contact-name", "Ana García");
     await page.fill("#contact-email", "ana@example.com");
+    await page.selectOption("#contact-reason", "academic");
     await page.fill("#contact-message", "Hola, quería hacerte una consulta profesional.");
     await page.check("#contact-consent");
     await page.click("button[type=submit]");
 
     await expect(page.locator("[data-error-for=name]")).toHaveText("");
+    await expect(page.locator("[data-error-for=reason]")).toHaveText("");
   });
 
   // El servidor estático de tests/static-server.mjs no ejecuta Pages
@@ -53,10 +56,22 @@ test.describe("Contact form", () => {
     await page.goto("/contacto/");
     await page.fill("#contact-name", "Ana García");
     await page.fill("#contact-email", "ana@example.com");
+    await page.selectOption("#contact-reason", "academic");
     await page.fill("#contact-message", "Hola, quería hacerte una consulta profesional.");
     await page.check("#contact-consent");
     await page.click("button[type=submit]");
 
     await expect(page.locator("[data-contact-status]")).not.toHaveText("");
+  });
+
+  test("cannot be submitted with only the placeholder reason selected", async ({ page }) => {
+    await page.goto("/contacto/");
+    await page.fill("#contact-name", "Ana García");
+    await page.fill("#contact-email", "ana@example.com");
+    await page.fill("#contact-message", "Hola, quería hacerte una consulta profesional.");
+    await page.check("#contact-consent");
+    await page.click("button[type=submit]");
+
+    await expect(page.locator("[data-error-for=reason]")).not.toHaveText("");
   });
 });

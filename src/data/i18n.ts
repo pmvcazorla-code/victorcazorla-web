@@ -92,11 +92,72 @@ export const routes: RouteDef[] = [
   },
 ];
 
+export type ContactReasonValue =
+  | "it_opportunities"
+  | "science_research"
+  | "philosophy_research"
+  | "professional_ethics"
+  | "academic"
+  | "other";
+
+export type ContactReasonOption = {
+  value: ContactReasonValue;
+  labels: Record<"es" | "en" | "fr" | "ca", string>;
+};
+
+// Mismos valores (no las etiquetas) que CONTACT_REASON_VALUES en
+// functions/_lib/contact.ts: ese archivo valida el envío en el servidor
+// sin importar nada de src/, así que la lista se mantiene duplicada a
+// propósito. Si se añade/renombra una razón, hay que tocar los dos sitios.
+export const contactReasons: ContactReasonOption[] = [
+  {
+    value: "it_opportunities",
+    labels: { es: "Oportunidades IT", en: "IT Opportunities", fr: "Opportunités IT", ca: "Oportunitats TI" },
+  },
+  {
+    value: "science_research",
+    labels: {
+      es: "Investigación Ciencia",
+      en: "Science Research",
+      fr: "Recherche scientifique",
+      ca: "Recerca Científica",
+    },
+  },
+  {
+    value: "philosophy_research",
+    labels: {
+      es: "Investigación Filosofía",
+      en: "Philosophy Research",
+      fr: "Recherche en philosophie",
+      ca: "Recerca en Filosofia",
+    },
+  },
+  {
+    value: "professional_ethics",
+    labels: {
+      es: "Ética profesional",
+      en: "Professional Ethics",
+      fr: "Éthique professionnelle",
+      ca: "Ètica professional",
+    },
+  },
+  {
+    value: "academic",
+    labels: { es: "Académico", en: "Academic", fr: "Académique", ca: "Acadèmic" },
+  },
+  {
+    value: "other",
+    labels: { es: "Otros", en: "Other", fr: "Autres", ca: "Altres" },
+  },
+];
+
 export type ContactCopy = {
   heading: string;
   intro: string;
   nameLabel: string;
   emailLabel: string;
+  reasonLabel: string;
+  reasonPlaceholder: string;
   messageLabel: string;
   consentLabel: string;
   privacyLinkLabel: string;
@@ -108,6 +169,7 @@ export type ContactCopy = {
   errorValidation: string;
   errorNameRequired: string;
   errorEmailInvalid: string;
+  errorReasonRequired: string;
   errorMessageTooShort: string;
   errorConsentRequired: string;
   directEmailIntro: string;
@@ -116,9 +178,11 @@ export type ContactCopy = {
 export const contactCopy: Record<"es" | "en" | "fr" | "ca", ContactCopy> = {
   es: {
     heading: "Contacto",
-    intro: "¿Tienes una consulta profesional? Completa el formulario y te responderé en cuanto pueda.",
+    intro: "Si tienes una consulta profesional y/o académica, completa el formulario y te atenderé en la mayor brevedad posible.",
     nameLabel: "Nombre",
     emailLabel: "Correo electrónico",
+    reasonLabel: "Razón",
+    reasonPlaceholder: "Selecciona una opción",
     messageLabel: "Mensaje",
     consentLabel: "He leído y acepto la",
     privacyLinkLabel: "política de privacidad",
@@ -130,15 +194,18 @@ export const contactCopy: Record<"es" | "en" | "fr" | "ca", ContactCopy> = {
     errorValidation: "Revisa los campos marcados antes de enviar el formulario.",
     errorNameRequired: "Escribe tu nombre.",
     errorEmailInvalid: "Escribe un correo electrónico válido.",
+    errorReasonRequired: "Selecciona una razón de contacto.",
     errorMessageTooShort: "Escribe un mensaje de al menos 10 caracteres.",
     errorConsentRequired: "Debes aceptar la política de privacidad para continuar.",
     directEmailIntro: "También puedes escribir directamente a",
   },
   en: {
     heading: "Contact",
-    intro: "Have a professional inquiry? Fill in the form and I'll get back to you as soon as possible.",
+    intro: "If you have a professional and/or academic inquiry, fill in the form and I'll get back to you as soon as possible.",
     nameLabel: "Name",
     emailLabel: "Email",
+    reasonLabel: "Reason",
+    reasonPlaceholder: "Select an option",
     messageLabel: "Message",
     consentLabel: "I have read and accept the",
     privacyLinkLabel: "privacy policy",
@@ -150,15 +217,18 @@ export const contactCopy: Record<"es" | "en" | "fr" | "ca", ContactCopy> = {
     errorValidation: "Please check the fields marked below before submitting the form.",
     errorNameRequired: "Enter your name.",
     errorEmailInvalid: "Enter a valid email address.",
+    errorReasonRequired: "Select a reason for contacting.",
     errorMessageTooShort: "Write a message of at least 10 characters.",
     errorConsentRequired: "You must accept the privacy policy to continue.",
     directEmailIntro: "You can also write directly to",
   },
   fr: {
     heading: "Contact",
-    intro: "Vous avez une question professionnelle ? Remplissez le formulaire, je vous répondrai dès que possible.",
+    intro: "Si vous avez une question professionnelle et/ou académique, remplissez le formulaire et je vous répondrai dans les meilleurs délais.",
     nameLabel: "Nom",
     emailLabel: "Adresse e-mail",
+    reasonLabel: "Motif",
+    reasonPlaceholder: "Sélectionnez une option",
     messageLabel: "Message",
     consentLabel: "J'ai lu et j'accepte la",
     privacyLinkLabel: "politique de confidentialité",
@@ -170,15 +240,18 @@ export const contactCopy: Record<"es" | "en" | "fr" | "ca", ContactCopy> = {
     errorValidation: "Vérifiez les champs indiqués avant d'envoyer le formulaire.",
     errorNameRequired: "Indiquez votre nom.",
     errorEmailInvalid: "Indiquez une adresse e-mail valide.",
+    errorReasonRequired: "Sélectionnez un motif de contact.",
     errorMessageTooShort: "Écrivez un message d'au moins 10 caractères.",
     errorConsentRequired: "Vous devez accepter la politique de confidentialité pour continuer.",
     directEmailIntro: "Vous pouvez aussi écrire directement à",
   },
   ca: {
     heading: "Contacte",
-    intro: "Tens una consulta professional? Omple el formulari i et respondré tan aviat com pugui.",
+    intro: "Si tens una consulta professional i/o acadèmica, omple el formulari i et respondré al més aviat possible.",
     nameLabel: "Nom",
     emailLabel: "Correu electrònic",
+    reasonLabel: "Motiu",
+    reasonPlaceholder: "Selecciona una opció",
     messageLabel: "Missatge",
     consentLabel: "He llegit i accepto la",
     privacyLinkLabel: "política de privacitat",
@@ -190,6 +263,7 @@ export const contactCopy: Record<"es" | "en" | "fr" | "ca", ContactCopy> = {
     errorValidation: "Revisa els camps marcats abans d'enviar el formulari.",
     errorNameRequired: "Escriu el teu nom.",
     errorEmailInvalid: "Escriu un correu electrònic vàlid.",
+    errorReasonRequired: "Selecciona un motiu de contacte.",
     errorMessageTooShort: "Escriu un missatge d'almenys 10 caràcters.",
     errorConsentRequired: "Has d'acceptar la política de privacitat per continuar.",
     directEmailIntro: "També pots escriure directament a",

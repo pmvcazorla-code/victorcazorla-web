@@ -1,13 +1,14 @@
 ---
 import ObfuscatedEmail from "./ObfuscatedEmail.astro";
-import type { ContactCopy } from "../data/i18n";
+import { contactReasons, type ContactCopy } from "../data/i18n";
 
 type Props = {
   copy: ContactCopy;
   directEmail: string;
+  lang: "es" | "en" | "fr" | "ca";
 };
 
-const { copy, directEmail } = Astro.props as Props;
+const { copy, directEmail, lang } = Astro.props as Props;
 ---
 <form class="contact-form" method="post" action="/api/contact" data-contact-form novalidate>
   <div class="contact-form__field">
@@ -20,6 +21,17 @@ const { copy, directEmail } = Astro.props as Props;
     <label for="contact-email">{copy.emailLabel}</label>
     <input id="contact-email" name="email" type="email" autocomplete="email" required maxlength="254" />
     <span class="contact-form__field-error" data-error-for="email" data-message={copy.errorEmailInvalid}></span>
+  </div>
+
+  <div class="contact-form__field">
+    <label for="contact-reason">{copy.reasonLabel}</label>
+    <select id="contact-reason" name="reason" required>
+      <option value="" disabled selected>{copy.reasonPlaceholder}</option>
+      {contactReasons.map((reason) => (
+        <option value={reason.value}>{reason.labels[lang]}</option>
+      ))}
+    </select>
+    <span class="contact-form__field-error" data-error-for="reason" data-message={copy.errorReasonRequired}></span>
   </div>
 
   <div class="contact-form__field">

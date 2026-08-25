@@ -710,6 +710,7 @@ footer {
 
 .contact-form__field input[type="text"],
 .contact-form__field input[type="email"],
+.contact-form__field select,
 .contact-form__field textarea {
   font: inherit;
   color: var(--color-text);
@@ -720,7 +721,14 @@ footer {
   resize: vertical;
 }
 
+.contact-form__field select {
+  /* Para que el desplegable nativo (menú de opciones) también use la
+     paleta oscura del sitio en los navegadores que lo soportan. */
+  color-scheme: dark;
+}
+
 .contact-form__field input:focus,
+.contact-form__field select:focus,
 .contact-form__field textarea:focus {
   outline: 2px solid var(--color-accent);
   outline-offset: 1px;

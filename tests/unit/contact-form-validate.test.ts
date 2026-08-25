@@ -5,6 +5,7 @@ function validFields(overrides = {}) {
   return {
     name: "Ana García",
     email: "ana@example.com",
+    reason: "academic",
     message: "a".repeat(MESSAGE_MIN_LENGTH),
     consent: true,
     ...overrides,
@@ -25,6 +26,10 @@ describe("validateContactFields", () => {
     expect(validateContactFields(validFields({ email: "not-an-email" }))).toContain("email");
   });
 
+  it("flags a missing reason", () => {
+    expect(validateContactFields(validFields({ reason: "" }))).toContain("reason");
+  });
+
   it("flags a message shorter than the minimum length", () => {
     expect(validateContactFields(validFields({ message: "short" }))).toContain("message");
   });
@@ -34,7 +39,7 @@ describe("validateContactFields", () => {
   });
 
   it("collects every failing field in one pass", () => {
-    const errors = validateContactFields({ name: "", email: "bad", message: "hi", consent: false });
-    expect(errors).toEqual(["name", "email", "message", "consent"]);
+    const errors = validateContactFields({ name: "", email: "bad", reason: "", message: "hi", consent: false });
+    expect(errors).toEqual(["name", "email", "reason", "message", "consent"]);
   });
 });

@@ -15,6 +15,7 @@ function baseInput(overrides: Partial<ContactInput> = {}): ContactInput {
   return {
     name: "Ana García",
     email: "ana@example.com",
+    reason: "academic",
     message: "Hola, quería consultar sobre una colaboración.",
     honeypot: "",
     consent: true,
@@ -31,6 +32,7 @@ describe("validateContactSubmission", () => {
       data: {
         name: "Ana García",
         email: "ana@example.com",
+        reason: "academic",
         message: "Hola, quería consultar sobre una colaboración.",
       },
     });
@@ -59,6 +61,26 @@ describe("validateContactSubmission", () => {
     expect(result.valid).toBe(false);
     if (!result.valid) expect(result.errors).toContain("email");
   });
+
+  it("rejects a missing reason", () => {
+    const result = validateContactSubmission(baseInput({ reason: "" }), NOW);
+    expect(result.valid).toBe(false);
+    if (!result.valid) expect(result.errors).toContain("reason");
+  });
+
+  it("rejects a reason value outside the known set (tampered request)", () => {
+    const result = validateContactSubmission(baseInput({ reason: "not_a_real_reason" }), NOW);
+    expect(result.valid).toBe(false);
+    if (!result.valid) expect(result.errors).toContain("reason");
+  });
+
+  it.each(["it_opportunities", "science_research", "philosophy_research", "professional_ethics", "academic", "other"])(
+    "accepts the reason value %s",
+    (reason) => {
+      const result = validateContactSubmission(baseInput({ reason }), NOW);
+      expect(result.valid).toBe(true);
+    }
+  );
 
   it("rejects a message that's too short", () => {
     const result = validateContactSubmission(baseInput({ message: "hi" }), NOW);
@@ -116,8 +138,20 @@ describe("sanitizeHeaderValue", () => {
 });
 
 describe("buildEmailPayload", () => {
-  const data = { name: "Ana García", email: "ana@example.com", message: "Línea uno\nLínea dos" };
+  const data = {
+    name: "Ana García",
+    email: "ana@example.com",
+    reason: "science_research" as const,
+    message: "Línea uno\nLínea dos",
+  };
   const opts = { toAddress: "contacto@victorcazorla.com", fromAddress: "web@victorcazorla.com" };
+
+  it("includes the human-readable reason label in the subject and both bodies", () => {
+    const payload = buildEmailPayload(data, opts);
+    expect(payload.subject).toContain("Investigación Ciencia");
+    expect(payload.text).toContain("Razón: Investigación Ciencia");
+    expect(payload.html).toContain("Investigación Ciencia");
+  });
 
   it("sets reply_to to the submitter's address so a reply reaches them directly", () => {
     const payload = buildEmailPayload(data, opts);

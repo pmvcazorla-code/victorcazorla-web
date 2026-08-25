@@ -72,6 +72,7 @@ export async function onRequestPost(context: RequestContext): Promise<Response> 
   const input: ContactInput = {
     name: body.name,
     email: body.email,
+    reason: body.reason,
     message: body.message,
     honeypot: body.company,
     consent: body.consent,

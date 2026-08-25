@@ -34,6 +34,7 @@ function initContactForm(form) {
     const fields = {
       name: form.elements.name.value,
       email: form.elements.email.value,
+      reason: form.elements.reason.value,
       message: form.elements.message.value,
       consent: form.elements.consent.checked,
     };
@@ -56,6 +57,7 @@ function initContactForm(form) {
         body: JSON.stringify({
           name: fields.name,
           email: fields.email,
+          reason: fields.reason,
           message: fields.message,
           consent: fields.consent,
           company: form.elements.company.value,

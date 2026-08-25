@@ -8,11 +8,12 @@
 export const MESSAGE_MIN_LENGTH = 10;
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export function validateContactFields({ name, email, message, consent }) {
+export function validateContactFields({ name, email, reason, message, consent }) {
   const errors = [];
 
   if (!name || !name.trim()) errors.push("name");
   if (!email || !EMAIL_RE.test(email.trim())) errors.push("email");
+  if (!reason) errors.push("reason");
   if (!message || message.trim().length < MESSAGE_MIN_LENGTH) errors.push("message");
   if (!consent) errors.push("consent");
 

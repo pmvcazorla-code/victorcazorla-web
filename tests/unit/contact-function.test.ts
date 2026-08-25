@@ -29,6 +29,7 @@ function validBody(overrides: Record<string, unknown> = {}) {
   return {
     name: "Ana García",
     email: "ana@example.com",
+    reason: "academic",
     message: "Hola, quería consultar sobre una colaboración.",
     company: "",
     consent: true,
@@ -77,6 +78,19 @@ describe("onRequestPost /api/contact", () => {
     const data = await response.json();
     expect(data.ok).toBe(false);
     expect(data.fields).toContain("email");
+    expect(fetchMock).not.toHaveBeenCalled();
+  });
+
+  it("rejects a submission with a missing or tampered reason value", async () => {
+    const kv = new FakeKV();
+    const response = await onRequestPost({
+      request: makeRequest(validBody({ reason: "not_a_real_reason" })),
+      env: { ...ENV_BASE, CONTACT_RATE_LIMIT: kv },
+    });
+
+    expect(response.status).toBe(400);
+    const data = await response.json();
+    expect(data.fields).toContain("reason");
     expect(fetchMock).not.toHaveBeenCalled();
   });
 
@@ -145,6 +159,7 @@ describe("onRequestPost /api/contact", () => {
     const form = new URLSearchParams({
       name: "Ana García",
       email: "ana@example.com",
+      reason: "academic",
       message: "Hola, quería consultar sobre una colaboración.",
       company: "",
       consent: "on",
