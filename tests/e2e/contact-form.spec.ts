@@ -74,4 +74,31 @@ test.describe("Contact form", () => {
 
     await expect(page.locator("[data-error-for=reason]")).not.toHaveText("");
   });
+
+  // Regresión: la opción placeholder ("") era a la vez disabled y
+  // selected. Esa combinación es un caso límite conocido en algunos
+  // navegadores WebKit, donde select.value puede seguir devolviendo ""
+  // aunque el usuario elija visualmente otra opción, dejando el error
+  // "Selecciona una razón de contacto." clavado en rojo sin poder
+  // enviar. value="" solo (sin disabled) evita el caso límite.
+  test("the placeholder reason option is not disabled, to avoid a WebKit select-value quirk", async ({ page }) => {
+    await page.goto("/contacto/");
+    await expect(page.locator('#contact-reason option[value=""]')).not.toHaveAttribute("disabled", "");
+  });
+
+  test("selecting each reason option updates the select's value correctly", async ({ page }) => {
+    await page.goto("/contacto/");
+    const reasons = [
+      "it_opportunities",
+      "science_research",
+      "philosophy_research",
+      "professional_ethics",
+      "academic",
+      "other",
+    ];
+    for (const reason of reasons) {
+      await page.selectOption("#contact-reason", reason);
+      await expect(page.locator("#contact-reason")).toHaveValue(reason);
+    }
+  });
 });

@@ -26,7 +26,12 @@ const { copy, directEmail, lang } = Astro.props as Props;
   <div class="contact-form__field">
     <label for="contact-reason">{copy.reasonLabel}</label>
     <select id="contact-reason" name="reason" required>
-      <option value="" disabled selected>{copy.reasonPlaceholder}</option>
+      <!-- Sin "disabled": una opción a la vez disabled y selected es un
+           caso límite que en algunos navegadores WebKit deja
+           select.value devolviendo "" aunque el usuario elija otra
+           opción visualmente. value="" ya basta para que la validación
+           (aquí y en el servidor) la trate como "sin elegir". -->
+      <option value="" selected>{copy.reasonPlaceholder}</option>
       {contactReasons.map((reason) => (
         <option value={reason.value}>{reason.labels[lang]}</option>
       ))}
