@@ -269,6 +269,19 @@ em {
   letter-spacing: 0.01em;
 }
 
+.career-card__specialty a {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: rgba(255, 255, 255, 0.35);
+  text-underline-offset: 2px;
+}
+
+.career-card__specialty a:hover,
+.career-card__specialty a:focus {
+  color: var(--color-text);
+  text-decoration-color: var(--accent-gold, #d4af37);
+}
+
 /* ================================
    LISTAS LIMPIAS
 ================================ */
