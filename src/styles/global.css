@@ -468,6 +468,13 @@ footer {
   font-size: 0.95rem;
 }
 
+.publication-item__summary {
+  margin: 0.7rem 0 0;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 0.95rem;
+}
+
 /* Subtítulo de sección, tamaño reducido */
 .section-heading-sm {
   margin-top: 2rem;
