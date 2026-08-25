@@ -172,6 +172,9 @@ export type ContactCopy = {
   errorReasonRequired: string;
   errorMessageTooShort: string;
   errorConsentRequired: string;
+  errorCaptchaRequired: string;
+  errorDisposableEmail: string;
+  errorSpam: string;
   directEmailIntro: string;
 };
 
@@ -197,6 +200,9 @@ export const contactCopy: Record<"es" | "en" | "fr" | "ca", ContactCopy> = {
     errorReasonRequired: "Selecciona una razón de contacto.",
     errorMessageTooShort: "Escribe un mensaje de al menos 10 caracteres.",
     errorConsentRequired: "Debes aceptar la política de privacidad para continuar.",
+    errorCaptchaRequired: "Completa la verificación de seguridad.",
+    errorDisposableEmail: "No se aceptan direcciones de correo temporales. Usa una dirección habitual.",
+    errorSpam: "El mensaje no se ha podido enviar porque parece spam. Revísalo e inténtalo de nuevo.",
     directEmailIntro: "También puedes escribir directamente a",
   },
   en: {
@@ -220,6 +226,9 @@ export const contactCopy: Record<"es" | "en" | "fr" | "ca", ContactCopy> = {
     errorReasonRequired: "Select a reason for contacting.",
     errorMessageTooShort: "Write a message of at least 10 characters.",
     errorConsentRequired: "You must accept the privacy policy to continue.",
+    errorCaptchaRequired: "Complete the security verification.",
+    errorDisposableEmail: "Temporary email addresses aren't accepted. Please use a regular address.",
+    errorSpam: "The message couldn't be sent because it looks like spam. Please review it and try again.",
     directEmailIntro: "You can also write directly to",
   },
   fr: {
@@ -243,6 +252,9 @@ export const contactCopy: Record<"es" | "en" | "fr" | "ca", ContactCopy> = {
     errorReasonRequired: "Sélectionnez un motif de contact.",
     errorMessageTooShort: "Écrivez un message d'au moins 10 caractères.",
     errorConsentRequired: "Vous devez accepter la politique de confidentialité pour continuer.",
+    errorCaptchaRequired: "Complétez la vérification de sécurité.",
+    errorDisposableEmail: "Les adresses e-mail temporaires ne sont pas acceptées. Utilisez une adresse habituelle.",
+    errorSpam: "Le message n'a pas pu être envoyé car il ressemble à du spam. Vérifiez-le et réessayez.",
     directEmailIntro: "Vous pouvez aussi écrire directement à",
   },
   ca: {
@@ -266,6 +278,9 @@ export const contactCopy: Record<"es" | "en" | "fr" | "ca", ContactCopy> = {
     errorReasonRequired: "Selecciona un motiu de contacte.",
     errorMessageTooShort: "Escriu un missatge d'almenys 10 caràcters.",
     errorConsentRequired: "Has d'acceptar la política de privacitat per continuar.",
+    errorCaptchaRequired: "Completa la verificació de seguretat.",
+    errorDisposableEmail: "No s'accepten adreces de correu temporals. Fes servir una adreça habitual.",
+    errorSpam: "El missatge no s'ha pogut enviar perquè sembla spam. Revisa'l i torna-ho a provar.",
     directEmailIntro: "També pots escriure directament a",
   },
 };

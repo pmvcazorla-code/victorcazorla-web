@@ -15,6 +15,7 @@ export default defineConfig({
         "public/scripts/lib/click-classify.js",
         "public/scripts/lib/contact-form-validate.js",
         "functions/_lib/contact.ts",
+        "functions/_lib/captcha.ts",
         "functions/api/contact.ts",
       ],
     },

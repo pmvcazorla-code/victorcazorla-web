@@ -8,6 +8,7 @@ function validFields(overrides = {}) {
     reason: "academic",
     message: "a".repeat(MESSAGE_MIN_LENGTH),
     consent: true,
+    captchaToken: "valid-token",
     ...overrides,
   };
 }
@@ -38,8 +39,19 @@ describe("validateContactFields", () => {
     expect(validateContactFields(validFields({ consent: false }))).toContain("consent");
   });
 
+  it("flags a missing captcha token", () => {
+    expect(validateContactFields(validFields({ captchaToken: "" }))).toContain("captcha");
+  });
+
   it("collects every failing field in one pass", () => {
-    const errors = validateContactFields({ name: "", email: "bad", reason: "", message: "hi", consent: false });
-    expect(errors).toEqual(["name", "email", "reason", "message", "consent"]);
+    const errors = validateContactFields({
+      name: "",
+      email: "bad",
+      reason: "",
+      message: "hi",
+      consent: false,
+      captchaToken: "",
+    });
+    expect(errors).toEqual(["name", "email", "reason", "message", "consent", "captcha"]);
   });
 });

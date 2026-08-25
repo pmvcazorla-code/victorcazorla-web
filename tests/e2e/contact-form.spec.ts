@@ -1,4 +1,26 @@
-import { test, expect } from "@playwright/test";
+import { test, expect, type Page } from "@playwright/test";
+
+// El widget real de hCaptcha se carga desde una CDN externa y no se
+// puede "resolver" mediante automatización; para probar nuestro propio
+// código (no la disponibilidad de un tercero) se simula un reto ya
+// superado. Si el script externo ha llegado a cargar, ya habrá creado
+// su propio campo "h-captcha-response" (vacío, sin resolver): hay que
+// reutilizarlo y ponerle valor, no añadir uno nuevo con el mismo name,
+// porque entonces form.elements["h-captcha-response"] devolvería una
+// RadioNodeList y .value tomaría el primero (el vacío) de los dos.
+async function fakeCaptchaSolved(page: Page) {
+  await page.evaluate(() => {
+    const form = document.querySelector("[data-contact-form]")!;
+    let field = form.querySelector('[name="h-captcha-response"]') as HTMLInputElement | null;
+    if (!field) {
+      field = document.createElement("input");
+      field.type = "hidden";
+      field.name = "h-captcha-response";
+      form.appendChild(field);
+    }
+    field.value = "e2e-fake-token";
+  });
+}
 
 test.describe("Contact form", () => {
   test("has exactly one h1 and a link to the privacy policy", async ({ page }) => {
@@ -28,6 +50,7 @@ test.describe("Contact form", () => {
     await expect(page.locator("[data-error-for=reason]")).not.toHaveText("");
     await expect(page.locator("[data-error-for=message]")).not.toHaveText("");
     await expect(page.locator("[data-error-for=consent]")).not.toHaveText("");
+    await expect(page.locator("[data-error-for=captcha]")).not.toHaveText("");
     await expect(page.locator("[data-contact-status]")).not.toHaveText("");
   });
 
@@ -59,9 +82,47 @@ test.describe("Contact form", () => {
     await page.selectOption("#contact-reason", "academic");
     await page.fill("#contact-message", "Hola, quería hacerte una consulta profesional.");
     await page.check("#contact-consent");
+    await fakeCaptchaSolved(page);
     await page.click("button[type=submit]");
 
     await expect(page.locator("[data-contact-status]")).not.toHaveText("");
+    // Confirma que sí llegó a intentar el envío (y no se quedó bloqueado
+    // en la validación de cliente, que es lo que el resto de tests de
+    // "campo vacío" ya cubren).
+    await expect(page.locator("[data-error-for=captcha]")).toHaveText("");
+  });
+
+  test("the hCaptcha widget container is present with the configured sitekey", async ({ page }) => {
+    await page.goto("/contacto/");
+    await expect(page.locator(".h-captcha")).toHaveAttribute("data-sitekey", /.+/);
+  });
+
+  test("blocks submission with a captcha error when the challenge hasn't been completed", async ({ page }) => {
+    await page.goto("/contacto/");
+    await page.fill("#contact-name", "Ana García");
+    await page.fill("#contact-email", "ana@example.com");
+    await page.selectOption("#contact-reason", "academic");
+    await page.fill("#contact-message", "Hola, quería hacerte una consulta profesional.");
+    await page.check("#contact-consent");
+    await page.click("button[type=submit]");
+
+    await expect(page.locator("[data-error-for=captcha]")).not.toHaveText("");
+  });
+
+  test("clears the captcha error once a completed challenge is present", async ({ page }) => {
+    await page.goto("/contacto/");
+    await page.fill("#contact-name", "Ana García");
+    await page.fill("#contact-email", "ana@example.com");
+    await page.selectOption("#contact-reason", "academic");
+    await page.fill("#contact-message", "Hola, quería hacerte una consulta profesional.");
+    await page.check("#contact-consent");
+    await page.click("button[type=submit]");
+    await expect(page.locator("[data-error-for=captcha]")).not.toHaveText("");
+
+    await fakeCaptchaSolved(page);
+    await page.click("button[type=submit]");
+
+    await expect(page.locator("[data-error-for=captcha]")).toHaveText("");
   });
 
   test("cannot be submitted with only the placeholder reason selected", async ({ page }) => {

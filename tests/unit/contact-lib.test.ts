@@ -3,7 +3,14 @@ import {
   validateContactSubmission,
   sanitizeHeaderValue,
   buildEmailPayload,
+  buildConfirmationEmailPayload,
   rateLimitKey,
+  emailRateLimitKey,
+  isDisposableEmail,
+  countMessageUrls,
+  findSpamKeyword,
+  checkForSpamContent,
+  MAX_MESSAGE_URLS,
   MIN_SUBMIT_MS,
   MAX_SUBMIT_AGE_MS,
   type ContactInput,
@@ -206,5 +213,118 @@ describe("rateLimitKey", () => {
   it("assigns different keys to different IPs in the same window", () => {
     const t0 = Date.UTC(2026, 0, 1, 10, 5);
     expect(rateLimitKey("1.2.3.4", t0)).not.toBe(rateLimitKey("5.6.7.8", t0));
+  });
+});
+
+describe("emailRateLimitKey", () => {
+  it("groups the same email within the same day into one key", () => {
+    const t0 = Date.UTC(2026, 0, 1, 1, 0);
+    const t1 = Date.UTC(2026, 0, 1, 23, 0);
+    expect(emailRateLimitKey("ana@example.com", t0)).toBe(emailRateLimitKey("ana@example.com", t1));
+  });
+
+  it("is case-insensitive on the email address", () => {
+    const t0 = Date.UTC(2026, 0, 1, 10, 0);
+    expect(emailRateLimitKey("Ana@Example.com", t0)).toBe(emailRateLimitKey("ana@example.com", t0));
+  });
+
+  it("assigns different keys to different days", () => {
+    const t0 = Date.UTC(2026, 0, 1, 10, 0);
+    const t1 = Date.UTC(2026, 0, 2, 10, 0);
+    expect(emailRateLimitKey("ana@example.com", t0)).not.toBe(emailRateLimitKey("ana@example.com", t1));
+  });
+});
+
+describe("isDisposableEmail", () => {
+  it("flags well-known disposable-email domains", () => {
+    expect(isDisposableEmail("someone@mailinator.com")).toBe(true);
+    expect(isDisposableEmail("someone@10minutemail.com")).toBe(true);
+  });
+
+  it("is case-insensitive on the domain", () => {
+    expect(isDisposableEmail("someone@MAILINATOR.COM")).toBe(true);
+  });
+
+  it("does not flag a regular domain", () => {
+    expect(isDisposableEmail("ana@example.com")).toBe(false);
+    expect(isDisposableEmail("contacto@victorcazorla.com")).toBe(false);
+  });
+});
+
+describe("countMessageUrls", () => {
+  it("counts http(s) and www links", () => {
+    expect(countMessageUrls("Visit http://a.example and https://b.example and www.c.example")).toBe(3);
+  });
+
+  it("returns 0 for a message with no links", () => {
+    expect(countMessageUrls("Hola, quería consultar sobre una colaboración.")).toBe(0);
+  });
+});
+
+describe("findSpamKeyword", () => {
+  it("finds a known spam phrase, case-insensitively", () => {
+    expect(findSpamKeyword("Check out our SEO Services for your site")).toBe("seo services");
+  });
+
+  it("returns null for ordinary text", () => {
+    expect(findSpamKeyword("Hola, quería consultar sobre una colaboración.")).toBeNull();
+  });
+});
+
+describe("checkForSpamContent", () => {
+  it("flags a message with more than MAX_MESSAGE_URLS links", () => {
+    const urls = Array.from({ length: MAX_MESSAGE_URLS + 1 }, (_, i) => `https://spam${i}.example`).join(" ");
+    expect(checkForSpamContent(urls)).toEqual({ isSpam: true, reason: "too_many_urls" });
+  });
+
+  it("allows a message with exactly MAX_MESSAGE_URLS links", () => {
+    const urls = Array.from({ length: MAX_MESSAGE_URLS }, (_, i) => `https://ok${i}.example`).join(" ");
+    expect(checkForSpamContent(urls)).toEqual({ isSpam: false });
+  });
+
+  it("flags a message containing a spam keyword", () => {
+    expect(checkForSpamContent("Guaranteed income working from home!")).toEqual({
+      isSpam: true,
+      reason: "spam_keyword",
+    });
+  });
+
+  it("accepts an ordinary professional message", () => {
+    expect(checkForSpamContent("Hola, quería consultar sobre una colaboración académica.")).toEqual({
+      isSpam: false,
+    });
+  });
+});
+
+describe("buildConfirmationEmailPayload", () => {
+  const data = {
+    name: "Ana García",
+    email: "ana@example.com",
+    reason: "academic" as const,
+    message: "Hola",
+  };
+  const opts = { fromAddress: "web@victorcazorla.com" };
+
+  it("sends the confirmation to the submitter's address", () => {
+    const payload = buildConfirmationEmailPayload(data, { ...opts, lang: "es" });
+    expect(payload.to).toBe("ana@example.com");
+  });
+
+  it("uses the exact Spanish subject and body when lang is es", () => {
+    const payload = buildConfirmationEmailPayload(data, { ...opts, lang: "es" });
+    expect(payload.subject).toBe("Confirmación de recepción - Víctor Cazorla");
+    expect(payload.text).toBe("Hemos recibido tu mensaje. Te responderé en la mayor brevedad posible.");
+  });
+
+  it.each(["en", "fr", "ca"] as const)("produces a non-empty localized subject and body for lang=%s", (lang) => {
+    const payload = buildConfirmationEmailPayload(data, { ...opts, lang });
+    expect(payload.subject.length).toBeGreaterThan(0);
+    expect(payload.text.length).toBeGreaterThan(0);
+    expect(payload.subject).not.toBe(buildConfirmationEmailPayload(data, { ...opts, lang: "es" }).subject);
+  });
+
+  it("falls back to Spanish for an unknown or missing lang", () => {
+    const payload = buildConfirmationEmailPayload(data, { ...opts, lang: "de" });
+    expect(payload.subject).toBe("Confirmación de recepción - Víctor Cazorla");
   });
 });

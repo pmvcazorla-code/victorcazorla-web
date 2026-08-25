@@ -20,6 +20,15 @@ function setStatus(statusEl, key) {
   if (key !== "success" && key !== "idle") statusEl.classList.add("contact-form__status--error");
 }
 
+function getCaptchaToken(form) {
+  const field = form.elements["h-captcha-response"];
+  return field ? field.value : "";
+}
+
+function resetCaptcha() {
+  if (window.hcaptcha) window.hcaptcha.reset();
+}
+
 function initContactForm(form) {
   const statusEl = form.querySelector("[data-contact-status]");
   const submitBtn = form.querySelector("button[type=submit]");
@@ -37,6 +46,7 @@ function initContactForm(form) {
       reason: form.elements.reason.value,
       message: form.elements.message.value,
       consent: form.elements.consent.checked,
+      captchaToken: getCaptchaToken(form),
     };
 
     const clientErrors = validateContactFields(fields);
@@ -62,6 +72,8 @@ function initContactForm(form) {
           consent: fields.consent,
           company: form.elements.company.value,
           ts: Number(tsField ? tsField.value : Date.now()),
+          lang: form.elements.lang.value,
+          "h-captcha-response": fields.captchaToken,
         }),
       });
 
@@ -70,9 +82,20 @@ function initContactForm(form) {
       if (result.ok) {
         form.reset();
         if (tsField) tsField.value = String(Date.now());
+        resetCaptcha();
         setStatus(statusEl, "success");
       } else if (result.error === "rate_limited") {
         setStatus(statusEl, "rate-limited");
+      } else if (result.error === "disposable_email") {
+        setFieldErrors(form, ["email"]);
+        setStatus(statusEl, "disposable-email");
+      } else if (result.error === "spam") {
+        setFieldErrors(form, ["message"]);
+        setStatus(statusEl, "spam");
+      } else if (result.error === "captcha") {
+        resetCaptcha();
+        setFieldErrors(form, ["captcha"]);
+        setStatus(statusEl, "captcha");
       } else if (result.error === "validation" && Array.isArray(result.fields)) {
         setFieldErrors(form, result.fields);
         setStatus(statusEl, "validation");

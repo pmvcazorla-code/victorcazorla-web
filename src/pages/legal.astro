@@ -129,12 +129,20 @@ const jsonLd = {
           El sitio cuenta con un formulario de contacto propio, en el que se
           solicitan nombre, correo electrónico, razón de contacto y mensaje.
           Estos datos se emplean exclusivamente para gestionar la consulta
-          planteada y responder a ella, y se transmiten al proveedor de envío
+          planteada y responder a ella (incluido un correo automático de
+          confirmación de recepción), y se transmiten al proveedor de envío
           de correo transaccional (Resend), que actúa como encargado del
-          tratamiento conforme al artículo 28 RGPD. No se almacenan en el
-          servidor del sitio, salvo la dirección IP del remitente, retenida
-          de forma temporal (máximo una hora) con la única finalidad de
-          limitar el envío masivo de mensajes (rate limiting).
+          tratamiento conforme al artículo 28 RGPD.
+        </p>
+        <p>
+          El formulario incorpora hCaptcha como medida antispam: al
+          enviarlo, hCaptcha recibe la dirección IP y el resultado del reto
+          de verificación, también como encargado del tratamiento. La
+          dirección IP del remitente se retiene además, de forma temporal
+          (máximo un día) y con el único fin de limitar el envío masivo de
+          mensajes (rate limiting); los intentos bloqueados por spam,
+          correo temporal o verificación fallida se registran de forma
+          análoga, con fines exclusivos de auditoría de seguridad.
         </p>
         <p>
           Las cookies de Google Analytics 4 tienen finalidad de medición, no

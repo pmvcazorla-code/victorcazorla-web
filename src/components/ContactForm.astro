@@ -9,6 +9,17 @@ type Props = {
 };
 
 const { copy, directEmail, lang } = Astro.props as Props;
+
+// Variable de build (PUBLIC_*, la lee Astro al compilar el sitio
+// estático), no la variable de entorno HCAPTCHA_SECRET de la Function,
+// que es el secreto server-side y nunca se expone aquí. La sitekey no
+// es secreta (ya viaja en el HTML de cada página vía data-sitekey), así
+// que la de producción se deja aquí como valor por defecto en vez de
+// depender de una variable de entorno de build en el dashboard de
+// Cloudflare Pages; PUBLIC_HCAPTCHA_SITE_KEY sigue teniendo prioridad
+// si alguna vez se define, para poder apuntar a otra sitekey (p. ej.
+// una de pruebas) sin tocar código.
+const hcaptchaSiteKey = import.meta.env.PUBLIC_HCAPTCHA_SITE_KEY || "c8d63508-fd6a-4cf0-b484-c5566418bd38";
 ---
 <form class="contact-form" method="post" action="/api/contact" data-contact-form novalidate>
   <div class="contact-form__field">
@@ -63,6 +74,12 @@ const { copy, directEmail, lang } = Astro.props as Props;
   </div>
 
   <input type="hidden" name="ts" value="" />
+  <input type="hidden" name="lang" value={lang} />
+
+  <div class="contact-form__field">
+    <div class="h-captcha" data-sitekey={hcaptchaSiteKey} data-hl={lang}></div>
+    <span class="contact-form__field-error" data-error-for="captcha" data-message={copy.errorCaptchaRequired}></span>
+  </div>
 
   <button type="submit" data-sending-label={copy.sendingLabel}>{copy.submitLabel}</button>
 
@@ -75,6 +92,9 @@ const { copy, directEmail, lang } = Astro.props as Props;
     data-error-message={copy.errorGeneric}
     data-rate-limited-message={copy.errorRateLimited}
     data-validation-message={copy.errorValidation}
+    data-captcha-message={copy.errorCaptchaRequired}
+    data-disposable-email-message={copy.errorDisposableEmail}
+    data-spam-message={copy.errorSpam}
   ></p>
 
   <p class="contact-form__direct">
@@ -82,4 +102,6 @@ const { copy, directEmail, lang } = Astro.props as Props;
   </p>
 </form>
 
+
+<script is:inline src="https://js.hcaptcha.com/1/api.js" async defer></script>
 <script is:inline type="module" src="/scripts/contact-form.js"></script>

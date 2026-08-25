@@ -13,7 +13,8 @@
     "test": "npm run test:unit:coverage && npm run test:e2e"
   },
   "dependencies": {
-    "astro": "^7.2.4"
+    "astro": "^7.2.4",
+    "disposable-email-domains": "^1.0.62"
   },
   "devDependencies": {
     "@playwright/test": "^1.62.1",

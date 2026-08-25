@@ -8,7 +8,7 @@
 export const MESSAGE_MIN_LENGTH = 10;
 export const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-export function validateContactFields({ name, email, reason, message, consent }) {
+export function validateContactFields({ name, email, reason, message, consent, captchaToken }) {
   const errors = [];
 
   if (!name || !name.trim()) errors.push("name");
@@ -16,6 +16,7 @@ export function validateContactFields({ name, email, reason, message, consent })
   if (!reason) errors.push("reason");
   if (!message || message.trim().length < MESSAGE_MIN_LENGTH) errors.push("message");
   if (!consent) errors.push("consent");
+  if (!captchaToken) errors.push("captcha");
 
   return errors;
 }
