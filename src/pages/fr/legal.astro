@@ -1,0 +1,276 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { navItems } from "../../data/i18n";
+
+const siteUrl = "https://victorcazorla.com";
+const pageUrl = `${siteUrl}/fr/legal/`;
+const contactEmail = "contacto@victorcazorla.com";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${pageUrl}#webpage`,
+      url: pageUrl,
+      name: "Informations légales et accessibilité | Victor Cazorla",
+      description:
+        "Déclaration d'accessibilité, politique de confidentialité (RGPD) et mentions légales de victorcazorla.com",
+      inLanguage: "fr",
+      isPartOf: {
+        "@type": "WebSite",
+        url: siteUrl,
+        name: "Víctor Cazorla Fernández",
+      },
+      accessibilityFeature: [
+        "alternativeText",
+        "readingOrder",
+        "structuralNavigation",
+        "skipLink",
+        "highContrastDisplay",
+      ],
+      accessibilityHazard: "none",
+      accessibilitySummary:
+        "conforme à la norme WCAG 2.1, niveau AA (ISO/IEC 40500).",
+      accessMode: ["textual", "visual"],
+      accessModeSufficient: ["textual"],
+    },
+    {
+      "@type": "LegalDocument",
+      "@id": `${pageUrl}#legaldocument`,
+      name: "Mentions légales et politique de confidentialité de victorcazorla.com",
+      url: pageUrl,
+      inLanguage: "fr",
+      about: "Mentions légales, propriété intellectuelle et protection des données (RGPD)",
+      author: {
+        "@type": "Person",
+        name: "Víctor Cazorla Fernández",
+        url: siteUrl,
+      },
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title="Informations légales et accessibilité | Victor Cazorla"
+  description="Déclaration d'accessibilité, politique de confidentialité (RGPD) et mentions légales de victorcazorla.com"
+  lang="fr"
+  navItems={navItems.fr}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <div class="container">
+    <article aria-labelledby="legal-title">
+      <section class="page-header">
+        <h1 id="legal-title">Accessibilité, confidentialité et mentions légales</h1>
+        <p class="page-intro">
+          <strong>Engagement d'accessibilité numérique :</strong> ce site
+          est conçu selon des principes d'accessibilité universelle afin
+          que les personnes en situation de handicap visuel, moteur,
+          auditif, cognitif ou du spectre autistique puissent naviguer,
+          comprendre et interagir avec le contenu sans obstacles. Il suit
+          la norme <strong>WCAG 2.1 niveau AA</strong>, les couleurs de
+          texte principales du site dépassant en outre le niveau de
+          contraste AAA.
+        </p>
+        <p class="page-intro">
+          <strong>Engagement de confidentialité :</strong> vos données
+          personnelles relèvent de la responsabilité de cet auteur, sont
+          traitées conformément au RGPD, ne sont partagées qu'en cas de
+          nécessité avec des prestataires de confiance, et vous pouvez
+          exercer à tout moment vos droits d'accès, de rectification ou
+          d'effacement. L'ensemble du contenu est réutilisable selon les
+          conditions décrites dans ce document.
+        </p>
+      </section>
+
+      <!-- ============================================
+           ACCESSIBILITÉ (priorité 1)
+      ============================================ -->
+      <section id="accesibilidad" aria-labelledby="accesibilidad-title">
+        <div class="a11y-header">
+          <h2 id="accesibilidad-title">Accessibilité</h2>
+          <div class="a11y-icons">
+            <img class="a11y-icon" src="/logos/accesibilidad-visual.jpg" width="64" height="64" loading="lazy" alt="Handicap visuel" title="Handicap visuel" />
+            <img class="a11y-icon" src="/logos/accesibilidad-motora.jpeg" width="64" height="64" loading="lazy" alt="Handicap moteur" title="Handicap moteur" />
+            <img class="a11y-icon" src="/logos/accesibilidad-auditiva.jpg" width="64" height="64" loading="lazy" alt="Handicap auditif" title="Handicap auditif" />
+            <img class="a11y-icon" src="/logos/accesibilidad-neurodiversidad.jpg" width="64" height="64" loading="lazy" alt="Neurodiversité (TSA, TDAH, dyslexie)" title="Neurodiversité (TSA, TDAH, dyslexie)" />
+            <img class="a11y-icon" src="/logos/accesibilidad-daltonismo.png" width="64" height="64" loading="lazy" alt="Daltonisme" title="Daltonisme" />
+          </div>
+        </div>
+
+        <h3>Mesures d'accessibilité mises en œuvre</h3>
+
+        <h4>Handicap visuel et basse vision</h4>
+        <ul>
+          <li><strong>Contraste des couleurs :</strong> les couleurs de texte utilisées sur le site dépassent un ratio de 7:1 par rapport au fond, au-delà du minimum WCAG 2.1 AA (4,5:1) et du niveau AAA (7:1) pour le texte normal.</li>
+          <li><strong>Texte alternatif :</strong> les images informatives comportent un attribut <code>alt</code> descriptif.</li>
+          <li><strong>HTML sémantique :</strong> <code>header</code>, <code>nav</code>, <code>main</code>, <code>article</code>, <code>footer</code>, <code>section</code> et une hiérarchie de titres cohérente, pensée pour les lecteurs d'écran.</li>
+          <li><strong>Design adaptatif :</strong> fonctionne sur tout type d'écran et avec le zoom de texte, sans défilement horizontal forcé.</li>
+        </ul>
+
+        <h4>Handicap moteur</h4>
+        <ul>
+          <li><strong>Navigation au clavier :</strong> l'ensemble du site est utilisable sans souris (Tab, Maj+Tab, Entrée, Échap), avec un focus visible.</li>
+          <li><strong>Zones tactiles :</strong> les boutons et contrôles interactifs mesurent au moins 44 à 48 px de hauteur, pour faciliter leur usage aux personnes souffrant de tremblements, d'arthrite ou d'autres difficultés de motricité fine.</li>
+          <li><strong>Lien d'évitement :</strong> accès direct au contenu principal, sans passer par l'en-tête ni le menu.</li>
+        </ul>
+
+        <h4>Handicap auditif</h4>
+        <ul>
+          <li><strong>Aucun contenu essentiel uniquement sonore :</strong> aucun contenu essentiel ne dépend exclusivement du son ; toute vidéo publiée à l'avenir inclura des sous-titres.</li>
+        </ul>
+
+        <h4>Neurodivergence (TSA, TDAH, dyslexie)</h4>
+        <ul>
+          <li><strong>Respect de la réduction des animations :</strong> si votre système d'exploitation a activé cette préférence, les animations et transitions du site sont automatiquement réduites au minimum.</li>
+          <li><strong>Lisibilité :</strong> interlignage généreux et espacement des lettres pensés pour réduire la charge de lecture.</li>
+          <li><strong>Navigation prévisible :</strong> ni lecture automatique ni éléments apparaissant de façon inattendue.</li>
+        </ul>
+
+        <h4>Daltonisme</h4>
+        <ul>
+          <li><strong>Jamais la couleur seule :</strong> les états de l'interface (par exemple, la langue active) sont indiqués par la couleur associée à une icône supplémentaire, pas seulement par un changement de teinte.</li>
+        </ul>
+
+        <h3>Signaler un problème</h3>
+        <p>
+          Les problèmes d'accessibilité peuvent être signalés à{" "}
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>, en
+          indiquant la page et le problème constaté. Engagement de
+          résolution : 72 heures à compter de la réception du signalement.
+        </p>
+      </section>
+
+      <!-- ============================================
+           CONFIDENTIALITÉ ET PROTECTION DES DONNÉES / RGPD (priorité 2)
+      ============================================ -->
+      <section id="privacidad" aria-labelledby="privacidad-title">
+        <h2 id="privacidad-title">Confidentialité et protection des données (RGPD)</h2>
+
+        <p>
+          Responsable du traitement : Víctor Cazorla Fernández —{" "}
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+        </p>
+
+        <h3>Données traitées</h3>
+        <p>
+          Données d'utilisation agrégées et anonymisées, via Google
+          Analytics 4.
+        </p>
+        <p>
+          Le site dispose de son propre formulaire de contact, demandant
+          nom, adresse e-mail, motif de contact et message. Ces données
+          sont utilisées exclusivement pour traiter la demande et y
+          répondre (y compris un e-mail automatique de confirmation de
+          réception), et sont transmises au prestataire d'envoi d'e-mails
+          transactionnels (Resend), qui agit en tant que sous-traitant
+          conformément à l'article 28 du RGPD.
+        </p>
+        <p>
+          Le formulaire intègre hCaptcha comme mesure anti-spam : lors de
+          l'envoi, hCaptcha reçoit l'adresse IP de l'expéditeur et le
+          résultat du test de vérification, agissant également en tant que
+          sous-traitant. L'adresse IP de l'expéditeur est en outre
+          conservée temporairement (un jour maximum), dans le seul but de
+          limiter l'envoi massif de messages (limitation de débit) ; les
+          tentatives bloquées pour spam, adresse e-mail temporaire ou échec
+          de vérification sont enregistrées de la même manière, à des fins
+          exclusives d'audit de sécurité.
+        </p>
+        <p>
+          Les cookies de Google Analytics 4 ont une finalité de mesure,
+          non publicitaire ni de suivi entre sites.
+        </p>
+
+        <h3>Droits</h3>
+        <p>
+          Droit d'accès, de rectification, d'effacement et de portabilité,
+          exerçables par demande à{" "}
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+        </p>
+        <p>
+          Réclamations auprès de l'Agence espagnole de protection des
+          données (AEPD) :{" "}
+          <a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer">aepd.es</a>.
+        </p>
+      </section>
+
+      <!-- ============================================
+           MENTIONS LÉGALES (priorité 3)
+      ============================================ -->
+      <section id="aviso-legal" aria-labelledby="aviso-legal-title">
+        <h2 id="aviso-legal-title">Mentions légales</h2>
+
+        <h3>Utilisation autorisée</h3>
+        <p>
+          L'utilisation personnelle et académique des contenus est
+          autorisée, sous réserve de citer la source. Toute redistribution
+          commerciale et toute modification sans autorisation expresse
+          sont interdites.
+        </p>
+
+        <h3>Propriété intellectuelle</h3>
+        <p>
+          Les contenus originaux appartiennent à Víctor Cazorla Fernández.
+          Les logos de tiers cités appartiennent à leurs propriétaires
+          respectifs.
+        </p>
+
+        <h3>Responsabilité</h3>
+        <p>
+          Les liens vers des sites tiers ne sont pas sous le contrôle du
+          responsable, qui n'assume aucune responsabilité quant à leur
+          contenu.
+        </p>
+      </section>
+
+      <p class="page-note-separator" role="none"></p>
+      <div class="page-note">
+        <p>
+          Pour toute autre question : <a href="/fr/">page d'accueil</a> ou{" "}
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+        </p>
+      </div>
+    </article>
+  </div>
+
+  <style>
+    .a11y-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .a11y-header h2 {
+      margin: 0;
+      flex: 1 1 auto;
+    }
+
+    .a11y-icon {
+      flex-shrink: 0;
+      border-radius: 10px;
+      object-fit: contain;
+    }
+
+    .a11y-icons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .a11y-icons .a11y-icon {
+      width: 40px;
+      height: 40px;
+      opacity: 0.9;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .a11y-icons .a11y-icon:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+  </style>
+</BaseLayout>

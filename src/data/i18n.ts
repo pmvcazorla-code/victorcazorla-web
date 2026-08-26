@@ -9,7 +9,12 @@ export type LanguageOption = {
 };
 
 export type RouteDef = {
-  key: "home" | "it" | "environmentalScience" | "ethics" | "education" | "contact";
+  key: "home" | "it" | "environmentalScience" | "ethics" | "education" | "contact" | "legal";
+  // Rutas como "legal" quieren hreflang, canonical y language switcher
+  // correctos (por eso viven en `routes`), pero no deben aparecer como
+  // un pill más en la navegación principal junto a las secciones de
+  // contenido. `navItems` filtra estas rutas.
+  hideFromNav?: boolean;
   // Fecha (YYYY-MM-DD) del último cambio de contenido real de esta ruta,
   // usada como <lastmod> en el sitemap. A mano y a propósito: si se
   // recalculara en cada build (p. ej. con `new Date()`), el sitemap
@@ -91,6 +96,18 @@ export const routes: RouteDef[] = [
       en: "Education",
       fr: "Formation",
       ca: "Formació",
+    },
+  },
+  {
+    key: "legal",
+    lastmod: "2026-08-26",
+    hideFromNav: true,
+    slugs: { es: "/legal/", en: "/en/legal/", fr: "/fr/legal/", ca: "/ca/legal/" },
+    labels: {
+      es: "Legal",
+      en: "Legal",
+      fr: "Mentions légales",
+      ca: "Legal",
     },
   },
   {
@@ -299,11 +316,20 @@ export const contactCopy: Record<"es" | "en" | "fr" | "ca", ContactCopy> = {
   },
 };
 
+const navRoutes = routes.filter((route) => !route.hideFromNav);
+
 export const navItems = {
-  es: routes.map((route) => ({ href: route.slugs.es, label: route.labels.es })),
-  en: routes.map((route) => ({ href: route.slugs.en, label: route.labels.en })),
-  fr: routes.map((route) => ({ href: route.slugs.fr, label: route.labels.fr })),
-  ca: routes.map((route) => ({ href: route.slugs.ca, label: route.labels.ca })),
+  es: navRoutes.map((route) => ({ href: route.slugs.es, label: route.labels.es })),
+  en: navRoutes.map((route) => ({ href: route.slugs.en, label: route.labels.en })),
+  fr: navRoutes.map((route) => ({ href: route.slugs.fr, label: route.labels.fr })),
+  ca: navRoutes.map((route) => ({ href: route.slugs.ca, label: route.labels.ca })),
+};
+
+export const footerLegalLabel: Record<"es" | "en" | "fr" | "ca", string> = {
+  es: "Legal y Accesibilidad",
+  en: "Legal & Accessibility",
+  fr: "Mentions légales et accessibilité",
+  ca: "Legal i Accessibilitat",
 };
 
 export const languages: LanguageOption[] = [

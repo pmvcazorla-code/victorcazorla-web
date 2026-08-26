@@ -1,0 +1,275 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { navItems } from "../../data/i18n";
+
+const siteUrl = "https://victorcazorla.com";
+const pageUrl = `${siteUrl}/ca/legal/`;
+const contactEmail = "contacto@victorcazorla.com";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${pageUrl}#webpage`,
+      url: pageUrl,
+      name: "Informació legal i accessibilitat | Victor Cazorla",
+      description:
+        "Declaració d'accessibilitat, política de privacitat (RGPD) i avís legal de victorcazorla.com",
+      inLanguage: "ca",
+      isPartOf: {
+        "@type": "WebSite",
+        url: siteUrl,
+        name: "Víctor Cazorla Fernández",
+      },
+      accessibilityFeature: [
+        "alternativeText",
+        "readingOrder",
+        "structuralNavigation",
+        "skipLink",
+        "highContrastDisplay",
+      ],
+      accessibilityHazard: "none",
+      accessibilitySummary:
+        "conforme a l'estàndard WCAG 2.1, nivell AA (ISO/IEC 40500).",
+      accessMode: ["textual", "visual"],
+      accessModeSufficient: ["textual"],
+    },
+    {
+      "@type": "LegalDocument",
+      "@id": `${pageUrl}#legaldocument`,
+      name: "Avís legal i política de privacitat de victorcazorla.com",
+      url: pageUrl,
+      inLanguage: "ca",
+      about: "Avís legal, propietat intel·lectual i protecció de dades (RGPD)",
+      author: {
+        "@type": "Person",
+        name: "Víctor Cazorla Fernández",
+        url: siteUrl,
+      },
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title="Informació legal i accessibilitat | Victor Cazorla"
+  description="Declaració d'accessibilitat, política de privacitat (RGPD) i avís legal de victorcazorla.com"
+  lang="ca"
+  navItems={navItems.ca}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <div class="container">
+    <article aria-labelledby="legal-title">
+      <section class="page-header">
+        <h1 id="legal-title">Accessibilitat, privacitat i avís legal</h1>
+        <p class="page-intro">
+          <strong>Compromís d'accessibilitat digital:</strong> aquest lloc
+          està dissenyat sota principis d'accessibilitat universal perquè
+          les persones amb discapacitats visuals, motrius, auditives,
+          cognitives i de l'espectre autista puguin navegar, comprendre i
+          interactuar amb el contingut sense barreres. Segueix
+          l'estàndard <strong>WCAG 2.1 Nivell AA</strong>, amb els colors
+          de text principals del lloc superant a més el nivell AAA de
+          contrast.
+        </p>
+        <p class="page-intro">
+          <strong>Compromís de privacitat:</strong> les teves dades
+          personals són responsabilitat d'aquest autor, es tracten
+          d'acord amb el RGPD, es comparteixen només quan és necessari
+          amb proveïdors de confiança, i pots exercir en qualsevol moment
+          els teus drets d'accés, rectificació o supressió. Tot el
+          contingut és reutilitzable sota els termes descrits en aquest
+          document.
+        </p>
+      </section>
+
+      <!-- ============================================
+           ACCESSIBILITAT (prioritat 1)
+      ============================================ -->
+      <section id="accesibilidad" aria-labelledby="accesibilidad-title">
+        <div class="a11y-header">
+          <h2 id="accesibilidad-title">Accessibilitat</h2>
+          <div class="a11y-icons">
+            <img class="a11y-icon" src="/logos/accesibilidad-visual.jpg" width="64" height="64" loading="lazy" alt="Discapacitat visual" title="Discapacitat visual" />
+            <img class="a11y-icon" src="/logos/accesibilidad-motora.jpeg" width="64" height="64" loading="lazy" alt="Discapacitat motriu" title="Discapacitat motriu" />
+            <img class="a11y-icon" src="/logos/accesibilidad-auditiva.jpg" width="64" height="64" loading="lazy" alt="Discapacitat auditiva" title="Discapacitat auditiva" />
+            <img class="a11y-icon" src="/logos/accesibilidad-neurodiversidad.jpg" width="64" height="64" loading="lazy" alt="Neurodiversitat (TEA, TDAH, dislèxia)" title="Neurodiversitat (TEA, TDAH, dislèxia)" />
+            <img class="a11y-icon" src="/logos/accesibilidad-daltonismo.png" width="64" height="64" loading="lazy" alt="Daltonisme" title="Daltonisme" />
+          </div>
+        </div>
+
+        <h3>Mesures d'accessibilitat implementades</h3>
+
+        <h4>Discapacitat visual i baixa visió</h4>
+        <ul>
+          <li><strong>Contrast de color:</strong> els colors de text utilitzats al lloc superen la ràtio de 7:1 sobre el fons, per sobre del mínim de WCAG 2.1 AA (4,5:1) i del nivell AAA (7:1) per a text normal.</li>
+          <li><strong>Text alternatiu:</strong> les imatges informatives inclouen <code>alt</code> descriptiu.</li>
+          <li><strong>HTML semàntic:</strong> <code>header</code>, <code>nav</code>, <code>main</code>, <code>article</code>, <code>footer</code>, <code>section</code> i una jerarquia d'encapçalaments coherent, pensada per a lectors de pantalla.</li>
+          <li><strong>Disseny adaptable:</strong> funciona en qualsevol mida de pantalla i amb zoom de text, sense desplaçament horitzontal forçat.</li>
+        </ul>
+
+        <h4>Discapacitat motriu</h4>
+        <ul>
+          <li><strong>Navegació per teclat:</strong> tot el lloc es pot fer servir sense ratolí (Tab, Maj+Tab, Retorn, Escapada), amb focus visible.</li>
+          <li><strong>Àrees tàctils:</strong> els botons i controls interactius fan com a mínim 44–48px d'alçada, per facilitar-ne l'ús a qui té tremolor, artritis o una altra dificultat de control motor fi.</li>
+          <li><strong>Enllaç de salt:</strong> accés directe al contingut principal, sense passar per la capçalera ni el menú.</li>
+        </ul>
+
+        <h4>Discapacitat auditiva</h4>
+        <ul>
+          <li><strong>Sense contingut crític només en àudio:</strong> cap contingut essencial depèn exclusivament del so; qualsevol vídeo que es publiqui en el futur inclourà subtítols.</li>
+        </ul>
+
+        <h4>Neurodivergència (TEA, TDAH, dislèxia)</h4>
+        <ul>
+          <li><strong>Respecte a "reduir moviment":</strong> si el teu sistema operatiu té activada aquesta preferència, les animacions i transicions del lloc es redueixen al mínim automàticament.</li>
+          <li><strong>Llegibilitat:</strong> interlineat ampli i espaiat entre lletres pensats per reduir la càrrega de lectura.</li>
+          <li><strong>Navegació predictible:</strong> sense reproducció automàtica ni elements que apareguin de manera inesperada.</li>
+        </ul>
+
+        <h4>Daltonisme</h4>
+        <ul>
+          <li><strong>Mai només color:</strong> els estats de la interfície (per exemple, l'idioma actiu) es marquen amb color i amb una icona addicional, no només amb un canvi de to.</li>
+        </ul>
+
+        <h3>Informe d'incidències</h3>
+        <p>
+          Les incidències d'accessibilitat es comuniquen a{" "}
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>, indicant
+          la pàgina i el problema detectat. Compromís de resolució: 72
+          hores des de la recepció de l'avís.
+        </p>
+      </section>
+
+      <!-- ============================================
+           PRIVACITAT I PROTECCIÓ DE DADES / RGPD (prioritat 2)
+      ============================================ -->
+      <section id="privacidad" aria-labelledby="privacidad-title">
+        <h2 id="privacidad-title">Privacitat i protecció de dades (RGPD)</h2>
+
+        <p>
+          Responsable del tractament: Víctor Cazorla Fernández —{" "}
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+        </p>
+
+        <h3>Dades tractades</h3>
+        <p>
+          Dades d'ús agregades i anonimitzades, mitjançant Google
+          Analytics 4.
+        </p>
+        <p>
+          El lloc compta amb un formulari de contacte propi, en què se
+          sol·liciten nom, correu electrònic, motiu de contacte i
+          missatge. Aquestes dades es fan servir exclusivament per
+          gestionar la consulta plantejada i respondre-hi (inclòs un
+          correu automàtic de confirmació de recepció), i es transmeten
+          al proveïdor d'enviament de correu transaccional (Resend), que
+          actua com a encarregat del tractament d'acord amb l'article 28
+          RGPD.
+        </p>
+        <p>
+          El formulari incorpora hCaptcha com a mesura antispam: en
+          enviar-lo, hCaptcha rep l'adreça IP i el resultat del repte de
+          verificació, també com a encarregat del tractament. L'adreça IP
+          del remitent es conserva a més de manera temporal (màxim un
+          dia) i amb l'únic fi de limitar l'enviament massiu de missatges
+          (rate limiting); els intents bloquejats per spam, correu
+          temporal o verificació fallida es registren de manera anàloga,
+          amb finalitats exclusives d'auditoria de seguretat.
+        </p>
+        <p>
+          Les galetes de Google Analytics 4 tenen finalitat de mesura, no
+          publicitària ni de seguiment entre llocs.
+        </p>
+
+        <h3>Drets</h3>
+        <p>
+          Dret d'accés, rectificació, supressió i portabilitat,
+          exercitables mitjançant sol·licitud a{" "}
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+        </p>
+        <p>
+          Reclamacions davant l'Agència Espanyola de Protecció de Dades
+          (AEPD):{" "}
+          <a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer">aepd.es</a>.
+        </p>
+      </section>
+
+      <!-- ============================================
+           AVÍS LEGAL (prioritat 3)
+      ============================================ -->
+      <section id="aviso-legal" aria-labelledby="aviso-legal-title">
+        <h2 id="aviso-legal-title">Avís legal</h2>
+
+        <h3>Ús permès</h3>
+        <p>
+          S'autoritza l'ús personal i acadèmic dels continguts, amb
+          citació de la font. Queda prohibida la seva redistribució
+          comercial i la seva modificació sense autorització expressa.
+        </p>
+
+        <h3>Propietat intel·lectual</h3>
+        <p>
+          Els continguts originals són titularitat de Víctor Cazorla
+          Fernández. Els logotips de tercers citats pertanyen als seus
+          respectius titulars.
+        </p>
+
+        <h3>Responsabilitat</h3>
+        <p>
+          Els enllaços a llocs de tercers no estan sota el control del
+          responsable, que no assumeix cap responsabilitat pel seu
+          contingut.
+        </p>
+      </section>
+
+      <p class="page-note-separator" role="none"></p>
+      <div class="page-note">
+        <p>
+          Qualsevol altra consulta: <a href="/ca/">pàgina d'inici</a> o{" "}
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+        </p>
+      </div>
+    </article>
+  </div>
+
+  <style>
+    .a11y-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .a11y-header h2 {
+      margin: 0;
+      flex: 1 1 auto;
+    }
+
+    .a11y-icon {
+      flex-shrink: 0;
+      border-radius: 10px;
+      object-fit: contain;
+    }
+
+    .a11y-icons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .a11y-icons .a11y-icon {
+      width: 40px;
+      height: 40px;
+      opacity: 0.9;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .a11y-icons .a11y-icon:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+  </style>
+</BaseLayout>

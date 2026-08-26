@@ -6,7 +6,7 @@ type NavItem = {
   label: string;
 };
 
-import { languages, routes, type LanguageOption } from "../data/i18n";
+import { languages, routes, footerLegalLabel, type LanguageOption } from "../data/i18n";
 
 type BaseLayoutProps = {
   title?: string;
@@ -83,6 +83,7 @@ const headerSubtitle: Record<"es" | "en" | "fr" | "ca", string> = {
 const isActiveHref = (href: string) => stripSlash(currentPath) === stripSlash(href);
 
 const homeRoute = routes[0];
+const legalRoute = routes.find((route) => route.key === "legal")!;
 const isHome = matchedRoute?.key === "home";
 
 const breadcrumbJsonLd = !matchedRoute || isHome
@@ -976,7 +977,7 @@ const breadcrumbJsonLd = !matchedRoute || isHome
     </main>
 
     <footer>
-      © 2026 · Víctor Cazorla Fernández · <a href="/legal/">Legal y Accesibilidad</a>
+      © 2026 · Víctor Cazorla Fernández · <a href={legalRoute.slugs[lang]}>{footerLegalLabel[lang]}</a>
     </footer>
 
     <!-- Como archivo externo (no inline) para cumplir la CSP

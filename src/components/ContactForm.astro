@@ -1,6 +1,6 @@
 ---
 import ObfuscatedEmail from "./ObfuscatedEmail.astro";
-import { contactReasons, type ContactCopy } from "../data/i18n";
+import { contactReasons, routes, type ContactCopy } from "../data/i18n";
 
 type Props = {
   copy: ContactCopy;
@@ -9,6 +9,7 @@ type Props = {
 };
 
 const { copy, directEmail, lang } = Astro.props as Props;
+const legalHref = routes.find((route) => route.key === "legal")!.slugs[lang];
 
 // Variable de build (PUBLIC_*, la lee Astro al compilar el sitio
 // estático), no la variable de entorno HCAPTCHA_SECRET de la Function,
@@ -59,7 +60,7 @@ const hcaptchaSiteKey = import.meta.env.PUBLIC_HCAPTCHA_SITE_KEY || "c8d63508-fd
   <div class="contact-form__field contact-form__field--checkbox">
     <input id="contact-consent" name="consent" type="checkbox" required />
     <label for="contact-consent">
-      {copy.consentLabel} <a href="/legal/">{copy.privacyLinkLabel}</a>.
+      {copy.consentLabel} <a href={legalHref}>{copy.privacyLinkLabel}</a>.
     </label>
     <span class="contact-form__field-error" data-error-for="consent" data-message={copy.errorConsentRequired}></span>
   </div>

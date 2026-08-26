@@ -39,13 +39,22 @@ describe("i18n route data", () => {
     expect(new Set(allSlugs).size).toBe(allSlugs.length);
   });
 
-  it("builds one nav item per route for each language, in route order", () => {
+  it("builds one nav item per visible route for each language, in route order", () => {
+    const visibleRoutes = routes.filter((route) => !route.hideFromNav);
     for (const code of LANG_CODES) {
-      expect(navItems[code]).toHaveLength(routes.length);
+      expect(navItems[code]).toHaveLength(visibleRoutes.length);
       navItems[code].forEach((item, i) => {
-        expect(item.href).toBe(routes[i].slugs[code]);
-        expect(item.label).toBe(routes[i].labels[code]);
+        expect(item.href).toBe(visibleRoutes[i].slugs[code]);
+        expect(item.label).toBe(visibleRoutes[i].labels[code]);
       });
+    }
+  });
+
+  it("keeps hideFromNav routes (e.g. legal) out of the main nav, but still fully i18n'd", () => {
+    const legal = routes.find((r) => r.key === "legal")!;
+    expect(legal.hideFromNav).toBe(true);
+    for (const code of LANG_CODES) {
+      expect(navItems[code].some((item) => item.href === legal.slugs[code])).toBe(false);
     }
   });
 });

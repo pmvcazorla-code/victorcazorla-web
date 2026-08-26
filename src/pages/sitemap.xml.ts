@@ -17,6 +17,7 @@ const routePriority: Record<string, string> = {
   environmentalScience: "0.8",
   ethics: "0.8",
   education: "0.8",
+  legal: "0.3",
 };
 
 const sitemapEntries = routes.flatMap((route) =>
@@ -34,15 +35,6 @@ const sitemapEntries = routes.flatMap((route) =>
     ],
   }))
 );
-
-// Página sin traducciones (fuera de `routes`), sin alternates de idioma.
-sitemapEntries.push({
-  url: `${siteUrl}/legal/`,
-  lastmod: "2026-08-25",
-  changefreq: "yearly",
-  priority: "0.3",
-  alternates: [],
-});
 
 export function GET() {
   const content = `<?xml version="1.0" encoding="UTF-8"?>

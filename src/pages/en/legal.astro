@@ -1,0 +1,267 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { navItems } from "../../data/i18n";
+
+const siteUrl = "https://victorcazorla.com";
+const pageUrl = `${siteUrl}/en/legal/`;
+const contactEmail = "contacto@victorcazorla.com";
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": `${pageUrl}#webpage`,
+      url: pageUrl,
+      name: "Legal Information & Accessibility | Victor Cazorla",
+      description:
+        "Accessibility statement, privacy policy (GDPR) and legal notice for victorcazorla.com",
+      inLanguage: "en",
+      isPartOf: {
+        "@type": "WebSite",
+        url: siteUrl,
+        name: "Víctor Cazorla Fernández",
+      },
+      accessibilityFeature: [
+        "alternativeText",
+        "readingOrder",
+        "structuralNavigation",
+        "skipLink",
+        "highContrastDisplay",
+      ],
+      accessibilityHazard: "none",
+      accessibilitySummary:
+        "conforms to the WCAG 2.1 standard, level AA (ISO/IEC 40500).",
+      accessMode: ["textual", "visual"],
+      accessModeSufficient: ["textual"],
+    },
+    {
+      "@type": "LegalDocument",
+      "@id": `${pageUrl}#legaldocument`,
+      name: "Legal notice and privacy policy for victorcazorla.com",
+      url: pageUrl,
+      inLanguage: "en",
+      about: "Legal notice, intellectual property and data protection (GDPR)",
+      author: {
+        "@type": "Person",
+        name: "Víctor Cazorla Fernández",
+        url: siteUrl,
+      },
+    },
+  ],
+};
+---
+
+<BaseLayout
+  title="Legal Information & Accessibility | Victor Cazorla"
+  description="Accessibility statement, privacy policy (GDPR) and legal notice for victorcazorla.com"
+  lang="en"
+  navItems={navItems.en}
+>
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
+  <div class="container">
+    <article aria-labelledby="legal-title">
+      <section class="page-header">
+        <h1 id="legal-title">Accessibility, privacy and legal notice</h1>
+        <p class="page-intro">
+          <strong>Digital accessibility commitment:</strong> this site is
+          designed under universal accessibility principles so that people
+          with visual, motor, auditory, cognitive and autism-spectrum
+          disabilities can navigate, understand and interact with the
+          content without barriers. It follows the{" "}
+          <strong>WCAG 2.1 Level AA</strong> standard, with the site's main
+          text colors also exceeding AAA contrast level.
+        </p>
+        <p class="page-intro">
+          <strong>Privacy commitment:</strong> your personal data is this
+          author's responsibility, is handled in accordance with the GDPR,
+          is shared only when necessary with trusted providers, and you can
+          exercise your rights of access, rectification or erasure at any
+          time. All content is reusable under the terms described in this
+          document.
+        </p>
+      </section>
+
+      <!-- ============================================
+           ACCESSIBILITY (priority 1)
+      ============================================ -->
+      <section id="accesibilidad" aria-labelledby="accesibilidad-title">
+        <div class="a11y-header">
+          <h2 id="accesibilidad-title">Accessibility</h2>
+          <div class="a11y-icons">
+            <img class="a11y-icon" src="/logos/accesibilidad-visual.jpg" width="64" height="64" loading="lazy" alt="Visual disability" title="Visual disability" />
+            <img class="a11y-icon" src="/logos/accesibilidad-motora.jpeg" width="64" height="64" loading="lazy" alt="Motor disability" title="Motor disability" />
+            <img class="a11y-icon" src="/logos/accesibilidad-auditiva.jpg" width="64" height="64" loading="lazy" alt="Hearing disability" title="Hearing disability" />
+            <img class="a11y-icon" src="/logos/accesibilidad-neurodiversidad.jpg" width="64" height="64" loading="lazy" alt="Neurodiversity (autism, ADHD, dyslexia)" title="Neurodiversity (autism, ADHD, dyslexia)" />
+            <img class="a11y-icon" src="/logos/accesibilidad-daltonismo.png" width="64" height="64" loading="lazy" alt="Color blindness" title="Color blindness" />
+          </div>
+        </div>
+
+        <h3>Accessibility measures implemented</h3>
+
+        <h4>Visual impairment and low vision</h4>
+        <ul>
+          <li><strong>Color contrast:</strong> the text colors used on the site exceed a 7:1 ratio against the background, above the WCAG 2.1 AA minimum (4.5:1) and the AAA level (7:1) for normal text.</li>
+          <li><strong>Alt text:</strong> informative images include descriptive <code>alt</code> text.</li>
+          <li><strong>Semantic HTML:</strong> <code>header</code>, <code>nav</code>, <code>main</code>, <code>article</code>, <code>footer</code>, <code>section</code> and a coherent heading hierarchy, designed for screen readers.</li>
+          <li><strong>Adaptive design:</strong> works at any screen size and with text zoom, with no forced horizontal scroll.</li>
+        </ul>
+
+        <h4>Motor disability</h4>
+        <ul>
+          <li><strong>Keyboard navigation:</strong> the whole site is operable without a mouse (Tab, Shift+Tab, Enter, Escape), with visible focus.</li>
+          <li><strong>Touch targets:</strong> interactive buttons and controls measure at least 44–48px tall, making them easier to use for people with tremor, arthritis or other fine motor control difficulties.</li>
+          <li><strong>Skip link:</strong> direct access to the main content, bypassing the header and menu.</li>
+        </ul>
+
+        <h4>Hearing disability</h4>
+        <ul>
+          <li><strong>No audio-only critical content:</strong> no essential content depends exclusively on sound; any video published in the future will include subtitles.</li>
+        </ul>
+
+        <h4>Neurodivergence (autism, ADHD, dyslexia)</h4>
+        <ul>
+          <li><strong>Respecting "reduce motion":</strong> if your operating system has that preference enabled, the site's animations and transitions are automatically minimized.</li>
+          <li><strong>Readability:</strong> generous line height and letter spacing designed to reduce reading load.</li>
+          <li><strong>Predictable navigation:</strong> no autoplay or elements that appear unexpectedly.</li>
+        </ul>
+
+        <h4>Color blindness</h4>
+        <ul>
+          <li><strong>Never color alone:</strong> interface states (for example, the active language) are marked with color plus an additional icon, not just a change in hue.</li>
+        </ul>
+
+        <h3>Reporting issues</h3>
+        <p>
+          Accessibility issues can be reported to{" "}
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>, indicating
+          the page and the problem found. Resolution commitment: 72 hours
+          from receipt of the report.
+        </p>
+      </section>
+
+      <!-- ============================================
+           PRIVACY AND DATA PROTECTION / GDPR (priority 2)
+      ============================================ -->
+      <section id="privacidad" aria-labelledby="privacidad-title">
+        <h2 id="privacidad-title">Privacy and data protection (GDPR)</h2>
+
+        <p>
+          Data controller: Víctor Cazorla Fernández —{" "}
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+        </p>
+
+        <h3>Data processed</h3>
+        <p>
+          Aggregated and anonymized usage data, via Google Analytics 4.
+        </p>
+        <p>
+          The site has its own contact form, which asks for name, email
+          address, reason for contact and message. This data is used
+          exclusively to handle and respond to the enquiry (including an
+          automatic confirmation email), and is transmitted to the
+          transactional email provider (Resend), which acts as a data
+          processor under Article 28 GDPR.
+        </p>
+        <p>
+          The form includes hCaptcha as an anti-spam measure: when
+          submitted, hCaptcha receives the sender's IP address and the
+          verification challenge result, also acting as a data processor.
+          The sender's IP address is additionally retained temporarily (a
+          maximum of one day) for the sole purpose of limiting mass message
+          sending (rate limiting); attempts blocked for spam, disposable
+          email addresses or failed verification are logged in the same
+          way, solely for security auditing purposes.
+        </p>
+        <p>
+          Google Analytics 4 cookies are used for measurement purposes
+          only, not for advertising or cross-site tracking.
+        </p>
+
+        <h3>Rights</h3>
+        <p>
+          Right of access, rectification, erasure and portability,
+          exercisable by request to{" "}
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+        </p>
+        <p>
+          Complaints to the Spanish Data Protection Agency (AEPD):{" "}
+          <a href="https://www.aepd.es" target="_blank" rel="noopener noreferrer">aepd.es</a>.
+        </p>
+      </section>
+
+      <!-- ============================================
+           LEGAL NOTICE (priority 3)
+      ============================================ -->
+      <section id="aviso-legal" aria-labelledby="aviso-legal-title">
+        <h2 id="aviso-legal-title">Legal notice</h2>
+
+        <h3>Permitted use</h3>
+        <p>
+          Personal and academic use of the content is authorized, with
+          attribution of the source. Commercial redistribution and
+          modification without express authorization are prohibited.
+        </p>
+
+        <h3>Intellectual property</h3>
+        <p>
+          The original content is owned by Víctor Cazorla Fernández.
+          Third-party logos cited belong to their respective owners.
+        </p>
+
+        <h3>Liability</h3>
+        <p>
+          Links to third-party sites are not under the controller's
+          control, who assumes no responsibility for their content.
+        </p>
+      </section>
+
+      <p class="page-note-separator" role="none"></p>
+      <div class="page-note">
+        <p>
+          Any other enquiry: <a href="/en/">home page</a> or{" "}
+          <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.
+        </p>
+      </div>
+    </article>
+  </div>
+
+  <style>
+    .a11y-header {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .a11y-header h2 {
+      margin: 0;
+      flex: 1 1 auto;
+    }
+
+    .a11y-icon {
+      flex-shrink: 0;
+      border-radius: 10px;
+      object-fit: contain;
+    }
+
+    .a11y-icons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .a11y-icons .a11y-icon {
+      width: 40px;
+      height: 40px;
+      opacity: 0.9;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+
+    .a11y-icons .a11y-icon:hover {
+      opacity: 1;
+      transform: translateY(-2px);
+    }
+  </style>
+</BaseLayout>
