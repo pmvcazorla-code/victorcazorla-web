@@ -247,6 +247,20 @@ const breadcrumbJsonLd = !matchedRoute || isHome
         --accent-gold: #d4af37;
       }
 
+      /* Respeta la preferencia de movimiento reducido del sistema
+         (importante para TEA, TDAH, trastornos vestibulares y
+         epilepsia fotosensible). */
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation-duration: 0.01ms !important;
+          animation-iteration-count: 1 !important;
+          transition-duration: 0.01ms !important;
+          scroll-behavior: auto !important;
+        }
+      }
+
       * {
         box-sizing: border-box;
       }
@@ -352,7 +366,8 @@ const breadcrumbJsonLd = !matchedRoute || isHome
         justify-content: center;
         align-items: center;
         gap: 0.55rem;
-        padding: 0.45rem 0.9rem;
+        padding: 0.6rem 1.1rem;
+        min-height: 48px;
         border-radius: 999px;
         border: 1px solid var(--border-soft);
         color: var(--accent);
@@ -364,6 +379,27 @@ const breadcrumbJsonLd = !matchedRoute || isHome
       .lang-switch.active {
         background: rgba(255, 255, 255, 0.05);
         border-color: rgba(255, 255, 255, 0.12);
+        position: relative;
+      }
+
+      /* Marca el idioma activo con un icono además del color, para
+         que no dependa de distinguir tonalidades (daltonismo). */
+      .lang-switch.active::after {
+        content: "✓";
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        width: 16px;
+        height: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.75rem;
+        font-weight: bold;
+        color: var(--accent-gold);
+        background: var(--bg-main);
+        border: 1px solid var(--accent-gold);
+        border-radius: 50%;
       }
 
       .lang-switch .flag-icon {
@@ -391,9 +427,14 @@ const breadcrumbJsonLd = !matchedRoute || isHome
         transform: translateY(-2px);
       }
 
-      nav a:focus {
+      nav a:focus-visible {
         outline: 2px solid var(--accent-gold);
         outline-offset: 2px;
+        border-radius: 4px;
+      }
+
+      nav a:focus:not(:focus-visible) {
+        outline: none;
       }
 
       nav a.active {
@@ -513,8 +554,10 @@ const breadcrumbJsonLd = !matchedRoute || isHome
         .flag-btn {
           display: flex;
           align-items: center;
+          justify-content: center;
           gap: 0.3rem;
-          padding: 0.28rem 0.5rem;
+          padding: 0.4rem 0.65rem;
+          min-height: 44px;
           border-radius: 999px;
           border: 1px solid transparent;
           color: var(--text-muted);
@@ -657,6 +700,7 @@ const breadcrumbJsonLd = !matchedRoute || isHome
         .mobile-menu-panel nav a:focus-visible {
           outline: 2px solid var(--accent-gold);
           outline-offset: -2px;
+          border-radius: 6px;
         }
 
         main {

@@ -12,7 +12,7 @@
   /* Paleta alineada con el tema oscuro editorial de BaseLayout.astro
      (--text-main, --text-muted, --border-soft, --accent) */
   --color-text: #e6e9ef;
-  --color-muted: #b6bcc8;
+  --color-muted: #c8d0db;
   --color-border: rgba(255, 255, 255, 0.1);
   --color-bg: #070b14;
   --color-soft: rgba(255, 255, 255, 0.03);
@@ -39,7 +39,7 @@ html, body {
   background: var(--color-bg);
   color: var(--color-text);
   font-family: var(--font-sans);
-  line-height: 1.7;
+  line-height: 1.8;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
@@ -86,7 +86,8 @@ section {
 p {
   font-size: 1.05rem;
   margin-bottom: 1.6rem;
-  line-height: 1.75;
+  line-height: 1.8;
+  letter-spacing: 0.01em;
 }
 
 .credential-logos {
@@ -309,9 +310,14 @@ a:hover {
   text-decoration: underline;
 }
 
-a:focus {
+a:focus-visible {
   outline: 2px solid var(--color-accent);
   outline-offset: 2px;
+  border-radius: 2px;
+}
+
+a:focus:not(:focus-visible) {
+  outline: none;
 }
 
 /* Página: nota al pie en formación */
@@ -938,11 +944,17 @@ footer {
   color-scheme: dark;
 }
 
+.contact-form__field input:focus-visible,
+.contact-form__field select:focus-visible,
+.contact-form__field textarea:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 1px;
+  border-color: var(--color-accent);
+}
+
 .contact-form__field input:focus,
 .contact-form__field select:focus,
 .contact-form__field textarea:focus {
-  outline: 2px solid var(--color-accent);
-  outline-offset: 1px;
   border-color: var(--color-accent);
 }
 

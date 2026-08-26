@@ -87,18 +87,39 @@ const jsonLd = {
         </div>
 
         <p>
-          Este sitio cumple el estándar WCAG 2.1, nivel AA (ISO/IEC 40500),
-          del World Wide Web Consortium (W3C).
+          Este sitio sigue el estándar <strong>WCAG 2.1, nivel AA (ISO/IEC 40500)</strong>{" "}
+          del World Wide Web Consortium (W3C), con un cuidado adicional en
+          contraste de color y en aspectos que facilitan la lectura a
+          personas neurodivergentes.
         </p>
 
         <h3>Medidas de accesibilidad implementadas</h3>
+
+        <h4>Discapacidad visual y baja visión</h4>
         <ul>
-          <li><strong>Enlaces de salto:</strong> acceso directo al contenido, sin pasar por cabecera ni menú.</li>
-          <li><strong>Navegación por teclado:</strong> todo el sitio es operable sin ratón, con foco visible.</li>
-          <li><strong>Contraste:</strong> cumple las ratios mínimas de WCAG 2.1 AA.</li>
-          <li><strong>HTML semántico:</strong> <code>header</code>, <code>nav</code>, <code>main</code>, <code>article</code>, <code>footer</code> y jerarquía de encabezados coherente.</li>
+          <li><strong>Contraste de color:</strong> los colores de texto usados en el sitio superan la ratio de 7:1 sobre el fondo, por encima del mínimo de WCAG 2.1 AA (4.5:1) y del nivel AAA (7:1) para texto normal.</li>
           <li><strong>Texto alternativo:</strong> las imágenes informativas incluyen <code>alt</code> descriptivo.</li>
-          <li><strong>Diseño adaptable:</strong> funciona en cualquier tamaño de pantalla y con zoom de texto.</li>
+          <li><strong>HTML semántico:</strong> <code>header</code>, <code>nav</code>, <code>main</code>, <code>article</code>, <code>footer</code>, <code>section</code> y una jerarquía de encabezados coherente, pensada para lectores de pantalla.</li>
+          <li><strong>Diseño adaptable:</strong> funciona en cualquier tamaño de pantalla y con zoom de texto, sin scroll horizontal forzado.</li>
+        </ul>
+
+        <h4>Discapacidad motora</h4>
+        <ul>
+          <li><strong>Navegación por teclado:</strong> todo el sitio es operable sin ratón (Tab, Mayús+Tab, Intro, Escape), con foco visible.</li>
+          <li><strong>Áreas táctiles:</strong> los botones y controles interactivos miden al menos 44–48px de alto, para facilitar su uso a quien tiene temblor, artritis u otra dificultad de control motor fino.</li>
+          <li><strong>Enlace de salto:</strong> acceso directo al contenido principal, sin pasar por cabecera ni menú.</li>
+        </ul>
+
+        <h4>Neurodivergencia (TEA, TDAH, dislexia)</h4>
+        <ul>
+          <li><strong>Respeto a "reducir movimiento":</strong> si tu sistema operativo tiene activada esa preferencia, las animaciones y transiciones del sitio se reducen al mínimo automáticamente.</li>
+          <li><strong>Legibilidad:</strong> interlineado amplio y espaciado entre letras pensados para reducir la carga de lectura.</li>
+          <li><strong>Navegación predecible:</strong> sin autoplay ni elementos que aparezcan de forma inesperada.</li>
+        </ul>
+
+        <h4>Daltonismo</h4>
+        <ul>
+          <li><strong>Nunca solo color:</strong> los estados de la interfaz (por ejemplo, el idioma activo) se marcan con color y con un icono adicional, no solo con un cambio de tono.</li>
         </ul>
 
         <h3>Reporte de incidencias</h3>
