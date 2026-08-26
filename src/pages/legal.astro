@@ -71,7 +71,9 @@ const jsonLd = {
           cognitivas y del espectro autista puedan navegar, comprender e
           interactuar con el contenido sin barreras. Sigue el estándar{" "}
           <strong>WCAG 2.1 Nivel AA</strong>, con los colores de texto
-          principales del sitio superando además el nivel AAA de contraste.{" "}
+          principales del sitio superando además el nivel AAA de contraste.
+        </p>
+        <p class="page-intro">
           <strong>Compromiso de privacidad:</strong> tus datos personales son
           responsabilidad de este autor, se tratan conforme al RGPD, se
           comparten solo cuando es necesario con proveedores de confianza, y
@@ -88,34 +90,11 @@ const jsonLd = {
         <div class="a11y-header">
           <h2 id="accesibilidad-title">Accesibilidad</h2>
           <div class="a11y-icons">
-            <svg role="img" class="a11y-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <title>Discapacidad visual</title>
-              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
-              <circle cx="12" cy="12" r="3"></circle>
-              <line x1="1" y1="1" x2="23" y2="23" stroke="currentColor"></line>
-            </svg>
-            <svg role="img" class="a11y-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <title>Discapacidad motora</title>
-              <path d="M6 8c0-1 .5-2 1.5-2.5S10 5 12 5c2 0 3.5.5 4.5 1.5S18 8 18 9"></path>
-              <path d="M4 20h16v-8c0-2-.5-4-2-5.5"></path>
-            </svg>
-            <svg role="img" class="a11y-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <title>Discapacidad auditiva</title>
-              <path d="M6 9a6 6 0 1 0 12 0"></path>
-              <path d="M9 9a3 3 0 0 0 6 0"></path>
-              <line x1="1" y1="1" x2="23" y2="23" stroke="currentColor"></line>
-            </svg>
-            <svg role="img" class="a11y-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <title>Neurodiversidad (TEA, TDAH, dislexia)</title>
-              <path d="M18.178 8c5.096 0 5.096 8 0 8-5.095 0-7.133-8-12.739-8-4.649 0-4.649 8 0 8 5.606 0 7.644-8 12.739-8z"></path>
-            </svg>
-            <svg role="img" class="a11y-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <title>Daltonismo</title>
-              <circle cx="12" cy="12" r="8"></circle>
-              <circle cx="8" cy="10" r="2" fill="currentColor"></circle>
-              <circle cx="14" cy="10" r="2" fill="currentColor"></circle>
-              <path d="M10 16c.5 1 1.5 1.5 2 1.5s1.5-.5 2-1.5"></path>
-            </svg>
+            <span class="a11y-icon" role="img" aria-label="Discapacidad visual" title="Discapacidad visual">👁️</span>
+            <span class="a11y-icon" role="img" aria-label="Discapacidad motora" title="Discapacidad motora">♿</span>
+            <span class="a11y-icon" role="img" aria-label="Discapacidad auditiva" title="Discapacidad auditiva">👂</span>
+            <span class="a11y-icon" role="img" aria-label="Neurodiversidad (TEA, TDAH, dislexia)" title="Neurodiversidad (TEA, TDAH, dislexia)">🧠</span>
+            <span class="a11y-icon" role="img" aria-label="Daltonismo" title="Daltonismo">🎨</span>
           </div>
         </div>
 
@@ -276,15 +255,16 @@ const jsonLd = {
     }
 
     .a11y-icons .a11y-icon {
-      width: 48px;
-      height: 48px;
-      stroke: var(--accent-gold);
-      opacity: 0.8;
-      transition: opacity 0.2s ease;
+      font-size: 1.6rem;
+      line-height: 1;
+      opacity: 0.85;
+      cursor: default;
+      transition: opacity 0.2s ease, transform 0.2s ease;
     }
 
     .a11y-icons .a11y-icon:hover {
       opacity: 1;
+      transform: translateY(-2px);
     }
   </style>
 </BaseLayout>
