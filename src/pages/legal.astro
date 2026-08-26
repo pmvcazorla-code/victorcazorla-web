@@ -71,10 +71,13 @@ const jsonLd = {
           cognitivas y del espectro autista puedan navegar, comprender e
           interactuar con el contenido sin barreras. Sigue el estándar{" "}
           <strong>WCAG 2.1 Nivel AA</strong>, con los colores de texto
-          principales del sitio superando además el nivel AAA de contraste.
-          Los datos personales se tratan conforme a RGPD, y todo el
-          contenido es reutilizable bajo los términos descritos en este
-          documento.
+          principales del sitio superando además el nivel AAA de contraste.{" "}
+          <strong>Compromiso de privacidad:</strong> tus datos personales son
+          responsabilidad de este autor, se tratan conforme al RGPD, se
+          comparten solo cuando es necesario con proveedores de confianza, y
+          puedes ejercer en cualquier momento tus derechos de acceso,
+          rectificación o supresión. Todo el contenido es reutilizable bajo
+          los términos descritos en este documento.
         </p>
       </section>
 
@@ -83,15 +86,37 @@ const jsonLd = {
       ============================================ -->
       <section id="accesibilidad" aria-labelledby="accesibilidad-title">
         <div class="a11y-header">
-          <h2 id="accesibilidad-title">Accesibilidad (web accesible para personas con discapacidad)</h2>
-          <img
-            src="/logos/accesibilidad-discapacidad-visual.jpg"
-            alt="Pictograma internacional de accesibilidad para personas con discapacidad visual"
-            width="64"
-            height="64"
-            loading="lazy"
-            class="a11y-icon"
-          />
+          <h2 id="accesibilidad-title">Accesibilidad</h2>
+          <div class="a11y-icons">
+            <svg role="img" class="a11y-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <title>Discapacidad visual</title>
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+              <circle cx="12" cy="12" r="3"></circle>
+              <line x1="1" y1="1" x2="23" y2="23" stroke="currentColor"></line>
+            </svg>
+            <svg role="img" class="a11y-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <title>Discapacidad motora</title>
+              <path d="M6 8c0-1 .5-2 1.5-2.5S10 5 12 5c2 0 3.5.5 4.5 1.5S18 8 18 9"></path>
+              <path d="M4 20h16v-8c0-2-.5-4-2-5.5"></path>
+            </svg>
+            <svg role="img" class="a11y-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <title>Discapacidad auditiva</title>
+              <path d="M6 9a6 6 0 1 0 12 0"></path>
+              <path d="M9 9a3 3 0 0 0 6 0"></path>
+              <line x1="1" y1="1" x2="23" y2="23" stroke="currentColor"></line>
+            </svg>
+            <svg role="img" class="a11y-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <title>Neurodiversidad (TEA, TDAH, dislexia)</title>
+              <path d="M18.178 8c5.096 0 5.096 8 0 8-5.095 0-7.133-8-12.739-8-4.649 0-4.649 8 0 8 5.606 0 7.644-8 12.739-8z"></path>
+            </svg>
+            <svg role="img" class="a11y-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <title>Daltonismo</title>
+              <circle cx="12" cy="12" r="8"></circle>
+              <circle cx="8" cy="10" r="2" fill="currentColor"></circle>
+              <circle cx="14" cy="10" r="2" fill="currentColor"></circle>
+              <path d="M10 16c.5 1 1.5 1.5 2 1.5s1.5-.5 2-1.5"></path>
+            </svg>
+          </div>
         </div>
 
         <h3>Medidas de accesibilidad implementadas</h3>
@@ -109,6 +134,11 @@ const jsonLd = {
           <li><strong>Navegación por teclado:</strong> todo el sitio es operable sin ratón (Tab, Mayús+Tab, Intro, Escape), con foco visible.</li>
           <li><strong>Áreas táctiles:</strong> los botones y controles interactivos miden al menos 44–48px de alto, para facilitar su uso a quien tiene temblor, artritis u otra dificultad de control motor fino.</li>
           <li><strong>Enlace de salto:</strong> acceso directo al contenido principal, sin pasar por cabecera ni menú.</li>
+        </ul>
+
+        <h4>Discapacidad auditiva</h4>
+        <ul>
+          <li><strong>Sin contenido crítico solo en audio:</strong> ningún contenido esencial depende exclusivamente del sonido; cualquier vídeo que se publique en el futuro incluirá subtítulos.</li>
         </ul>
 
         <h4>Neurodivergencia (TEA, TDAH, dislexia)</h4>
@@ -237,6 +267,24 @@ const jsonLd = {
       flex-shrink: 0;
       border-radius: 10px;
       object-fit: contain;
+    }
+
+    .a11y-icons {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .a11y-icons .a11y-icon {
+      width: 48px;
+      height: 48px;
+      stroke: var(--accent-gold);
+      opacity: 0.8;
+      transition: opacity 0.2s ease;
+    }
+
+    .a11y-icons .a11y-icon:hover {
+      opacity: 1;
     }
   </style>
 </BaseLayout>
