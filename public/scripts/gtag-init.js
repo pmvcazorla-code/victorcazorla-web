@@ -3,4 +3,6 @@ function gtag() {
   dataLayer.push(arguments);
 }
 gtag("js", new Date());
-gtag("config", "G-3GQEMTYB7S");
+gtag("config", "G-3GQEMTYB7S", {
+  "traffic_type": "internal"
+});
