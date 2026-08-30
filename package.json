@@ -22,8 +22,6 @@
   "devDependencies": {
     "@playwright/test": "^1.62.1",
     "@vitest/coverage-v8": "^4.1.11",
-    "node-html-parser": "^9.0.2",
-    "turndown": "^7.2.4",
     "vitest": "^4.1.11"
   }
 }

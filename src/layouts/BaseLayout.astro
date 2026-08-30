@@ -988,6 +988,11 @@ const breadcrumbJsonLd = !matchedRoute || isHome
       © 2026 · Víctor Cazorla Fernández · <a href={legalRoute.slugs[lang]}>{footerLegalLabel[lang]}</a>
     </footer>
 
+    <!-- Contenido superpuesto (p. ej. el chatbot de /inicio): fuera de
+         <main> para no contar como contenido principal ni contaminar la
+         extracción de la base de conocimiento (scripts/kb/extract.mjs). -->
+    <slot name="overlay" />
+
     <!-- Como archivo externo (no inline) para cumplir la CSP
          "script-src 'self'" de public/_headers sin tener que
          añadir 'unsafe-inline'. -->
