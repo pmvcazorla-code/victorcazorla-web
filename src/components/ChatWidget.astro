@@ -183,7 +183,9 @@ const t = copy[lang];
     position: fixed;
     right: clamp(0.75rem, 3vw, 1.5rem);
     bottom: clamp(0.75rem, 3vw, 1.5rem);
-    z-index: 60;
+    /* Por encima del <header> pegajoso (z-index 100 en BaseLayout), para
+       que el panel no quede tapado al abrirlo cerca del borde superior. */
+    z-index: 1000;
     font-family: var(--font-sans);
   }
 
@@ -206,9 +208,28 @@ const t = copy[lang];
   .chat__toggle-icon svg { width: 100%; height: 100%; }
   .chat--open .chat__toggle { display: none; }
 
+  /* Selectores con `.chat ` (especificidad 0,2,0) a propósito: el
+     empaquetador de CSS de Astro agrupa las media queries y puede
+     colocarlas ANTES de las reglas base, así que con la misma
+     especificidad la regla base ganaría por orden. */
   @media (max-width: 30rem) {
-    .chat__toggle-label { display: none; }
-    .chat__toggle { padding: 0.8rem; }
+    .chat .chat__toggle-label { display: none; }
+    .chat .chat__toggle { padding: 0.8rem; }
+
+    /* En móvil el panel ocupa toda la pantalla (hoja): así el teclado
+       virtual no tapa el campo de texto y el área táctil es cómoda. */
+    .chat .chat__panel {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100vh;
+      height: 100dvh;
+      border: 0;
+      border-radius: 0;
+    }
+    .chat .chat__close { width: 2.5rem; height: 2.5rem; padding: 0.55rem; }
+    .chat .chat__header { padding: 1rem; }
+    .chat .chat__disclaimer { padding-bottom: 1rem; }
   }
 
   .chat__panel {
@@ -216,6 +237,7 @@ const t = copy[lang];
     flex-direction: column;
     width: min(24rem, calc(100vw - 1.5rem));
     height: min(32rem, calc(100vh - 3rem));
+    height: min(32rem, calc(100dvh - 3rem)); /* dvh: excluye la barra del navegador móvil */
     background: #0a0f1c;
     border: 1px solid var(--color-border);
     border-radius: 14px;
@@ -255,36 +277,41 @@ const t = copy[lang];
     gap: 0.75rem;
   }
 
-  .chat-msg {
+  /* Las burbujas de mensaje las crea chat-widget.js en tiempo de
+     ejecución, así que NO llevan el atributo de scope de Astro. Con
+     `.chat :global(...)` la raíz `.chat` sigue scopeada pero el interior
+     queda global y sí las alcanza (sin filtrarse fuera del widget). */
+  .chat :global(.chat-msg) {
     max-width: 85%;
     padding: 0.6rem 0.85rem;
     border-radius: 12px;
     font-size: 0.9rem;
     line-height: 1.6;
+    overflow-wrap: anywhere;
   }
-  .chat-msg p { margin: 0 0 0.5rem; }
-  .chat-msg p:last-child { margin-bottom: 0; }
-  .chat-msg ul { margin: 0.25rem 0; padding-left: 1.1rem; }
-  .chat-msg a { color: var(--color-accent); }
-  .chat-msg--user {
+  .chat :global(.chat-msg p) { margin: 0 0 0.5rem; }
+  .chat :global(.chat-msg p:last-child) { margin-bottom: 0; }
+  .chat :global(.chat-msg ul) { margin: 0.25rem 0; padding-left: 1.1rem; }
+  .chat :global(.chat-msg a) { color: var(--color-accent); }
+  .chat :global(.chat-msg--user) {
     align-self: flex-end;
     background: var(--color-accent);
     color: #0a0f1c;
   }
-  .chat-msg--user a { color: #0a0f1c; text-decoration: underline; }
-  .chat-msg--assistant {
+  .chat :global(.chat-msg--user a) { color: #0a0f1c; text-decoration: underline; }
+  .chat :global(.chat-msg--assistant) {
     align-self: flex-start;
     background: var(--color-soft);
     border: 1px solid var(--color-border);
   }
-  .chat-msg--error {
+  .chat :global(.chat-msg--error) {
     align-self: flex-start;
     background: rgba(255, 120, 120, 0.12);
     border: 1px solid rgba(255, 120, 120, 0.35);
     color: #ffd8d8;
   }
-  .chat-msg__thinking { opacity: 0.7; }
-  .chat-msg__sources {
+  .chat :global(.chat-msg__thinking) { opacity: 0.7; }
+  .chat :global(.chat-msg__sources) {
     margin: 0.55rem 0 0;
     padding-left: 1.1rem;
     font-size: 0.8rem;
@@ -308,7 +335,8 @@ const t = copy[lang];
     background: #0d1424;
     color: var(--color-text);
     font-family: inherit;
-    font-size: 0.9rem;
+    /* 16px: por debajo de eso, iOS Safari hace zoom al enfocar el campo. */
+    font-size: 1rem;
     line-height: 1.5;
   }
   .chat__input:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 1px; }

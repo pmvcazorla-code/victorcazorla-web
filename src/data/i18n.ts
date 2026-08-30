@@ -100,7 +100,7 @@ export const routes: RouteDef[] = [
   },
   {
     key: "legal",
-    lastmod: "2026-08-26",
+    lastmod: "2026-08-30",
     hideFromNav: true,
     slugs: { es: "/legal/", en: "/en/legal/", fr: "/fr/legal/", ca: "/ca/legal/" },
     labels: {
