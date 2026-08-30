@@ -24,12 +24,17 @@ interface KVNamespaceLike {
   put(key: string, value: string, options?: { expirationTtl?: number }): Promise<void>;
 }
 
-// env.AI.run(): solo lo que se consume aquí.
+// env.AI.run(): solo lo que se consume aquí. Los modelos antiguos
+// devuelven { response }; los nuevos, formato OpenAI { choices: [...] }.
 interface AiRunOptions {
   gateway?: { id: string; collectLog?: boolean };
 }
+interface AiResult {
+  response?: string;
+  choices?: Array<{ message?: { content?: string } }>;
+}
 interface AiBinding {
-  run(model: string, input: Record<string, unknown>, options?: AiRunOptions): Promise<{ response?: string }>;
+  run(model: string, input: Record<string, unknown>, options?: AiRunOptions): Promise<AiResult>;
 }
 
 interface Env {
@@ -73,10 +78,13 @@ async function readCount(kv: KVNamespaceLike, key: string): Promise<number> {
   return Number((await kv.get(key)) ?? "0");
 }
 
-// Algunos modelos con "reasoning" (p. ej. Qwen 3.x) anteponen su cadena
-// de pensamiento en un bloque <think>…</think>: se descarta.
-function cleanAnswer(raw: unknown): string {
-  return String(raw || "")
+// El texto sale en `response` (modelos antiguos) o en
+// `choices[0].message.content` (formato OpenAI de los nuevos). Algunos
+// modelos con "reasoning" anteponen su cadena de pensamiento en un bloque
+// <think>…</think>: se descarta.
+function cleanAnswer(result: AiResult): string {
+  const raw = result.response ?? result.choices?.[0]?.message?.content ?? "";
+  return String(raw)
     .replace(/<think>[\s\S]*?<\/think>/gi, "")
     .replace(/^\s*<\/?think>\s*/i, "")
     .trim();
@@ -167,7 +175,7 @@ export async function onRequestPost(context: RequestContext): Promise<Response> 
   for (const model of models) {
     try {
       const out = await env.AI.run(model, input, { gateway: { id: gatewayId, collectLog: true } });
-      answer = cleanAnswer(out.response);
+      answer = cleanAnswer(out);
       if (answer) break;
     } catch (error) {
       console.error(
