@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-Host: https://victorcazorla.com
 
 Sitemap: https://victorcazorla.com/sitemap.xml

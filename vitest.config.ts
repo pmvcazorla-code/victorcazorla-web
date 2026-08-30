@@ -16,6 +16,7 @@ export default defineConfig({
         "public/scripts/lib/contact-form-validate.js",
         "functions/_lib/contact.ts",
         "functions/_lib/captcha.ts",
+        "functions/_lib/canonical-host.ts",
         "functions/api/contact.ts",
       ],
     },
