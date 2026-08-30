@@ -34,8 +34,11 @@
     "CONTACT_TO_EMAIL": "contacto@victorcazorla.com",
     "CONTACT_FROM_EMAIL": "web@victorcazorla.com",
     // Chatbot: AI Gateway (con Logs activados) por el que pasan las
-    // llamadas a Workers AI, y modelo de generación (gratuito).
+    // llamadas a Workers AI, y modelos de generación (gratuitos en el
+    // plan Workers Free). Si el primario deja de existir (Cloudflare
+    // retira modelos con un 410), el endpoint reintenta con el fallback.
     "AI_GATEWAY_ID": "victorcazorla-ai",
-    "CHAT_MODEL": "@cf/meta/llama-3.1-8b-instruct"
+    "CHAT_MODEL": "@cf/meta/llama-3.1-8b-instruct-fast",
+    "CHAT_MODEL_FALLBACK": "@cf/qwen/qwen3.8-27b"
   }
 }

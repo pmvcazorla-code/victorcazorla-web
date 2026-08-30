@@ -23,7 +23,8 @@ function makeEnv(overrides: Record<string, unknown> = {}) {
     CONTACT_RATE_LIMIT: new FakeKV(),
     HCAPTCHA_SECRET: "secret",
     AI_GATEWAY_ID: "victorcazorla-ai",
-    CHAT_MODEL: "@cf/meta/llama-3.1-8b-instruct",
+    CHAT_MODEL: "@cf/meta/llama-3.1-8b-instruct-fast",
+    CHAT_MODEL_FALLBACK: "@cf/qwen/qwen3.8-27b",
     ...overrides,
   } as never;
 }
@@ -77,9 +78,37 @@ describe("onRequestPost /api/chat", () => {
     // Llama a Workers AI a través del AI Gateway configurado.
     expect(run).toHaveBeenCalledTimes(1);
     const [model, input, options] = run.mock.calls[0];
-    expect(model).toBe("@cf/meta/llama-3.1-8b-instruct");
+    expect(model).toBe("@cf/meta/llama-3.1-8b-instruct-fast");
     expect(options).toEqual({ gateway: { id: "victorcazorla-ai", collectLog: true } });
     expect((input as { messages: unknown[] }).messages).toHaveLength(2);
+  });
+
+  it("reintenta con el modelo de fallback si el primario falla (p. ej. 410)", async () => {
+    const run = vi
+      .fn()
+      .mockRejectedValueOnce(new Error("410 Gone"))
+      .mockResolvedValueOnce({ response: "Respuesta del fallback." });
+    const res = await onRequestPost({
+      request: makeRequest({ message: "¿A qué se dedica Víctor Cazorla?", token: "hc" }),
+      env: makeEnv({ AI: { run } }),
+    });
+    expect(res.status).toBe(200);
+    expect((await res.json() as { answer: string }).answer).toBe("Respuesta del fallback.");
+    expect(run.mock.calls.map((c) => c[0])).toEqual([
+      "@cf/meta/llama-3.1-8b-instruct-fast",
+      "@cf/qwen/qwen3.8-27b",
+    ]);
+  });
+
+  it("descarta el bloque <think> de los modelos con reasoning", async () => {
+    const run = vi.fn(async () => ({
+      response: "<think>El usuario pregunta por su cargo.</think>Preside el Comité de Ética del COAMB.",
+    }));
+    const res = await onRequestPost({
+      request: makeRequest({ message: "¿Qué cargo tiene en el COAMB?", token: "hc" }),
+      env: makeEnv({ AI: { run } }),
+    });
+    expect((await res.json() as { answer: string }).answer).toBe("Preside el Comité de Ética del COAMB.");
   });
 
   it("no vuelve a pedir captcha una vez superado (pase en KV)", async () => {

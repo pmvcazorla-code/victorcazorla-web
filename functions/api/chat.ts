@@ -38,6 +38,7 @@ interface Env {
   HCAPTCHA_SECRET: string;
   // Configurables desde wrangler.jsonc; los defaults cubren el caso de que falten.
   CHAT_MODEL?: string;
+  CHAT_MODEL_FALLBACK?: string;
   AI_GATEWAY_ID?: string;
 }
 
@@ -46,7 +47,12 @@ interface RequestContext {
   env: Env;
 }
 
-const DEFAULT_MODEL = "@cf/meta/llama-3.1-8b-instruct";
+// Modelos gratuitos de Workers AI (cuota diaria del plan Workers Free; si
+// se agota devuelven error, nunca facturan). Cloudflare retira modelos
+// antiguos con un 410, así que hay un fallback: si el primario falla se
+// reintenta con el segundo antes de rendirse.
+const DEFAULT_MODEL = "@cf/meta/llama-3.1-8b-instruct-fast";
+const DEFAULT_MODEL_FALLBACK = "@cf/qwen/qwen3.8-27b";
 const DEFAULT_GATEWAY = "victorcazorla-ai";
 const JSON_HEADERS = { "Content-Type": "application/json; charset=utf-8" };
 
@@ -64,6 +70,15 @@ function logBlocked(reason: BlockReason, ip: string, extra: Record<string, unkno
 
 async function readCount(kv: KVNamespaceLike, key: string): Promise<number> {
   return Number((await kv.get(key)) ?? "0");
+}
+
+// Algunos modelos con "reasoning" (p. ej. Qwen 3.x) anteponen su cadena
+// de pensamiento en un bloque <think>…</think>: se descarta.
+function cleanAnswer(raw: unknown): string {
+  return String(raw || "")
+    .replace(/<think>[\s\S]*?<\/think>/gi, "")
+    .replace(/^\s*<\/?think>\s*/i, "")
+    .trim();
 }
 
 /** perfil-resumen + top-K recuperados (deduplicado), con home como red de seguridad. */
@@ -141,28 +156,29 @@ export async function onRequestPost(context: RequestContext): Promise<Response> 
   // la respuesta con Workers AI (cuota diaria gratuita). La llamada pasa
   // por el AI Gateway, así que cada pregunta queda registrada en el panel.
   const docs = selectContext(message);
-  const model = env.CHAT_MODEL || DEFAULT_MODEL;
   const gatewayId = env.AI_GATEWAY_ID || DEFAULT_GATEWAY;
+  const models = [env.CHAT_MODEL || DEFAULT_MODEL, env.CHAT_MODEL_FALLBACK || DEFAULT_MODEL_FALLBACK].filter(
+    (m, i, arr) => m && arr.indexOf(m) === i
+  );
+  const input = { messages: buildMessages(message, docs), max_tokens: 512, temperature: 0.2 };
 
   let answer = "";
-  try {
-    const out = await env.AI.run(
-      model,
-      { messages: buildMessages(message, docs), max_tokens: 512, temperature: 0.2 },
-      { gateway: { id: gatewayId, collectLog: true } }
-    );
-    answer = (out.response || "").trim();
-  } catch (error) {
-    console.error(
-      JSON.stringify({
-        event: "chat_model_failed",
-        timestamp: new Date().toISOString(),
-        ip,
-        model,
-        message: error instanceof Error ? error.message : String(error),
-      })
-    );
-    return json({ ok: false, error: "server" }, 502);
+  for (const model of models) {
+    try {
+      const out = await env.AI.run(model, input, { gateway: { id: gatewayId, collectLog: true } });
+      answer = cleanAnswer(out.response);
+      if (answer) break;
+    } catch (error) {
+      console.error(
+        JSON.stringify({
+          event: "chat_model_failed",
+          timestamp: new Date().toISOString(),
+          ip,
+          model,
+          message: error instanceof Error ? error.message : String(error),
+        })
+      );
+    }
   }
 
   if (!answer) return json({ ok: false, error: "server" }, 502);
