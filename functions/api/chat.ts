@@ -47,12 +47,13 @@ interface RequestContext {
   env: Env;
 }
 
-// Modelos gratuitos de Workers AI (cuota diaria del plan Workers Free; si
-// se agota devuelven error, nunca facturan). Cloudflare retira modelos
-// antiguos con un 410, así que hay un fallback: si el primario falla se
-// reintenta con el segundo antes de rendirse.
-const DEFAULT_MODEL = "@cf/meta/llama-3.1-8b-instruct-fast";
-const DEFAULT_MODEL_FALLBACK = "@cf/qwen/qwen3.8-27b";
+// Modelos de Workers AI (Cloudflare-hosted → cubiertos por la cuota
+// diaria gratuita del plan Workers Free; si se agota devuelven error,
+// nunca facturan). Cloudflare retira modelos antiguos con un 410, así que
+// hay un fallback: si el primario falla se reintenta con el segundo antes
+// de rendirse. Ambos verificados vía el AI Gateway (2026-08-30).
+const DEFAULT_MODEL = "@cf/zai-org/glm-4.7-flash"; // multilingüe, optimizado para chat
+const DEFAULT_MODEL_FALLBACK = "@cf/google/gemma-4-26b-a4b-it";
 const DEFAULT_GATEWAY = "victorcazorla-ai";
 const JSON_HEADERS = { "Content-Type": "application/json; charset=utf-8" };
 
