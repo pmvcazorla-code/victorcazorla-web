@@ -80,6 +80,16 @@ function initContactForm(form) {
       const result = await response.json().catch(() => ({ ok: false }));
 
       if (result.ok) {
+        // Conversión: mensaje de contacto enviado con éxito. Evento
+        // recomendado de GA4 (se puede marcar como "evento clave").
+        // window.gtag solo existe en producción (ver gtag-init.js).
+        if (typeof window.gtag === "function") {
+          window.gtag("event", "generate_lead", {
+            form_id: "contact",
+            contact_reason: fields.reason,
+            page_location: window.location.href,
+          });
+        }
         form.reset();
         if (tsField) tsField.value = String(Date.now());
         resetCaptcha();

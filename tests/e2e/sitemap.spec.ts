@@ -8,7 +8,7 @@ test.describe("Sitemap", () => {
 
     const body = await response.text();
     const urlCount = (body.match(/<url>/g) ?? []).length;
-    expect(urlCount).toBe(28); // 7 rutas (home, it, ciencias, deontología, formación, legal, contacto) x 4 idiomas
+    expect(urlCount).toBe(28); // 7 routes (home, it, cienciasambientales, deontologia, formacion, legal, contacto) x 4 languages
     expect(body).toContain("<loc>https://victorcazorla.com/</loc>");
   });
 

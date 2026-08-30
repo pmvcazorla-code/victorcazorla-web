@@ -3,12 +3,18 @@
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
-  Permissions-Policy: camera=(), microphone=(), geolocation=()
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), browsing-topics=()
   Cross-Origin-Opener-Policy: same-origin
   Cross-Origin-Resource-Policy: same-origin
   Content-Security-Policy: default-src 'self'; img-src 'self' data: https://*.hcaptcha.com; style-src 'self' 'unsafe-inline' https://*.hcaptcha.com; font-src 'self'; script-src 'self' https://www.googletagmanager.com https://static.cloudflareinsights.com https://*.hcaptcha.com; connect-src 'self' https://cloudflareinsights.com https://www.google-analytics.com https://*.google-analytics.com https://www.googletagmanager.com https://*.hcaptcha.com; frame-src https://*.hcaptcha.com; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'
 
 /fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+
+# Assets generados por Astro: el nombre lleva un hash del contenido, así
+# que un cambio siempre produce una URL nueva. Se pueden cachear "para
+# siempre" (Cloudflare Pages, sin regla, les aplicaría solo 4 h).
+/_astro/*
   Cache-Control: public, max-age=31536000, immutable
 
 # Imágenes estáticas: no llevan hash en el nombre, así que no son

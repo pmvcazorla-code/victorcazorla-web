@@ -7,6 +7,7 @@ type NavItem = {
 };
 
 import { languages, routes, footerLegalLabel, type LanguageOption } from "../data/i18n";
+import CookieConsent from "../components/CookieConsent.astro";
 
 type BaseLayoutProps = {
   title?: string;
@@ -115,10 +116,12 @@ const breadcrumbJsonLd = !matchedRoute || isHome
          W3C): garantiza que el navegador decodifica el resto del
          documento como UTF-8 antes de parsear ningún otro byte. -->
     <meta charset="utf-8" />
-    <!-- Google tag (gtag.js). Init como archivo externo (no inline) para
-         no necesitar 'unsafe-inline' en script-src (public/_headers). -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQEMTYB7S"></script>
-    <script is:inline src="/scripts/gtag-init.js" defer></script>
+    <!-- Google Analytics 4. gtag-init.js solo define window.loadAnalytics()
+         y la llama si ya hay consentimiento guardado; el aviso de cookies
+         (cookie-consent.js, al final de <body>) es quien lo arranca al
+         pulsar «Aceptar». No se activa en local ni en *.pages.dev.
+         Módulo externo (no inline) por la CSP de public/_headers. -->
+    <script is:inline type="module" src="/scripts/gtag-init.js"></script>
     <!-- Se coloca lo antes posible para minimizar el parpadeo en
          visitantes que van a ser redirigidos a su idioma. Archivo
          externo (no inline) por la CSP de public/_headers. -->
@@ -155,7 +158,7 @@ const breadcrumbJsonLd = !matchedRoute || isHome
       "@type": "Person",
       name: "Víctor Cazorla Fernández",
       url: siteUrl,
-      email: "info@victorcazorla.com",
+      email: "contacto@victorcazorla.com",
       image: `${siteUrl}/img/linkedin_face.jpg`,
       jobTitle: "IT Management · Environmental Science · Professional Ethics",
       worksFor: {
@@ -838,7 +841,6 @@ const breadcrumbJsonLd = !matchedRoute || isHome
         }
       }
     </style>
-    {image ? <link rel="preload" as="image" href={image} /> : null}
   </head>
 
   <body>
@@ -988,6 +990,8 @@ const breadcrumbJsonLd = !matchedRoute || isHome
       © 2026 · Víctor Cazorla Fernández · <a href={legalRoute.slugs[lang]}>{footerLegalLabel[lang]}</a>
     </footer>
 
+    <CookieConsent lang={lang} />
+
     <!-- Contenido superpuesto (p. ej. el chatbot de /inicio): fuera de
          <main> para no contar como contenido principal ni contaminar la
          extracción de la base de conocimiento (scripts/kb/extract.mjs). -->
@@ -998,5 +1002,6 @@ const breadcrumbJsonLd = !matchedRoute || isHome
          añadir 'unsafe-inline'. -->
     <script is:inline src="/scripts/mobile-menu.js" defer></script>
     <script is:inline type="module" src="/scripts/ga-events.js"></script>
+    <script is:inline type="module" src="/scripts/cookie-consent.js"></script>
   </body>
 </html>
