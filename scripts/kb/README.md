@@ -1,102 +1,78 @@
 # Base de conocimiento del chatbot de `/inicio`
 
-Pipeline que alimenta el chatbot de IA con contenido acotado al perfil de
-Víctor Cazorla Fernández: las páginas del propio sitio + material curado
-(prensa, RRSS, notas).
+Chatbot acotado al perfil de Víctor Cazorla Fernández. Responde con la
+información del propio sitio + material curado (prensa, RRSS). **Sin coste
+y sin servicios de pago**: la base de conocimiento viaja empaquetada
+dentro del despliegue y la generación usa la cuota diaria gratuita de
+Workers AI.
 
 ```
-astro build  ─►  dist/**.html
-                     │  scripts/kb/extract.mjs   (kb:extract)
-                     ▼
-                 .kb/site/**.md   +   kb/curated/**.md
-                     │  scripts/kb/sync.mjs      (kb:sync)
-                     ▼
-        R2: victorcazorla-kb   ─►  AI Search (AutoRAG)  ─►  Pages Function /api/chat
-                                        │
-                                   AI Gateway (logs de preguntas en el panel)
+astro build ─► dist/**.html
+                 │  scripts/kb/extract.mjs   (kb:extract)
+                 ▼
+             .kb/site/**.md   +   kb/curated/**.md
+                 │  scripts/kb/bundle.mjs    (kb:bundle)
+                 ▼
+        functions/_lib/kb-content.json   (≈110 KB, versionado, se despliega con el sitio)
+                 │
+                 ▼
+   functions/api/chat.ts  ──►  búsqueda por palabras clave (en memoria)
+                 │             + Workers AI (env.AI.run, modelo gratuito)
+                 ▼
+         AI Gateway "victorcazorla-ai"  (Logs ON → preguntas visibles en el panel)
 ```
 
-## Scripts
+**Por qué así y no con AI Search / R2**: R2 obliga a activar una
+suscripción de pago por uso (aunque tenga tramo gratuito) y AI Search
+depende de R2. Se descartó para que **no exista ninguna vía de cobro**.
+El corpus es diminuto (~30 páginas), así que un ranking por solapamiento
+de términos + el resumen `llms.txt` siempre en contexto da resultados de
+sobra sin necesidad de embeddings ni vector store.
+
+## Comandos
 
 | Comando | Qué hace |
 |---|---|
-| `npm run kb:extract` | Lee `dist/` y genera `.kb/site/*.md` (contenido principal de cada página en Markdown, con frontmatter y enlaces externos citados). No usa red. |
-| `npm run kb:sync` | Sube `.kb/site/**` y `kb/curated/**` al bucket R2. Borra del bucket lo que ya no existe (`--no-prune` lo evita, `--dry-run` solo lista). |
-| `npm run kb:deploy` | `build` + `kb:extract` + `kb:sync` en cadena. |
+| `npm run kb:extract` | `dist/**.html` → `.kb/site/*.md` (contenido principal a Markdown, con frontmatter y enlaces externos citados). Incluye `llms.txt` como resumen. Sin red. |
+| `npm run kb:bundle` | `.kb/site/**` + `kb/curated/**` → `functions/_lib/kb-content.json`. Sin red. |
+| `npm run kb:build` | `build` + `kb:extract` + `kb:bundle` en cadena. |
 
-`.kb/` está en `.gitignore` (es generado). `kb/curated/` **sí** se versiona.
+`.kb/` está en `.gitignore` (intermedio). `functions/_lib/kb-content.json`
+y `kb/curated/` **sí** se versionan: el JSON es lo que se despliega.
 
-## Puesta en marcha (una sola vez)
+## Recursos en Cloudflare
 
-Todo en la misma cuenta de Cloudflare del proyecto Pages.
+- **AI Gateway `victorcazorla-ai`** — creado, con *Collect Logs* activado.
+  Aquí se revisan las preguntas de los visitantes:
+  Panel → AI → AI Gateway → `victorcazorla-ai` → **Logs**.
+- **Workers AI** — no necesita configuración: el binding `ai` de
+  `wrangler.jsonc` funciona en el plan Workers Free. La cuota diaria
+  gratuita (10.000 Neurons/día) se reparte entre todas las peticiones; si
+  se agota, el endpoint devuelve un error controlado (nunca factura sin
+  plan Workers Paid).
+- **Modelo**: `@cf/meta/llama-3.1-8b-instruct` (var `CHAT_MODEL` en
+  `wrangler.jsonc`; cambiar ahí para probar otro modelo gratuito).
+- **hCaptcha**: reutiliza `HCAPTCHA_SECRET` (ya configurado para el
+  formulario de contacto).
 
-### 1. Bucket R2
-
-```sh
-npx wrangler r2 bucket create victorcazorla-kb
-```
-
-### 2. AI Gateway con logs
-
-Panel → **AI** → **AI Gateway** → *Create Gateway*, nombre `victorcazorla-ai`.
-En **Settings** del gateway, activa **Logs** (guarda peticiones y respuestas).
-Ahí es donde podrás revisar las preguntas de los visitantes.
-
-### 3. Instancia de AI Search
-
-Panel → **AI** → **AI Search** → *Create*:
-
-- **Data source**: bucket R2 `victorcazorla-kb`.
-- **Embedding model**: `@cf/baai/bge-m3` (multilingüe: es/en/fr/ca).
-- **Generation model**: `@cf/meta/llama-3.1-8b-instruct` (gratis en el tier de
-  Workers AI). Alternativas sin coste de licencia: `@cf/meta/llama-3.3-70b-instruct-fp8-fast`
-  o `@cf/deepseek-ai/deepseek-r1-distill-qwen-32b`. Se puede cambiar luego en Settings.
-- **AI Gateway**: selecciona `victorcazorla-ai` para que todas las consultas
-  queden registradas.
-- **Nombre de la instancia**: `victorcazorla-ai-search`.
-- **System prompt**: ver `scripts/kb/system-prompt.md`.
-
-### 4. Credenciales para `kb:sync` en local
+## Puesta en marcha / actualización
 
 ```sh
-export CLOUDFLARE_ACCOUNT_ID="<id de cuenta>"
-export CLOUDFLARE_API_TOKEN="<token con 'Workers R2 Storage: Edit'>"
-# o simplemente:  npx wrangler login
+npm run kb:build          # regenera functions/_lib/kb-content.json
+git add functions/_lib/kb-content.json && git commit -m "content: actualiza KB del chatbot"
+git push                  # el deploy de Pages recoge el binding ai y el JSON
 ```
 
-### 5. Primera carga
-
-```sh
-npm run kb:deploy
-```
-
-Luego, en AI Search → **Data** → *Sync index* (o espera al reindexado
-automático). Prueba una consulta desde la pestaña **Playground**.
+Opcional: en Pages → Settings → Builds, poner el *Build command* como
+`npm run kb:build` para que el JSON se regenere en cada despliegue sin
+tener que commitearlo a mano.
 
 ## Mantenimiento
 
-- **Cambias contenido del sitio**: `npm run kb:deploy` tras el deploy normal
-  (o añade el paso al pipeline de Pages).
-- **Nueva entrevista / mención en prensa / hito profesional**: crea un `.md`
-  en `kb/curated/` (copia `_plantilla.md`), `git commit`, y `npm run kb:sync`.
-- **Revisar qué preguntan los visitantes**: AI Gateway → `victorcazorla-ai` → Logs.
-
-## Endpoint y widget (ya implementados)
-
-- `functions/api/chat.ts` — Pages Function. Consulta
-  `env.AI.autorag(AI_SEARCH_INSTANCE).aiSearch({ query, rewrite_query: true })`
-  (vía compatible con el `compatibility_date` actual). Rate-limit por IP
-  sobre el KV `CONTACT_RATE_LIMIT` (15/h, 50/día) y hCaptcha en el primer
-  mensaje por IP (pase en KV, TTL 2 h). Lógica pura y testeada en
-  `functions/_lib/chat.ts`.
-- `src/components/ChatWidget.astro` + `public/scripts/chat-widget.js` —
-  chat flotante, solo en `/` (la home española). hCaptcha invisible, se
-  resuelve solo si el servidor responde `captcha_required`.
-- Bindings/vars en `wrangler.jsonc`: `ai` (binding `AI`) y
-  `AI_SEARCH_INSTANCE`. El secreto `HCAPTCHA_SECRET` ya existe (formulario
-  de contacto); el chatbot lo reutiliza.
-- Guardarraíles del modelo: `scripts/kb/system-prompt.md` (se pega en la
-  config de la instancia de AI Search, no en el código).
-
-Los guardarraíles y el nombre de la instancia son lo único que falta
-configurar en el panel para que el chat funcione en producción.
+- **Cambia contenido del sitio** → `npm run kb:build` + commit del JSON.
+- **Nueva entrevista / mención en prensa / hito** → crea un `.md` en
+  `kb/curated/` (copia `_plantilla.md`), y `npm run kb:build` + commit.
+- **Guardarraíles del modelo** → `functions/_lib/chat.ts` (constante
+  `SYSTEM_PROMPT`). `system-prompt.md` de esta carpeta es la copia de
+  referencia legible.
+- **Revisar qué preguntan los visitantes** → AI Gateway → `victorcazorla-ai` → Logs.

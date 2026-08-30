@@ -13,17 +13,17 @@ class FakeKV {
 
 const CAPTCHA_URL = "https://api.hcaptcha.com/siteverify";
 
-function makeAi(result: unknown = { response: "Víctor preside el Comité de Ética del COAMB.", data: [] }) {
-  const aiSearch = vi.fn(async () => result);
-  return { binding: { autorag: vi.fn(() => ({ aiSearch })) }, aiSearch };
+function makeAiRun(response = "Víctor preside el Comité de Ética del COAMB.") {
+  return vi.fn(async () => ({ response }));
 }
 
 function makeEnv(overrides: Record<string, unknown> = {}) {
   return {
-    AI: makeAi().binding,
+    AI: { run: makeAiRun() },
     CONTACT_RATE_LIMIT: new FakeKV(),
     HCAPTCHA_SECRET: "secret",
-    AI_SEARCH_INSTANCE: "victorcazorla-ai-search",
+    AI_GATEWAY_ID: "victorcazorla-ai",
+    CHAT_MODEL: "@cf/meta/llama-3.1-8b-instruct",
     ...overrides,
   } as never;
 }
@@ -58,43 +58,40 @@ describe("onRequestPost /api/chat", () => {
     expect(await res.json()).toEqual({ ok: false, error: "captcha_required" });
   });
 
-  it("responde y devuelve fuentes cuando el token es válido", async () => {
-    const ai = makeAi({
-      response: "Es perito judicial ambiental.",
-      data: [{ filename: "site/deontologia.md" }, { filename: "site/cienciasambientales.md" }],
-    });
-    const env = makeEnv({ AI: ai.binding });
+  it("responde y adjunta fuentes cuando el token es válido", async () => {
+    const run = makeAiRun("Es perito judicial ambiental.");
+    const env = makeEnv({ AI: { run } });
     const res = await onRequestPost({
-      request: makeRequest({ message: "¿A qué se dedica?", token: "hc-token" }),
+      request: makeRequest({ message: "¿Quién preside el comité de deontología del COAMB?", token: "hc" }),
       env,
     });
     expect(res.status).toBe(200);
-    const body = (await res.json()) as Record<string, unknown>;
+    const body = (await res.json()) as { ok: boolean; answer: string; sources: { title: string; url: string }[] };
     expect(body.ok).toBe(true);
     expect(body.answer).toBe("Es perito judicial ambiental.");
-    expect(body.sources).toEqual([
-      { title: "Deontologia", url: "https://victorcazorla.com/deontologia/" },
-      { title: "Cienciasambientales", url: "https://victorcazorla.com/cienciasambientales/" },
-    ]);
-    expect(ai.binding.autorag).toHaveBeenCalledWith("victorcazorla-ai-search");
+    expect(body.sources.length).toBeGreaterThan(0);
+    expect(body.sources.every((s) => s.url && s.url.startsWith("https://victorcazorla.com/"))).toBe(true);
+    // No expone el resumen de perfil como "fuente".
+    expect(body.sources.some((s) => /llms\.txt/.test(s.url))).toBe(false);
+
+    // Llama a Workers AI a través del AI Gateway configurado.
+    expect(run).toHaveBeenCalledTimes(1);
+    const [model, input, options] = run.mock.calls[0];
+    expect(model).toBe("@cf/meta/llama-3.1-8b-instruct");
+    expect(options).toEqual({ gateway: { id: "victorcazorla-ai", collectLog: true } });
+    expect((input as { messages: unknown[] }).messages).toHaveLength(2);
   });
 
   it("no vuelve a pedir captcha una vez superado (pase en KV)", async () => {
     const env = makeEnv();
-    await onRequestPost({ request: makeRequest({ message: "Primera", token: "hc-token" }), env });
-    const res = await onRequestPost({ request: makeRequest({ message: "Segunda" }), env });
+    await onRequestPost({ request: makeRequest({ message: "Primera pregunta", token: "hc" }), env });
+    const res = await onRequestPost({ request: makeRequest({ message: "Segunda pregunta" }), env });
     expect(res.status).toBe(200);
   });
 
   it("rechaza un token de captcha inválido", async () => {
-    vi.stubGlobal(
-      "fetch",
-      vi.fn(async () => new Response(JSON.stringify({ success: false }), { status: 200 }))
-    );
-    const res = await onRequestPost({
-      request: makeRequest({ message: "Hola", token: "malo" }),
-      env: makeEnv(),
-    });
+    vi.stubGlobal("fetch", vi.fn(async () => new Response(JSON.stringify({ success: false }), { status: 200 })));
+    const res = await onRequestPost({ request: makeRequest({ message: "Hola", token: "malo" }), env: makeEnv() });
     expect(res.status).toBe(422);
     expect(await res.json()).toMatchObject({ error: "captcha" });
   });
@@ -105,7 +102,7 @@ describe("onRequestPost /api/chat", () => {
     expect(await short.json()).toMatchObject({ error: "empty" });
 
     const long = await onRequestPost({
-      request: makeRequest({ message: "x".repeat(501), token: "hc-token" }),
+      request: makeRequest({ message: "x".repeat(501), token: "hc" }),
       env: makeEnv(),
     });
     expect(long.status).toBe(400);
@@ -114,21 +111,28 @@ describe("onRequestPost /api/chat", () => {
 
   it("aplica rate-limit por IP a la hora", async () => {
     const env = makeEnv();
-    env.CONTACT_RATE_LIMIT.store.set(`chat:captcha-ok:203.0.113.5`, "1");
+    env.CONTACT_RATE_LIMIT.store.set("chat:captcha-ok:203.0.113.5", "1");
     for (let i = 0; i < 15; i++) {
-      const ok = await onRequestPost({ request: makeRequest({ message: `pregunta ${i}` }), env });
+      const ok = await onRequestPost({ request: makeRequest({ message: `pregunta numero ${i}` }), env });
       expect(ok.status).toBe(200);
     }
-    const blocked = await onRequestPost({ request: makeRequest({ message: "una más" }), env });
+    const blocked = await onRequestPost({ request: makeRequest({ message: "una mas" }), env });
     expect(blocked.status).toBe(429);
     expect(await blocked.json()).toMatchObject({ error: "rate_limited" });
   });
 
-  it("devuelve 502 si AI Search falla", async () => {
-    const failing = { autorag: () => ({ aiSearch: async () => { throw new Error("upstream"); } }) };
+  it("devuelve 502 si Workers AI falla", async () => {
     const res = await onRequestPost({
-      request: makeRequest({ message: "Hola", token: "hc-token" }),
-      env: makeEnv({ AI: failing as never }),
+      request: makeRequest({ message: "Hola", token: "hc" }),
+      env: makeEnv({ AI: { run: async () => { throw new Error("capacity"); } } }),
+    });
+    expect(res.status).toBe(502);
+  });
+
+  it("devuelve 502 si el modelo responde vacío", async () => {
+    const res = await onRequestPost({
+      request: makeRequest({ message: "Hola", token: "hc" }),
+      env: makeEnv({ AI: { run: async () => ({ response: "  " }) } }),
     });
     expect(res.status).toBe(502);
   });

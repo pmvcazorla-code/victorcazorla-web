@@ -2,38 +2,43 @@ import {
   validateMessage,
   chatRateLimitKeys,
   captchaPassKey,
-  extractSources,
+  buildMessages,
+  toSource,
   CHAT_MAX_PER_HOUR,
   CHAT_MAX_PER_DAY,
   CAPTCHA_PASS_TTL_SECONDS,
   type ChatSource,
 } from "../_lib/chat";
+import { retrieve, type KbDoc } from "../_lib/kb-search";
 import { verifyCaptcha } from "../_lib/captcha";
+import kbData from "../_lib/kb-content.json";
 
-// Subconjunto mínimo de KVNamespace (mismo criterio que contact.ts: no
-// añadir @cloudflare/workers-types solo para tipar tres métodos).
+const KB = (kbData as { docs: KbDoc[] }).docs;
+// Resumen curado del perfil (llms.txt): siempre va como contexto base.
+const PROFILE_SUMMARY = KB.find((d) => d.id === "site/perfil-resumen");
+const HOME_DOC = KB.find((d) => d.id === "site/home");
+
+// Subconjunto mínimo de KVNamespace (mismo criterio que contact.ts).
 interface KVNamespaceLike {
   get(key: string): Promise<string | null>;
   put(key: string, value: string, options?: { expirationTtl?: number }): Promise<void>;
 }
 
-// La respuesta de env.AI.autorag(...).aiSearch(): solo lo que se consume aquí.
-interface AiSearchResult {
-  response?: string;
-  data?: unknown;
+// env.AI.run(): solo lo que se consume aquí.
+interface AiRunOptions {
+  gateway?: { id: string; collectLog?: boolean };
 }
 interface AiBinding {
-  autorag(instance: string): { aiSearch(opts: Record<string, unknown>): Promise<AiSearchResult> };
+  run(model: string, input: Record<string, unknown>, options?: AiRunOptions): Promise<{ response?: string }>;
 }
 
 interface Env {
   AI: AiBinding;
   CONTACT_RATE_LIMIT: KVNamespaceLike;
   HCAPTCHA_SECRET: string;
-  // Nombre de la instancia de AI Search (Panel → AI → AI Search). Se
-  // configura como var en wrangler.jsonc; este default cubre el caso de
-  // que falte.
-  AI_SEARCH_INSTANCE?: string;
+  // Configurables desde wrangler.jsonc; los defaults cubren el caso de que falten.
+  CHAT_MODEL?: string;
+  AI_GATEWAY_ID?: string;
 }
 
 interface RequestContext {
@@ -41,7 +46,8 @@ interface RequestContext {
   env: Env;
 }
 
-const DEFAULT_INSTANCE = "victorcazorla-ai-search";
+const DEFAULT_MODEL = "@cf/meta/llama-3.1-8b-instruct";
+const DEFAULT_GATEWAY = "victorcazorla-ai";
 const JSON_HEADERS = { "Content-Type": "application/json; charset=utf-8" };
 
 function json(body: unknown, status = 200): Response {
@@ -58,6 +64,23 @@ function logBlocked(reason: BlockReason, ip: string, extra: Record<string, unkno
 
 async function readCount(kv: KVNamespaceLike, key: string): Promise<number> {
   return Number((await kv.get(key)) ?? "0");
+}
+
+/** perfil-resumen + top-K recuperados (deduplicado), con home como red de seguridad. */
+function selectContext(message: string): KbDoc[] {
+  const hits = retrieve(message, KB, 3);
+  const picked: KbDoc[] = [];
+  const seen = new Set<string>();
+  const add = (doc?: KbDoc) => {
+    if (doc && !seen.has(doc.id)) {
+      seen.add(doc.id);
+      picked.push(doc);
+    }
+  };
+  add(PROFILE_SUMMARY);
+  for (const hit of hits) add(hit.doc);
+  if (picked.length === 1) add(HOME_DOC); // la consulta no casó con nada
+  return picked;
 }
 
 export async function onRequestPost(context: RequestContext): Promise<Response> {
@@ -108,36 +131,46 @@ export async function onRequestPost(context: RequestContext): Promise<Response> 
     await env.CONTACT_RATE_LIMIT.put(passKey, "1", { expirationTtl: CAPTCHA_PASS_TTL_SECONDS });
   }
 
-  // 4. Consume una unidad de cuota justo antes de la llamada cara.
+  // 4. Consume una unidad de cuota justo antes de la llamada al modelo.
   await Promise.all([
     env.CONTACT_RATE_LIMIT.put(hourKey, String(hourCount + 1), { expirationTtl: 3600 }),
     env.CONTACT_RATE_LIMIT.put(dayKey, String(dayCount + 1), { expirationTtl: 86400 }),
   ]);
 
-  // 5. RAG contra AI Search. El system prompt y los guardarraíles se
-  // configuran a nivel de instancia en el panel (scripts/kb/system-prompt.md);
-  // aquí solo se pasa la consulta. Las peticiones quedan registradas en el
-  // AI Gateway enlazado a la instancia.
-  const instance = env.AI_SEARCH_INSTANCE || DEFAULT_INSTANCE;
-  let result: AiSearchResult;
+  // 5. Recupera contexto de la base de conocimiento empaquetada y genera
+  // la respuesta con Workers AI (cuota diaria gratuita). La llamada pasa
+  // por el AI Gateway, así que cada pregunta queda registrada en el panel.
+  const docs = selectContext(message);
+  const model = env.CHAT_MODEL || DEFAULT_MODEL;
+  const gatewayId = env.AI_GATEWAY_ID || DEFAULT_GATEWAY;
+
+  let answer = "";
   try {
-    result = await env.AI.autorag(instance).aiSearch({ query: message, rewrite_query: true });
+    const out = await env.AI.run(
+      model,
+      { messages: buildMessages(message, docs), max_tokens: 512, temperature: 0.2 },
+      { gateway: { id: gatewayId, collectLog: true } }
+    );
+    answer = (out.response || "").trim();
   } catch (error) {
     console.error(
       JSON.stringify({
-        event: "chat_ai_search_failed",
+        event: "chat_model_failed",
         timestamp: new Date().toISOString(),
         ip,
-        instance,
+        model,
         message: error instanceof Error ? error.message : String(error),
       })
     );
     return json({ ok: false, error: "server" }, 502);
   }
 
-  const answer = (result.response || "").trim();
   if (!answer) return json({ ok: false, error: "server" }, 502);
 
-  const sources: ChatSource[] = extractSources(result.data);
+  const sources: ChatSource[] = docs
+    .filter((d) => d.id !== "site/perfil-resumen" && d.url)
+    .map(toSource)
+    .slice(0, 4);
+
   return json({ ok: true, answer, sources });
 }

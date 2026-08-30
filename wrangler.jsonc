@@ -15,11 +15,11 @@
       "id": "ab2a109039ae40639b48e5bdcc75401f"
     }
   ],
-  // Binding de Workers AI. functions/api/chat.ts lo usa vía
-  // env.AI.autorag("<instancia>").aiSearch(...) — la vía compatible con
-  // el compatibility_date actual (el binding ai_search_namespaces
-  // exigiría 2026-03-27 o posterior). La instancia de AI Search y el AI
-  // Gateway con Logs se crean en el panel; ver scripts/kb/README.md.
+  // Binding de Workers AI. functions/api/chat.ts lo usa vía env.AI.run()
+  // con la cuota diaria gratuita del plan Workers Free (si se agota,
+  // devuelve error; nunca factura sin plan Workers Paid). La base de
+  // conocimiento viaja empaquetada en functions/_lib/kb-content.json
+  // (sin R2, sin AI Search). Ver scripts/kb/README.md.
   "ai": {
     "binding": "AI"
   },
@@ -33,7 +33,9 @@
     // *build* de Astro (la usa ContactForm.astro al compilar el sitio).
     "CONTACT_TO_EMAIL": "contacto@victorcazorla.com",
     "CONTACT_FROM_EMAIL": "web@victorcazorla.com",
-    // Nombre de la instancia de AI Search que consulta el chatbot.
-    "AI_SEARCH_INSTANCE": "victorcazorla-ai-search"
+    // Chatbot: AI Gateway (con Logs activados) por el que pasan las
+    // llamadas a Workers AI, y modelo de generación (gratuito).
+    "AI_GATEWAY_ID": "victorcazorla-ai",
+    "CHAT_MODEL": "@cf/meta/llama-3.1-8b-instruct"
   }
 }

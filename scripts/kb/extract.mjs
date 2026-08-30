@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Extrae el contenido principal de cada página ya compilada en dist/ y lo
-// convierte a Markdown limpio dentro de .kb/ para que Cloudflare AI Search
-// (antes AutoRAG) lo indexe. No toca la red: solo lee dist/ y escribe .kb/.
+// convierte a Markdown limpio dentro de .kb/, que luego kb:bundle
+// empaqueta para el chatbot. No toca la red: solo lee dist/ y escribe .kb/.
 //
 // Uso:  npm run build && npm run kb:extract
 //
@@ -200,7 +200,7 @@ function main() {
   }
 
   console.log(`\n${n} documentos escritos en .kb/site/`);
-  console.log('Añade material externo (prensa, RRSS) en kb/curated/*.md y luego: npm run kb:sync');
+  console.log('Añade material externo (prensa, RRSS) en kb/curated/*.md y luego: npm run kb:bundle');
 }
 
 main();

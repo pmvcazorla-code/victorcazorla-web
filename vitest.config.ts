@@ -18,6 +18,7 @@ export default defineConfig({
         "functions/_lib/contact.ts",
         "functions/_lib/captcha.ts",
         "functions/_lib/chat.ts",
+        "functions/_lib/kb-search.ts",
         "functions/api/contact.ts",
         "functions/api/chat.ts",
       ],
