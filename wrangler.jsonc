@@ -15,6 +15,14 @@
       "id": "ab2a109039ae40639b48e5bdcc75401f"
     }
   ],
+  // Binding de Workers AI. functions/api/chat.ts lo usa vía
+  // env.AI.autorag("<instancia>").aiSearch(...) — la vía compatible con
+  // el compatibility_date actual (el binding ai_search_namespaces
+  // exigiría 2026-03-27 o posterior). La instancia de AI Search y el AI
+  // Gateway con Logs se crean en el panel; ver scripts/kb/README.md.
+  "ai": {
+    "binding": "AI"
+  },
   "vars": {
     // No son secretos (ya son públicos como enlaces mailto en el propio
     // sitio). RESEND_API_KEY y HCAPTCHA_SECRET sí lo son y se
@@ -24,6 +32,8 @@
     // variable distinta: no va aquí tampoco, sino como variable de
     // *build* de Astro (la usa ContactForm.astro al compilar el sitio).
     "CONTACT_TO_EMAIL": "contacto@victorcazorla.com",
-    "CONTACT_FROM_EMAIL": "web@victorcazorla.com"
+    "CONTACT_FROM_EMAIL": "web@victorcazorla.com",
+    // Nombre de la instancia de AI Search que consulta el chatbot.
+    "AI_SEARCH_INSTANCE": "victorcazorla-ai-search"
   }
 }

@@ -1,0 +1,359 @@
+---
+/**
+ * Chatbot flotante (solo /inicio). El comportamiento vive en
+ * public/scripts/chat-widget.js; aquí solo el markup + estilos. El
+ * <button> nace con `hidden` y solo el JS lo revela, así que sin
+ * JavaScript el widget no aparece y la página no se ve afectada.
+ *
+ * La sitekey pública de hCaptcha es la misma que usa ContactForm.astro
+ * (no es secreta: viaja en el HTML). El secreto server-side vive en la
+ * variable de entorno HCAPTCHA_SECRET de la Function.
+ */
+import { routes } from "../data/i18n";
+
+type Lang = "es" | "en" | "fr" | "ca";
+type Props = { lang?: Lang };
+const { lang = "es" } = Astro.props as Props;
+
+const hcaptchaSiteKey =
+  import.meta.env.PUBLIC_HCAPTCHA_SITE_KEY || "c8d63508-fd6a-4cf0-b484-c5566418bd38";
+const legalHref = routes.find((route) => route.key === "legal")!.slugs[lang];
+
+const copy: Record<Lang, {
+  launch: string;
+  title: string;
+  close: string;
+  greeting: string;
+  placeholder: string;
+  send: string;
+  disclaimerLead: string;
+  privacyLink: string;
+  thinking: string;
+  generic: string;
+  rate: string;
+  tooLong: string;
+  captcha: string;
+  empty: string;
+}> = {
+  es: {
+    launch: "Abrir el asistente",
+    title: "Asistente sobre Víctor Cazorla",
+    close: "Cerrar",
+    greeting:
+      "Hola. Puedo responder preguntas sobre la trayectoria profesional y académica de Víctor Cazorla Fernández a partir de la información de esta web. ¿Qué te gustaría saber?",
+    placeholder: "Escribe tu pregunta…",
+    send: "Enviar",
+    disclaimerLead:
+      "Asistente de IA: puede cometer errores y solo responde sobre el perfil de Víctor Cazorla. No introduzcas datos personales.",
+    privacyLink: "Privacidad",
+    thinking: "Buscando en la web…",
+    generic: "Algo ha fallado. Inténtalo de nuevo en un momento.",
+    rate: "Has enviado muchas preguntas seguidas. Prueba de nuevo más tarde.",
+    tooLong: "La pregunta es demasiado larga (máximo 500 caracteres).",
+    captcha: "No se ha podido verificar que no eres un bot. Recarga la página e inténtalo de nuevo.",
+    empty: "Escribe una pregunta.",
+  },
+  en: {
+    launch: "Open the assistant",
+    title: "Assistant about Víctor Cazorla",
+    close: "Close",
+    greeting:
+      "Hi. I can answer questions about Víctor Cazorla Fernández's professional and academic background using the information on this site. What would you like to know?",
+    placeholder: "Type your question…",
+    send: "Send",
+    disclaimerLead:
+      "AI assistant: it can make mistakes and only answers about Víctor Cazorla's profile. Do not enter personal data.",
+    privacyLink: "Privacy",
+    thinking: "Searching the site…",
+    generic: "Something went wrong. Please try again in a moment.",
+    rate: "You have sent too many questions in a row. Please try again later.",
+    tooLong: "The question is too long (500 characters maximum).",
+    captcha: "We could not verify you are not a bot. Please reload the page and try again.",
+    empty: "Type a question.",
+  },
+  fr: {
+    launch: "Ouvrir l'assistant",
+    title: "Assistant sur Víctor Cazorla",
+    close: "Fermer",
+    greeting:
+      "Bonjour. Je peux répondre à des questions sur le parcours professionnel et académique de Víctor Cazorla Fernández à partir des informations de ce site. Que souhaitez-vous savoir ?",
+    placeholder: "Écrivez votre question…",
+    send: "Envoyer",
+    disclaimerLead:
+      "Assistant IA : il peut se tromper et ne répond que sur le profil de Víctor Cazorla. N'indiquez pas de données personnelles.",
+    privacyLink: "Confidentialité",
+    thinking: "Recherche sur le site…",
+    generic: "Une erreur s'est produite. Réessayez dans un instant.",
+    rate: "Vous avez envoyé trop de questions d'affilée. Réessayez plus tard.",
+    tooLong: "La question est trop longue (500 caractères maximum).",
+    captcha: "Impossible de vérifier que vous n'êtes pas un robot. Rechargez la page et réessayez.",
+    empty: "Écrivez une question.",
+  },
+  ca: {
+    launch: "Obrir l'assistent",
+    title: "Assistent sobre Víctor Cazorla",
+    close: "Tancar",
+    greeting:
+      "Hola. Puc respondre preguntes sobre la trajectòria professional i acadèmica de Víctor Cazorla Fernández a partir de la informació d'aquest lloc. Què t'agradaria saber?",
+    placeholder: "Escriu la teva pregunta…",
+    send: "Enviar",
+    disclaimerLead:
+      "Assistent d'IA: pot cometre errors i només respon sobre el perfil de Víctor Cazorla. No introdueixis dades personals.",
+    privacyLink: "Privacitat",
+    thinking: "Cercant al lloc…",
+    generic: "Alguna cosa ha fallat. Torna-ho a provar d'aquí a un moment.",
+    rate: "Has enviat massa preguntes seguides. Torna-ho a provar més tard.",
+    tooLong: "La pregunta és massa llarga (màxim 500 caràcters).",
+    captcha: "No s'ha pogut verificar que no ets un bot. Torna a carregar la pàgina i prova-ho de nou.",
+    empty: "Escriu una pregunta.",
+  },
+};
+
+const t = copy[lang];
+---
+
+<div
+  class="chat"
+  data-chat-widget
+  data-endpoint="/api/chat"
+  data-sitekey={hcaptchaSiteKey}
+  data-greeting={t.greeting}
+  data-msg-thinking={t.thinking}
+  data-msg-generic={t.generic}
+  data-msg-rate={t.rate}
+  data-msg-too-long={t.tooLong}
+  data-msg-captcha={t.captcha}
+  data-msg-empty={t.empty}
+>
+  <button type="button" class="chat__toggle" data-chat-toggle aria-controls="chat-panel" aria-expanded="false" hidden>
+    <span class="chat__toggle-icon" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M21 11.5a8.38 8.38 0 0 1-8.5 8.5 8.38 8.38 0 0 1-3.8-.9L3 20l1.9-5.7a8.38 8.38 0 0 1-.9-3.8A8.5 8.5 0 0 1 12.5 3a8.5 8.5 0 0 1 8.5 8.5z" />
+      </svg>
+    </span>
+    <span class="chat__toggle-label">{t.launch}</span>
+  </button>
+
+  <div class="chat__panel" id="chat-panel" data-chat-panel role="dialog" aria-label={t.title} hidden>
+    <div class="chat__header">
+      <span class="chat__title">{t.title}</span>
+      <button type="button" class="chat__close" data-chat-close aria-label={t.close}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+          <line x1="6" y1="6" x2="18" y2="18" /><line x1="18" y1="6" x2="6" y2="18" />
+        </svg>
+      </button>
+    </div>
+
+    <div class="chat__log" data-chat-log role="log" aria-live="polite" aria-atomic="false"></div>
+
+    <form class="chat__form" data-chat-form>
+      <label class="chat__sr" for="chat-input">{t.placeholder}</label>
+      <textarea
+        id="chat-input"
+        class="chat__input"
+        data-chat-input
+        rows="1"
+        maxlength="500"
+        placeholder={t.placeholder}
+        autocomplete="off"
+      ></textarea>
+      <button type="submit" class="chat__send" data-chat-send aria-label={t.send}>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <line x1="22" y1="2" x2="11" y2="13" /><polygon points="22 2 15 22 11 13 2 9 22 2" />
+        </svg>
+      </button>
+    </form>
+
+    <p class="chat__disclaimer">
+      {t.disclaimerLead} <a href={legalHref}>{t.privacyLink}</a>.
+    </p>
+  </div>
+
+  <div class="chat__hcaptcha" data-chat-hcaptcha aria-hidden="true"></div>
+</div>
+
+<script is:inline type="module" src="/scripts/chat-widget.js"></script>
+
+<style>
+  /* Un selector de clase gana al [hidden] de la hoja de estilos del
+     navegador, así que hay que reafirmar display:none explícitamente. */
+  .chat [hidden] { display: none !important; }
+
+  .chat {
+    position: fixed;
+    right: clamp(0.75rem, 3vw, 1.5rem);
+    bottom: clamp(0.75rem, 3vw, 1.5rem);
+    z-index: 60;
+    font-family: var(--font-sans);
+  }
+
+  .chat__toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.05rem;
+    border-radius: 999px;
+    border: 1px solid var(--color-border);
+    background: #0d1424;
+    color: var(--color-text);
+    font-size: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.45);
+  }
+  .chat__toggle:hover { border-color: var(--color-accent); }
+  .chat__toggle:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 2px; }
+  .chat__toggle-icon { display: inline-flex; width: 1.15rem; height: 1.15rem; color: var(--color-accent); }
+  .chat__toggle-icon svg { width: 100%; height: 100%; }
+  .chat--open .chat__toggle { display: none; }
+
+  @media (max-width: 30rem) {
+    .chat__toggle-label { display: none; }
+    .chat__toggle { padding: 0.8rem; }
+  }
+
+  .chat__panel {
+    display: flex;
+    flex-direction: column;
+    width: min(24rem, calc(100vw - 1.5rem));
+    height: min(32rem, calc(100vh - 3rem));
+    background: #0a0f1c;
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    box-shadow: 0 20px 55px rgba(0, 0, 0, 0.55);
+    overflow: hidden;
+  }
+
+  .chat__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding: 0.85rem 1rem;
+    border-bottom: 1px solid var(--color-border);
+  }
+  .chat__title { font-size: 0.92rem; font-weight: 600; }
+  .chat__close {
+    display: inline-flex;
+    width: 1.75rem;
+    height: 1.75rem;
+    padding: 0.3rem;
+    border: none;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--color-muted);
+    cursor: pointer;
+  }
+  .chat__close:hover { color: var(--color-text); background: var(--color-soft); }
+  .chat__close svg { width: 100%; height: 100%; }
+
+  .chat__log {
+    flex: 1;
+    overflow-y: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+  .chat-msg {
+    max-width: 85%;
+    padding: 0.6rem 0.85rem;
+    border-radius: 12px;
+    font-size: 0.9rem;
+    line-height: 1.6;
+  }
+  .chat-msg p { margin: 0 0 0.5rem; }
+  .chat-msg p:last-child { margin-bottom: 0; }
+  .chat-msg ul { margin: 0.25rem 0; padding-left: 1.1rem; }
+  .chat-msg a { color: var(--color-accent); }
+  .chat-msg--user {
+    align-self: flex-end;
+    background: var(--color-accent);
+    color: #0a0f1c;
+  }
+  .chat-msg--user a { color: #0a0f1c; text-decoration: underline; }
+  .chat-msg--assistant {
+    align-self: flex-start;
+    background: var(--color-soft);
+    border: 1px solid var(--color-border);
+  }
+  .chat-msg--error {
+    align-self: flex-start;
+    background: rgba(255, 120, 120, 0.12);
+    border: 1px solid rgba(255, 120, 120, 0.35);
+    color: #ffd8d8;
+  }
+  .chat-msg__thinking { opacity: 0.7; }
+  .chat-msg__sources {
+    margin: 0.55rem 0 0;
+    padding-left: 1.1rem;
+    font-size: 0.8rem;
+    opacity: 0.85;
+  }
+
+  .chat__form {
+    display: flex;
+    align-items: flex-end;
+    gap: 0.5rem;
+    padding: 0.75rem;
+    border-top: 1px solid var(--color-border);
+  }
+  .chat__input {
+    flex: 1;
+    resize: none;
+    max-height: 120px;
+    padding: 0.55rem 0.7rem;
+    border-radius: 9px;
+    border: 1px solid var(--color-border);
+    background: #0d1424;
+    color: var(--color-text);
+    font-family: inherit;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+  .chat__input:focus-visible { outline: 2px solid var(--color-accent); outline-offset: 1px; }
+  .chat__send {
+    display: inline-flex;
+    width: 2.2rem;
+    height: 2.2rem;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 9px;
+    background: var(--color-accent);
+    color: #0a0f1c;
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+  .chat__send:disabled { opacity: 0.5; cursor: default; }
+  .chat__send svg { width: 100%; height: 100%; }
+
+  .chat__disclaimer {
+    margin: 0;
+    padding: 0 0.9rem 0.85rem;
+    font-size: 0.72rem;
+    line-height: 1.5;
+    color: var(--color-muted);
+  }
+  .chat__disclaimer a { color: var(--color-accent); }
+
+  .chat__hcaptcha { position: absolute; }
+  .chat__sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .chat__panel { animation: chat-in 0.16s ease-out; }
+    @keyframes chat-in {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  }
+</style>
