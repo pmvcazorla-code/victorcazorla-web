@@ -50,12 +50,14 @@ y `kb/curated/` **sí** se versionan: el JSON es lo que se despliega.
   gratuita (10.000 Neurons/día) se reparte entre todas las peticiones; si
   se agota, el endpoint devuelve un error controlado (nunca factura sin
   plan Workers Paid).
-- **Modelo**: `@cf/meta/llama-3.1-8b-instruct-fast`, con
-  `@cf/qwen/qwen3.8-27b` de reserva (vars `CHAT_MODEL` y
-  `CHAT_MODEL_FALLBACK` en `wrangler.jsonc`). Cloudflare retira modelos
-  antiguos devolviendo un 410; si el primario cae, el endpoint reintenta
-  con el fallback. Modelos vivos: Panel → AI → Models (Text Generation,
-  filtro "Cloudflare-hosted").
+- **Modelo**: `@cf/zai-org/glm-4.7-flash` (multilingüe, optimizado para
+  chat), con `@cf/google/gemma-4-26b-a4b-it` de reserva (vars `CHAT_MODEL`
+  y `CHAT_MODEL_FALLBACK` en `wrangler.jsonc`). Cloudflare retira modelos
+  antiguos devolviendo un **410** (le pasó a `@cf/meta/llama-3.1-8b-instruct`);
+  si el primario cae, el endpoint reintenta con el fallback. Para probar
+  que un modelo sigue vivo: Panel → AI → AI Gateway → `victorcazorla-ai`
+  → **Playground**. Modelos disponibles: Panel → AI → Models (Text
+  Generation, filtro "Cloudflare-hosted").
 - **hCaptcha**: reutiliza `HCAPTCHA_SECRET` (ya configurado para el
   formulario de contacto).
 
