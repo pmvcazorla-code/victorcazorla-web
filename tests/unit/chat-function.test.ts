@@ -23,7 +23,7 @@ function makeEnv(overrides: Record<string, unknown> = {}) {
     CONTACT_RATE_LIMIT: new FakeKV(),
     HCAPTCHA_SECRET: "secret",
     AI_GATEWAY_ID: "victorcazorla-ai",
-    CHAT_MODEL: "@cf/zai-org/glm-4.7-flash",
+    CHAT_MODEL: "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
     CHAT_MODEL_FALLBACK: "@cf/google/gemma-4-26b-a4b-it",
     ...overrides,
   } as never;
@@ -78,7 +78,7 @@ describe("onRequestPost /api/chat", () => {
     // Llama a Workers AI a través del AI Gateway configurado.
     expect(run).toHaveBeenCalledTimes(1);
     const [model, input, options] = run.mock.calls[0];
-    expect(model).toBe("@cf/zai-org/glm-4.7-flash");
+    expect(model).toBe("@cf/meta/llama-3.3-70b-instruct-fp8-fast");
     expect(options).toEqual({ gateway: { id: "victorcazorla-ai", collectLog: true } });
     expect((input as { messages: unknown[] }).messages).toHaveLength(2);
   });
@@ -95,7 +95,7 @@ describe("onRequestPost /api/chat", () => {
     expect(res.status).toBe(200);
     expect((await res.json() as { answer: string }).answer).toBe("Respuesta del fallback.");
     expect(run.mock.calls.map((c) => c[0])).toEqual([
-      "@cf/zai-org/glm-4.7-flash",
+      "@cf/meta/llama-3.3-70b-instruct-fp8-fast",
       "@cf/google/gemma-4-26b-a4b-it",
     ]);
   });

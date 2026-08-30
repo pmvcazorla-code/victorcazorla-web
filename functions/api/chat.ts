@@ -54,10 +54,13 @@ interface RequestContext {
 
 // Modelos de Workers AI (Cloudflare-hosted → cubiertos por la cuota
 // diaria gratuita del plan Workers Free; si se agota devuelven error,
-// nunca facturan). Cloudflare retira modelos antiguos con un 410, así que
-// hay un fallback: si el primario falla se reintenta con el segundo antes
-// de rendirse. Ambos verificados vía el AI Gateway (2026-08-30).
-const DEFAULT_MODEL = "@cf/zai-org/glm-4.7-flash"; // multilingüe, optimizado para chat
+// nunca facturan). Deben ser modelos "instruct" SIN modo reasoning: los
+// que razonan (p. ej. glm-4.7-flash) gastan todo el presupuesto de
+// tokens en <think>/reasoning_content y no llegan a emitir `content`.
+// Cloudflare retira modelos antiguos con un 410, de ahí el fallback: si
+// el primario falla se reintenta con el segundo. Ambos verificados
+// respondiendo en español vía el AI Gateway (2026-08-30).
+const DEFAULT_MODEL = "@cf/meta/llama-3.3-70b-instruct-fp8-fast";
 const DEFAULT_MODEL_FALLBACK = "@cf/google/gemma-4-26b-a4b-it";
 const DEFAULT_GATEWAY = "victorcazorla-ai";
 const JSON_HEADERS = { "Content-Type": "application/json; charset=utf-8" };
@@ -169,7 +172,7 @@ export async function onRequestPost(context: RequestContext): Promise<Response> 
   const models = [env.CHAT_MODEL || DEFAULT_MODEL, env.CHAT_MODEL_FALLBACK || DEFAULT_MODEL_FALLBACK].filter(
     (m, i, arr) => m && arr.indexOf(m) === i
   );
-  const input = { messages: buildMessages(message, docs), max_tokens: 512, temperature: 0.2 };
+  const input = { messages: buildMessages(message, docs), max_tokens: 800, temperature: 0.2 };
 
   let answer = "";
   for (const model of models) {
