@@ -3,6 +3,9 @@ dist/
 # generated types
 .astro/
 
+# base de conocimiento generada para AI Search (kb:extract)
+.kb/
+
 # dependencies
 node_modules/
 
