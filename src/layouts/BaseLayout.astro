@@ -115,9 +115,10 @@ const breadcrumbJsonLd = !matchedRoute || isHome
          W3C): garantiza que el navegador decodifica el resto del
          documento como UTF-8 antes de parsear ningún otro byte. -->
     <meta charset="utf-8" />
-    <!-- Google tag (gtag.js). Init como archivo externo (no inline) para
-         no necesitar 'unsafe-inline' en script-src (public/_headers). -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-3GQEMTYB7S"></script>
+    <!-- Google Analytics 4. gtag-init.js decide si activarlo (solo en
+         producción, no en local ni en *.pages.dev) e inyecta la
+         librería gtag.js él mismo; ver comentario en ese archivo.
+         Externo (no inline) por la CSP de public/_headers. -->
     <script is:inline src="/scripts/gtag-init.js" defer></script>
     <!-- Se coloca lo antes posible para minimizar el parpadeo en
          visitantes que van a ser redirigidos a su idioma. Archivo
