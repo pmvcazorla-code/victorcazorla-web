@@ -71,20 +71,28 @@ describe("toSource", () => {
 });
 
 describe("buildMessages", () => {
-  it("monta system + user con el contexto y la pregunta", () => {
-    const messages = buildMessages("¿Preside algún comité?", [doc(), doc({ id: "site/home", title: "Perfil", url: "https://victorcazorla.com/" })]);
+  it("mete las instrucciones y la ficha en el system; el user es solo la pregunta", () => {
+    const messages = buildMessages("¿Preside algún comité?", [
+      doc(),
+      doc({ id: "site/home", title: "Perfil", url: "https://victorcazorla.com/" }),
+    ]);
     expect(messages).toHaveLength(2);
-    expect(messages[0]).toEqual({ role: "system", content: SYSTEM_PROMPT });
-    expect(messages[1].role).toBe("user");
-    expect(messages[1].content).toContain("### Deontología (https://victorcazorla.com/deontologia/)");
-    expect(messages[1].content).toContain("Comité de Ética del COAMB");
-    expect(messages[1].content).toContain("PREGUNTA DEL VISITANTE: ¿Preside algún comité?");
+    expect(messages[0].role).toBe("system");
+    expect(messages[0].content).toContain(SYSTEM_PROMPT);
+    expect(messages[0].content).toContain("## Deontología — https://victorcazorla.com/deontologia/");
+    expect(messages[0].content).toContain("Comité de Ética del COAMB");
+    expect(messages[1]).toEqual({ role: "user", content: "¿Preside algún comité?" });
   });
 
-  it("recorta documentos largos", () => {
+  it("prohíbe al modelo mencionar el contexto / la información proporcionada", () => {
+    const flat = SYSTEM_PROMPT.replace(/\s+/g, " ").toLowerCase();
+    expect(flat).toContain("nunca menciones");
+    expect(flat).toContain("según la información proporcionada");
+  });
+
+  it("recorta documentos largos en la ficha", () => {
     const long = doc({ text: "hola ".repeat(2000) });
-    const [, user] = buildMessages("test", [long]);
-    expect(user.content.length).toBeLessThan(5000);
-    expect(user.content).toContain("…");
+    const [system] = buildMessages("test", [long]);
+    expect(system.content).toContain("…");
   });
 });

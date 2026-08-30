@@ -169,13 +169,15 @@ export async function onRequestPost(context: RequestContext): Promise<Response> 
   // por el AI Gateway, así que cada pregunta queda registrada en el panel.
   const docs = selectContext(message);
   const gatewayId = env.AI_GATEWAY_ID || DEFAULT_GATEWAY;
-  const models = [env.CHAT_MODEL || DEFAULT_MODEL, env.CHAT_MODEL_FALLBACK || DEFAULT_MODEL_FALLBACK].filter(
-    (m, i, arr) => m && arr.indexOf(m) === i
-  );
+  const primary = env.CHAT_MODEL || DEFAULT_MODEL;
+  const fallback = env.CHAT_MODEL_FALLBACK || DEFAULT_MODEL_FALLBACK;
+  // primario → fallback → primario: cubre tanto que un modelo desaparezca
+  // (410) como los fallos transitorios de capacidad de Workers AI.
+  const attempts = fallback && fallback !== primary ? [primary, fallback, primary] : [primary, primary];
   const input = { messages: buildMessages(message, docs), max_tokens: 800, temperature: 0.2 };
 
   let answer = "";
-  for (const model of models) {
+  for (const model of attempts) {
     try {
       const out = await env.AI.run(model, input, { gateway: { id: gatewayId, collectLog: true } });
       answer = cleanAnswer(out);
