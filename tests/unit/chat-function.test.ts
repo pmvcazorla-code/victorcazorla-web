@@ -111,6 +111,18 @@ describe("onRequestPost /api/chat", () => {
     expect((await res.json() as { answer: string }).answer).toBe("Preside el Comité de Ética del COAMB.");
   });
 
+  it("lee la respuesta en formato OpenAI (choices[0].message.content) de los modelos nuevos", async () => {
+    const run = vi.fn(async () => ({
+      choices: [{ index: 0, message: { role: "assistant", content: "Es científico ambiental y perito judicial." } }],
+    }));
+    const res = await onRequestPost({
+      request: makeRequest({ message: "¿A qué se dedica?", token: "hc" }),
+      env: makeEnv({ AI: { run } }),
+    });
+    expect(res.status).toBe(200);
+    expect((await res.json() as { answer: string }).answer).toBe("Es científico ambiental y perito judicial.");
+  });
+
   it("no vuelve a pedir captcha una vez superado (pase en KV)", async () => {
     const env = makeEnv();
     await onRequestPost({ request: makeRequest({ message: "Primera pregunta", token: "hc" }), env });
