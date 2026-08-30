@@ -338,3 +338,49 @@ export const languages: LanguageOption[] = [
   { code: "fr", label: "Français" },
   { code: "ca", label: "Català" },
 ];
+
+// Textos del aviso de cookies (src/components/CookieConsent.astro).
+export type ConsentCopy = {
+  // aria-label de la región que envuelve el aviso
+  regionLabel: string;
+  title: string;
+  body: string;
+  learnMore: string;
+  accept: string;
+  reject: string;
+};
+
+export const consentCopy: Record<"es" | "en" | "fr" | "ca", ConsentCopy> = {
+  es: {
+    regionLabel: "Aviso de cookies",
+    title: "Cookies",
+    body: "Uso Google Analytics para medir las visitas de forma agregada. No se activa ni instala ninguna cookie hasta que lo aceptas.",
+    learnMore: "Más información",
+    accept: "Aceptar",
+    reject: "Rechazar",
+  },
+  en: {
+    regionLabel: "Cookie notice",
+    title: "Cookies",
+    body: "I use Google Analytics to measure visits in aggregate. Nothing runs and no cookie is set until you accept.",
+    learnMore: "Learn more",
+    accept: "Accept",
+    reject: "Reject",
+  },
+  fr: {
+    regionLabel: "Avis relatif aux cookies",
+    title: "Cookies",
+    body: "J'utilise Google Analytics pour mesurer les visites de façon agrégée. Rien ne se charge et aucun cookie n'est déposé tant que vous n'acceptez pas.",
+    learnMore: "En savoir plus",
+    accept: "Accepter",
+    reject: "Refuser",
+  },
+  ca: {
+    regionLabel: "Avís de galetes",
+    title: "Galetes",
+    body: "Faig servir Google Analytics per mesurar les visites de manera agregada. No s'activa res ni s'instal·la cap galeta fins que ho acceptes.",
+    learnMore: "Més informació",
+    accept: "Accepta",
+    reject: "Rebutja",
+  },
+};

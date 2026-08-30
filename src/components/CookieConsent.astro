@@ -1,0 +1,214 @@
+---
+import { consentCopy, routes } from "../data/i18n";
+
+type Props = {
+  lang: "es" | "en" | "fr" | "ca";
+};
+
+const { lang } = Astro.props as Props;
+const copy = consentCopy[lang];
+const legalHref = routes.find((route) => route.key === "legal")!.slugs[lang];
+---
+
+{/*
+  No es un modal: es una región (landmark) que no bloquea la página. El
+  comportamiento (retardo de 2,5 s, foco, Escape, guardado, arranque de
+  GA) vive en public/scripts/cookie-consent.js. Empieza con `hidden`;
+  en local y en *.pages.dev nunca se muestra (no hay analítica).
+*/}
+<section id="cookie-consent" class="cookie-consent" role="region" aria-label={copy.regionLabel} hidden>
+  <div
+    class="cookie-consent__panel"
+    data-consent-panel
+    tabindex="-1"
+    role="group"
+    aria-labelledby="cookie-consent-title"
+    aria-describedby="cookie-consent-body"
+  >
+    <h2 id="cookie-consent-title" class="cookie-consent__title">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+        <path d="M12 2a10 10 0 1 0 10 10 4 4 0 0 1-5-5 4 4 0 0 1-5-5Z" />
+        <path d="M8.5 9.5h.01M15 8h.01M9.5 14.5h.01M14.5 14h.01M12 12h.01" />
+      </svg>
+      {copy.title}
+    </h2>
+
+    <p id="cookie-consent-body" class="cookie-consent__body">
+      {copy.body}{" "}
+      <a href={legalHref}>{copy.learnMore}</a>
+    </p>
+
+    <div class="cookie-consent__actions">
+      <button type="button" data-consent="reject" class="cookie-consent__btn cookie-consent__btn--reject">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.25" stroke-linecap="round" aria-hidden="true" focusable="false">
+          <path d="M18 6 6 18M6 6l12 12" />
+        </svg>
+        {copy.reject}
+      </button>
+      <button type="button" data-consent="accept" class="cookie-consent__btn cookie-consent__btn--accept">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+          <path d="m20 6-11 11-5-5" />
+        </svg>
+        {copy.accept}
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cookie-consent {
+    position: fixed;
+    z-index: 1000;
+    right: 1rem;
+    bottom: 1rem;
+    width: calc(100vw - 2rem);
+    max-width: 380px;
+    /* Estado de entrada (antes de .cookie-consent--visible). */
+    opacity: 0;
+    transform: translateY(12px);
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease;
+  }
+
+  .cookie-consent--visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  .cookie-consent[hidden] {
+    display: none;
+  }
+
+  .cookie-consent__panel {
+    /* Translúcido (se difumina el fondo) pero con opacidad alta para
+       garantizar 7:1 de contraste pase lo que pase detrás. */
+    background: rgba(9, 13, 22, 0.96);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    border-radius: 12px;
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    padding: 1.15rem 1.25rem 1.25rem;
+    color: var(--color-text);
+  }
+
+  /* El panel recibe el foco solo por script. Indicador discreto (los
+     objetivos accionables —enlace y botones— llevan uno más marcado). */
+  .cookie-consent__panel:focus {
+    outline: none;
+  }
+  .cookie-consent__panel:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .cookie-consent__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0 0 0.5rem;
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--color-text);
+  }
+  .cookie-consent__title svg {
+    flex: none;
+    width: 1.15rem;
+    height: 1.15rem;
+  }
+
+  .cookie-consent__body {
+    margin: 0 0 1rem;
+    font-size: 0.9rem;
+    line-height: 1.65;
+    color: var(--color-text);
+  }
+  .cookie-consent__body a {
+    color: var(--color-accent);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+  .cookie-consent__body a:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+
+  .cookie-consent__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+  }
+
+  /* Ambos botones: mismo tamaño y mismo peso (igual prominencia). Se
+     distinguen por color de fondo + icono + texto, nunca solo color. */
+  .cookie-consent__btn {
+    flex: 1 1 8rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+    min-height: 46px;
+    padding: 0.5rem 1rem;
+    border: 1px solid transparent;
+    border-radius: 8px;
+    font: inherit;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.3;
+    cursor: pointer;
+  }
+  .cookie-consent__btn svg {
+    flex: none;
+    width: 1rem;
+    height: 1rem;
+  }
+  .cookie-consent__btn:focus-visible {
+    outline: 3px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+
+  .cookie-consent__btn--accept {
+    background: var(--color-accent);
+    color: #06122b;
+  }
+  .cookie-consent__btn--reject {
+    background: rgba(255, 255, 255, 0.14);
+    border-color: rgba(255, 255, 255, 0.28);
+    color: var(--color-text);
+  }
+
+  @media (hover: hover) {
+    .cookie-consent__btn--accept:hover {
+      background: #a8c4ff;
+    }
+    .cookie-consent__btn--reject:hover {
+      background: rgba(255, 255, 255, 0.22);
+    }
+  }
+
+  /* En móvil ocupa el ancho disponible con márgenes iguales. */
+  @media (max-width: 30rem) {
+    .cookie-consent {
+      right: 0.75rem;
+      left: 0.75rem;
+      bottom: 0.75rem;
+      width: auto;
+      max-width: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .cookie-consent {
+      transition: none;
+    }
+  }
+
+  @media print {
+    .cookie-consent {
+      display: none !important;
+    }
+  }
+</style>

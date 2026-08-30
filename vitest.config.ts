@@ -14,6 +14,8 @@ export default defineConfig({
         "src/utils/obfuscate.ts",
         "public/scripts/lib/click-classify.js",
         "public/scripts/lib/contact-form-validate.js",
+        "public/scripts/lib/consent-store.js",
+        "public/scripts/lib/production-host.js",
         "functions/_lib/contact.ts",
         "functions/_lib/captcha.ts",
         "functions/_lib/canonical-host.ts",
