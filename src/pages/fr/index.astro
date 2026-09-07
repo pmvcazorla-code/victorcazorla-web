@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ObfuscatedEmail from "../../components/ObfuscatedEmail.astro";
+import ChatWidget from "../../components/ChatWidget.astro";
 import { navItems } from "../../data/i18n";
 
 const title = "Víctor Cazorla Fernández — Gestion des TI, gestion environnementale et éthique professionnelle";
@@ -96,4 +97,6 @@ const description = "Gestion des TI · Gestion environnementale · Éthique prof
       "
     ></div>
   </section>
+
+  <ChatWidget slot="overlay" lang="fr" />
 </BaseLayout>

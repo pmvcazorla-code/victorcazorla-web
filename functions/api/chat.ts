@@ -1,5 +1,6 @@
 import {
   validateMessage,
+  normalizeLang,
   chatRateLimitKeys,
   captchaPassKey,
   buildMessages,
@@ -7,6 +8,7 @@ import {
   CHAT_MAX_PER_HOUR,
   CHAT_MAX_PER_DAY,
   CAPTCHA_PASS_TTL_SECONDS,
+  type ChatLang,
   type ChatSource,
 } from "../_lib/chat";
 import { retrieve, type KbDoc } from "../_lib/kb-search";
@@ -94,8 +96,8 @@ function cleanAnswer(result: AiResult): string {
 }
 
 /** perfil-resumen + top-K recuperados (deduplicado), con home como red de seguridad. */
-function selectContext(message: string): KbDoc[] {
-  const hits = retrieve(message, KB, 3);
+function selectContext(message: string, lang: ChatLang | null): KbDoc[] {
+  const hits = retrieve(message, KB, 3, lang ?? undefined);
   const picked: KbDoc[] = [];
   const seen = new Set<string>();
   const add = (doc?: KbDoc) => {
@@ -139,6 +141,7 @@ export async function onRequestPost(context: RequestContext): Promise<Response> 
     return json({ ok: false, error: check.error === "too_long" ? "too_long" : "empty" }, 400);
   }
   const message = check.value;
+  const lang = normalizeLang(body.lang);
 
   // 3. hCaptcha: solo la primera vez por IP. Tras resolverlo se guarda un
   // "pase" en KV (TTL 2 h) y los siguientes mensajes no lo piden.
@@ -167,14 +170,14 @@ export async function onRequestPost(context: RequestContext): Promise<Response> 
   // 5. Recupera contexto de la base de conocimiento empaquetada y genera
   // la respuesta con Workers AI (cuota diaria gratuita). La llamada pasa
   // por el AI Gateway, así que cada pregunta queda registrada en el panel.
-  const docs = selectContext(message);
+  const docs = selectContext(message, lang);
   const gatewayId = env.AI_GATEWAY_ID || DEFAULT_GATEWAY;
   const primary = env.CHAT_MODEL || DEFAULT_MODEL;
   const fallback = env.CHAT_MODEL_FALLBACK || DEFAULT_MODEL_FALLBACK;
   // primario → fallback → primario: cubre tanto que un modelo desaparezca
   // (410) como los fallos transitorios de capacidad de Workers AI.
   const attempts = fallback && fallback !== primary ? [primary, fallback, primary] : [primary, primary];
-  const input = { messages: buildMessages(message, docs), max_tokens: 800, temperature: 0.2 };
+  const input = { messages: buildMessages(message, docs, lang), max_tokens: 800, temperature: 0.2 };
 
   let answer = "";
   for (const model of attempts) {

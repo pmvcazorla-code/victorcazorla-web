@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import ObfuscatedEmail from "../../components/ObfuscatedEmail.astro";
+import ChatWidget from "../../components/ChatWidget.astro";
 import { navItems } from "../../data/i18n";
 
 const title = "Víctor Cazorla Fernández — Direcció IT, Gestió Ambiental i Ètica Professional";
@@ -82,4 +83,6 @@ const description = "Direcció IT · Gestió Ambiental · Ètica professional";
       Vols posar-te en contacte? Escriu a <ObfuscatedEmail address="contacto@victorcazorla.com" />.
     </p>
   </section>
+
+  <ChatWidget slot="overlay" lang="ca" />
 </BaseLayout>

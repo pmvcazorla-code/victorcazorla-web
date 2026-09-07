@@ -83,6 +83,32 @@ describe("onRequestPost /api/chat", () => {
     expect((input as { messages: unknown[] }).messages).toHaveLength(2);
   });
 
+  it("pasa el idioma de la página al prompt del modelo", async () => {
+    const run = makeAiRun("Il est scientifique de l'environnement.");
+    const env = makeEnv({ AI: { run } });
+    const res = await onRequestPost({
+      request: makeRequest({ message: "publications?", token: "hc", lang: "fr" }),
+      env,
+    });
+    expect(res.status).toBe(200);
+    const [, input] = run.mock.calls[0];
+    const system = (input as { messages: { role: string; content: string }[] }).messages[0].content;
+    expect(system).toContain("français");
+  });
+
+  it("ignora un idioma no soportado (no rompe, no añade línea de desempate)", async () => {
+    const run = makeAiRun();
+    const env = makeEnv({ AI: { run } });
+    const res = await onRequestPost({
+      request: makeRequest({ message: "¿A qué se dedica?", token: "hc", lang: "de" }),
+      env,
+    });
+    expect(res.status).toBe(200);
+    const [, input] = run.mock.calls[0];
+    const system = (input as { messages: { role: string; content: string }[] }).messages[0].content;
+    expect(system).not.toMatch(/la pregunta llega desde la versión/i);
+  });
+
   it("reintenta con el modelo de fallback si el primario falla (p. ej. 410)", async () => {
     const run = vi
       .fn()

@@ -73,12 +73,16 @@ export function detectLang(query: string): string {
  * Devuelve los `k` documentos más relevantes (score > 0), ordenados de
  * mayor a menor. `perfil-resumen` no se fuerza aquí; el endpoint lo
  * añade siempre aparte.
+ *
+ * `langHint` (el idioma de la página desde la que se pregunta) manda
+ * sobre `detectLang`: una consulta corta o ambigua ("publications?") no
+ * da señal de idioma, pero sí sabemos en qué idioma está el visitante.
  */
-export function retrieve(query: string, docs: KbDoc[], k = 3): KbHit[] {
+export function retrieve(query: string, docs: KbDoc[], k = 3, langHint?: string): KbHit[] {
   const queryTokens = [...new Set(tokenize(query))];
   if (!queryTokens.length) return [];
 
-  const queryLang = detectLang(query);
+  const queryLang = langHint || detectLang(query);
 
   const hits: KbHit[] = docs.map((doc) => {
     const haystack = normalize(`${doc.title} ${doc.text}`);

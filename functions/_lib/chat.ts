@@ -24,6 +24,26 @@ export const CAPTCHA_PASS_TTL_SECONDS = 2 * 60 * 60;
 // ~8k tokens de ventana; con esto entran 4 documentos + pregunta).
 export const CONTEXT_DOC_CHARS = 3500;
 
+// Idiomas del sitio. El widget manda el de la página; se usa para elegir
+// la KB correcta y como idioma de respuesta cuando la pregunta es
+// demasiado corta para deducirlo.
+export const CHAT_LANGS = ["es", "en", "fr", "ca"] as const;
+export type ChatLang = (typeof CHAT_LANGS)[number];
+
+const CHAT_LANG_NAMES: Record<ChatLang, string> = {
+  es: "español",
+  en: "English",
+  fr: "français",
+  ca: "català",
+};
+
+/** Devuelve el idioma si es uno de los del sitio; si no, null. */
+export function normalizeLang(raw: unknown): ChatLang | null {
+  return typeof raw === "string" && (CHAT_LANGS as readonly string[]).includes(raw)
+    ? (raw as ChatLang)
+    : null;
+}
+
 export const SYSTEM_PROMPT = [
   "Eres el asistente del sitio web de Víctor Cazorla Fernández. Ayudas a los",
   "visitantes de victorcazorla.com a conocer su perfil profesional y académico.",
@@ -86,7 +106,8 @@ export function toSource(doc: KbDoc): ChatSource {
  */
 export function buildMessages(
   question: string,
-  docs: KbDoc[]
+  docs: KbDoc[],
+  lang?: ChatLang | null
 ): Array<{ role: "system" | "user"; content: string }> {
   const fiche = docs
     .map((doc) => {
@@ -96,8 +117,17 @@ export function buildMessages(
     })
     .join("\n\n");
 
+  // El prompt ya pide "responde en el idioma de la pregunta"; esto solo
+  // fija el idioma de la página como desempate para preguntas cortas.
+  const langLine = lang
+    ? `\n\nLa pregunta llega desde la versión en ${CHAT_LANG_NAMES[lang]} del sitio: si no queda claro en qué idioma está escrita, responde en ${CHAT_LANG_NAMES[lang]}.`
+    : "";
+
   return [
-    { role: "system", content: `${SYSTEM_PROMPT}\n\n===== FICHA DE VÍCTOR CAZORLA FERNÁNDEZ =====\n\n${fiche}` },
+    {
+      role: "system",
+      content: `${SYSTEM_PROMPT}${langLine}\n\n===== FICHA DE VÍCTOR CAZORLA FERNÁNDEZ =====\n\n${fiche}`,
+    },
     { role: "user", content: question },
   ];
 }

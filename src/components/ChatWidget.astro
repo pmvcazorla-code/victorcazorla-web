@@ -1,7 +1,7 @@
 ---
 /**
- * Chatbot flotante (solo /inicio). El comportamiento vive en
- * public/scripts/chat-widget.js; aquí solo el markup + estilos. El
+ * Chatbot flotante (portadas de los 4 idiomas). El comportamiento vive
+ * en public/scripts/chat-widget.js; aquí solo el markup + estilos. El
  * <button> nace con `hidden` y solo el JS lo revela, así que sin
  * JavaScript el widget no aparece y la página no se ve afectada.
  *
@@ -116,6 +116,7 @@ const t = copy[lang];
   class="chat"
   data-chat-widget
   data-endpoint="/api/chat"
+  data-lang={lang}
   data-sitekey={hcaptchaSiteKey}
   data-greeting={t.greeting}
   data-msg-thinking={t.thinking}
