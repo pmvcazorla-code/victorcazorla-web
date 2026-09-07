@@ -39,6 +39,13 @@ describe("retrieve", () => {
     expect(hits[0].doc.id).toBe("en/ethics");
   });
 
+  it("langHint manda sobre detectLang para consultas ambiguas", () => {
+    // "COAMB" aparece en el doc es y en el en, y no delata idioma:
+    // sin pista gana el es (realce por defecto); con pista "en", el en.
+    expect(retrieve("COAMB", docs, 4)[0].doc.id).toBe("site/deontologia");
+    expect(retrieve("COAMB", docs, 4, "en")[0].doc.id).toBe("en/ethics");
+  });
+
   it("devuelve como mucho k resultados y solo con score > 0", () => {
     const hits = retrieve("ciberseguridad cloud", docs, 3);
     expect(hits.length).toBeLessThanOrEqual(3);

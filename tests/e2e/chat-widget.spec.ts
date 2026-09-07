@@ -66,6 +66,28 @@ test.describe("Chat widget (home)", () => {
     await expect(page.locator('[data-chat-form] ~ .chat__disclaimer a[href="/legal/"]')).toBeVisible();
   });
 
+  test("also loads on the other language homes and sends that language to the API", async ({ page }) => {
+    let sentLang: unknown;
+    await page.route("**/api/chat", (route) => {
+      sentLang = (route.request().postDataJSON() as { lang?: unknown }).lang;
+      route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({ ok: true, answer: "Il est scientifique de l'environnement.", sources: [] }),
+      });
+    });
+    await page.goto("/fr/");
+    const toggle = page.locator("[data-chat-toggle]");
+    await expect(toggle).toContainText("Ouvrir l'assistant");
+    await toggle.click();
+    await page.fill("[data-chat-input]", "publications ?");
+    await page.click("[data-chat-send]");
+    await expect(page.locator("[data-chat-log] .chat-msg--assistant").last()).toContainText(
+      "scientifique de l'environnement"
+    );
+    expect(sentLang).toBe("fr");
+  });
+
   test.describe("on a phone viewport", () => {
     test.use({ viewport: { width: 375, height: 667 }, reducedMotion: "reduce" });
 

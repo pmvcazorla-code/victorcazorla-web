@@ -44,6 +44,7 @@ function initChatWidget(root) {
   if (!toggle || !panel || !form || !input || !log || !captchaMount) return;
 
   const endpoint = root.dataset.endpoint || "/api/chat";
+  const lang = root.dataset.lang || "";
   const sitekey = root.dataset.sitekey || "";
   const copy = {
     thinking: root.dataset.msgThinking || "…",
@@ -155,10 +156,13 @@ function initChatWidget(root) {
   /* ---------- envío ---------- */
 
   async function ask(message, token) {
+    const payload = { message };
+    if (token) payload.token = token;
+    if (lang) payload.lang = lang;
     const res = await fetch(endpoint, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(token ? { message, token } : { message }),
+      body: JSON.stringify(payload),
     });
     const data = await res.json().catch(() => ({ ok: false }));
     if (res.status === 401 && data && data.error === "captcha_required") {

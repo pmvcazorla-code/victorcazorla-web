@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   validateMessage,
+  normalizeLang,
   chatRateLimitKeys,
   captchaPassKey,
   buildMessages,
@@ -40,6 +41,23 @@ describe("validateMessage", () => {
       valid: false,
       error: "too_long",
     });
+  });
+});
+
+describe("normalizeLang", () => {
+  it("acepta los cuatro idiomas del sitio", () => {
+    expect(normalizeLang("es")).toBe("es");
+    expect(normalizeLang("en")).toBe("en");
+    expect(normalizeLang("fr")).toBe("fr");
+    expect(normalizeLang("ca")).toBe("ca");
+  });
+
+  it("descarta cualquier otro valor", () => {
+    expect(normalizeLang("de")).toBeNull();
+    expect(normalizeLang("EN")).toBeNull();
+    expect(normalizeLang("")).toBeNull();
+    expect(normalizeLang(undefined)).toBeNull();
+    expect(normalizeLang(42)).toBeNull();
   });
 });
 
@@ -94,5 +112,16 @@ describe("buildMessages", () => {
     const long = doc({ text: "hola ".repeat(2000) });
     const [system] = buildMessages("test", [long]);
     expect(system.content).toContain("…");
+  });
+
+  it("añade el idioma de la página como desempate cuando se le pasa", () => {
+    const [system] = buildMessages("publications?", [doc()], "fr");
+    expect(system.content).toContain("français");
+    expect(system.content).toMatch(/si no queda claro.*responde en français/i);
+  });
+
+  it("sin idioma no añade la línea de desempate", () => {
+    const [system] = buildMessages("¿Preside algún comité?", [doc()]);
+    expect(system.content).not.toMatch(/la pregunta llega desde la versión/i);
   });
 });
