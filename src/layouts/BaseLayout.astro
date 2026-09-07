@@ -87,6 +87,62 @@ const homeRoute = routes[0];
 const legalRoute = routes.find((route) => route.key === "legal")!;
 const isHome = matchedRoute?.key === "home";
 
+// Ficha Person (JSON-LD). El email se ofusca en la cadena final como
+// escapes unicode JSON (@ por @, . por .): sigue siendo JSON
+// válido y Google lo interpreta, pero un scraper que recorra el texto
+// con una expresión regular no reconoce la dirección. El HTML visible ya
+// se ofusca aparte con ObfuscatedEmail.
+const contactEmail = "contacto@victorcazorla.com";
+const personJsonLd = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Víctor Cazorla Fernández",
+  url: siteUrl,
+  email: contactEmail,
+  image: `${siteUrl}/img/linkedin_face.jpg`,
+  jobTitle: "IT Management · Environmental Science · Professional Ethics",
+  worksFor: {
+    "@type": "Organization",
+    name: "Independent Professional",
+  },
+  alumniOf: [
+    { "@type": "CollegeOrUniversity", name: "UNED (Universidad Nacional de Educación a Distancia)" },
+    { "@type": "CollegeOrUniversity", name: "UNIR (Universidad Internacional de La Rioja)" },
+    { "@type": "CollegeOrUniversity", name: "URJC (Universidad Rey Juan Carlos)" },
+    { "@type": "CollegeOrUniversity", name: "UCMA (Universidad Camilo José Cela)" },
+  ],
+  memberOf: {
+    "@type": "Organization",
+    name: "Col·legi d'Ambientòlegs de Catalunya (COAMB)",
+    url: "https://www.coamb.cat",
+  },
+  knowsLanguage: ["es", "en", "fr", "ca"],
+  sameAs: [
+    "https://www.linkedin.com/in/victorcazorla-f/",
+    "https://orcid.org/0009-0009-7976-9691",
+    "https://www.credly.com/users/victor-cazorla-fernandez/badges",
+    "https://scholar.google.com/citations?view_op=list_works&hl=es&hl=es&user=2-WDnroAAAAJ",
+    "https://www.researchgate.net/profile/Victor-Cazorla-Fernandez",
+  ],
+  knowsAbout: [
+    "IT Governance",
+    "Cloud Infrastructure Architecture",
+    "Cybersecurity",
+    "Digital Transformation",
+    "FinOps",
+    "Professional Deontology",
+    "Legal Philosophy",
+    "Deontic Logic",
+    "Normative Conflict Resolution",
+    "Environmental Forensics",
+    "Marine Ecology",
+    "Invasive Species Ecology",
+    "Caulerpa prolifera",
+  ],
+})
+  .split(contactEmail)
+  .join(contactEmail.replace(/[@.]/g, (c) => "\\u" + c.charCodeAt(0).toString(16).padStart(4, "0")));
+
 const breadcrumbJsonLd = !matchedRoute || isHome
   ? null
   : {
@@ -153,53 +209,7 @@ const breadcrumbJsonLd = !matchedRoute || isHome
     {image ? <meta name="twitter:image" content={fullUrl(image)} /> : null}
     {image && imageAlt ? <meta property="og:image:alt" content={imageAlt} /> : null}
     <title>{title}</title>
-    <script type="application/ld+json" set:html={JSON.stringify({
-      "@context": "https://schema.org",
-      "@type": "Person",
-      name: "Víctor Cazorla Fernández",
-      url: siteUrl,
-      email: "contacto@victorcazorla.com",
-      image: `${siteUrl}/img/linkedin_face.jpg`,
-      jobTitle: "IT Management · Environmental Science · Professional Ethics",
-      worksFor: {
-        "@type": "Organization",
-        name: "Independent Professional",
-      },
-      alumniOf: [
-        { "@type": "CollegeOrUniversity", name: "UNED (Universidad Nacional de Educación a Distancia)" },
-        { "@type": "CollegeOrUniversity", name: "UNIR (Universidad Internacional de La Rioja)" },
-        { "@type": "CollegeOrUniversity", name: "URJC (Universidad Rey Juan Carlos)" },
-        { "@type": "CollegeOrUniversity", name: "UCMA (Universidad Camilo José Cela)" },
-      ],
-      memberOf: {
-        "@type": "Organization",
-        name: "Col·legi d'Ambientòlegs de Catalunya (COAMB)",
-        url: "https://www.coamb.cat",
-      },
-      knowsLanguage: ["es", "en", "fr", "ca"],
-      sameAs: [
-        "https://www.linkedin.com/in/victorcazorla-f/",
-        "https://orcid.org/0009-0009-7976-9691",
-        "https://www.credly.com/users/victor-cazorla-fernandez/badges",
-        "https://scholar.google.com/citations?view_op=list_works&hl=es&hl=es&user=2-WDnroAAAAJ",
-        "https://www.researchgate.net/profile/Victor-Cazorla-Fernandez",
-      ],
-      knowsAbout: [
-        "IT Governance",
-        "Cloud Infrastructure Architecture",
-        "Cybersecurity",
-        "Digital Transformation",
-        "FinOps",
-        "Professional Deontology",
-        "Legal Philosophy",
-        "Deontic Logic",
-        "Normative Conflict Resolution",
-        "Environmental Forensics",
-        "Marine Ecology",
-        "Invasive Species Ecology",
-        "Caulerpa prolifera",
-      ],
-    })} />
+    <script type="application/ld+json" set:html={personJsonLd} />
     {breadcrumbJsonLd ? (
       <script type="application/ld+json" set:html={JSON.stringify(breadcrumbJsonLd)} />
     ) : null}
