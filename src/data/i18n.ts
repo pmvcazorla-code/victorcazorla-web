@@ -57,7 +57,7 @@ export const routes: RouteDef[] = [
   },
   {
     key: "environmentalScience",
-    lastmod: "2026-09-06",
+    lastmod: "2026-09-07",
     slugs: {
       es: "/cienciasambientales/",
       en: "/en/environmental-science/",
