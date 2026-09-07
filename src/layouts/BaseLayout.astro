@@ -6,7 +6,7 @@ type NavItem = {
   label: string;
 };
 
-import { languages, routes, footerLegalLabel, type LanguageOption } from "../data/i18n";
+import { languages, routes, footerLegalLabel, languageSelectorLabel, type LanguageOption } from "../data/i18n";
 import CookieConsent from "../components/CookieConsent.astro";
 
 type BaseLayoutProps = {
@@ -861,7 +861,7 @@ const breadcrumbJsonLd = !matchedRoute || isHome
             </a>
           ))}
         </nav>
-        <div class="lang-switch-group" role="navigation" aria-label="Language selector">
+        <div class="lang-switch-group" role="navigation" aria-label={languageSelectorLabel[lang]}>
           {languages.map((language: LanguageOption) => (
             <a
               class={"lang-switch" + (language.code === lang ? " active" : "")}
@@ -902,7 +902,7 @@ const breadcrumbJsonLd = !matchedRoute || isHome
       </div>
 
       <div class="header-mobile">
-        <div class="flag-strip" role="navigation" aria-label="Selector de idioma">
+        <div class="flag-strip" role="navigation" aria-label={languageSelectorLabel[lang]}>
           {languages.map((language: LanguageOption) => (
             <a
               class={"flag-btn" + (language.code === lang ? " active" : "")}

@@ -20,6 +20,17 @@ test.describe("Mobile menu", () => {
     await expect(menuPanel).not.toHaveClass(/open/);
   });
 
+  test("the closed panel is inert (its links are out of the tab order)", async ({ page }) => {
+    await page.goto("/");
+    const menuPanel = page.locator("#mobile-menu-panel");
+    await expect(menuPanel).toHaveJSProperty("inert", true);
+    await page.locator("#mobile-menu-btn").click();
+    await expect(menuPanel).toHaveJSProperty("inert", false);
+    await page.keyboard.press("Escape");
+    await expect(page.locator("#mobile-menu-btn")).toHaveAttribute("aria-expanded", "false");
+    await expect(menuPanel).toHaveJSProperty("inert", true);
+  });
+
   test("panel links navigate to the right section", async ({ page }) => {
     await page.goto("/");
     await page.locator("#mobile-menu-btn").click();

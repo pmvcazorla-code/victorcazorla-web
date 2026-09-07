@@ -332,6 +332,16 @@ export const footerLegalLabel: Record<"es" | "en" | "fr" | "ca", string> = {
   ca: "Legal i Accessibilitat",
 };
 
+// aria-label del selector de idioma (hay dos: la barra de banderas móvil
+// y el grupo de escritorio). Se anuncia a lectores de pantalla, así que
+// va en el idioma de la página, no fijo en un idioma.
+export const languageSelectorLabel: Record<"es" | "en" | "fr" | "ca", string> = {
+  es: "Selector de idioma",
+  en: "Language selector",
+  fr: "Sélecteur de langue",
+  ca: "Selector d'idioma",
+};
+
 export const languages: LanguageOption[] = [
   { code: "es", label: "Español" },
   { code: "en", label: "English" },
