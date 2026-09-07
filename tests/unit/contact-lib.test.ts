@@ -10,6 +10,7 @@ import {
   countMessageUrls,
   findSpamKeyword,
   checkForSpamContent,
+  renderFormResultPage,
   MAX_MESSAGE_URLS,
   MIN_SUBMIT_MS,
   MAX_SUBMIT_AGE_MS,
@@ -326,5 +327,31 @@ describe("buildConfirmationEmailPayload", () => {
   it("falls back to Spanish for an unknown or missing lang", () => {
     const payload = buildConfirmationEmailPayload(data, { ...opts, lang: "de" });
     expect(payload.subject).toBe("Confirmación de recepción - Víctor Cazorla");
+  });
+});
+
+describe("renderFormResultPage", () => {
+  it("renders a localized success page with a safe back link", () => {
+    const html = renderFormResultPage("fr", true, "/fr/contact/");
+    expect(html).toContain('<html lang="fr">');
+    expect(html).toContain("Message envoyé");
+    expect(html).toContain('href="/fr/contact/"');
+    expect(html).toContain('name="robots" content="noindex"');
+  });
+
+  it("renders the error copy when ok is false", () => {
+    expect(renderFormResultPage("es", false)).toMatch(/no se ha podido enviar/i);
+  });
+
+  it("falls back to Spanish and to '/' for unknown lang / unsafe back href", () => {
+    const html = renderFormResultPage("de", true, "https://evil.example/phish");
+    expect(html).toContain('<html lang="es">');
+    expect(html).toContain('href="/"');
+    expect(html).not.toContain("evil.example");
+  });
+
+  it("escapes the back href", () => {
+    const html = renderFormResultPage("es", true, '/x"><script>alert(1)</script>');
+    expect(html).not.toContain("<script>alert(1)</script>");
   });
 });

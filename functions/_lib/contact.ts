@@ -289,3 +289,49 @@ export function buildConfirmationEmailPayload(
     html: `<p>${escapeHtml(copy.body)}</p>`,
   };
 }
+
+// Respuesta para el envío del <form> nativo cuando el visitante no tiene
+// JavaScript: sin JS, contact-form.js no intercepta el submit y el
+// navegador muestra tal cual lo que devuelva la Function. En vez de un
+// JSON crudo, se le da una página mínima con el resultado y un enlace de
+// vuelta. Con JS esto nunca se ve (la respuesta se lee como JSON).
+const NOJS_RESULT_COPY: Record<
+  "es" | "en" | "fr" | "ca",
+  { ok: string; error: string; back: string }
+> = {
+  es: {
+    ok: "Mensaje enviado. Te responderé en cuanto pueda.",
+    error: "No se ha podido enviar el mensaje. Inténtalo de nuevo en unos minutos.",
+    back: "Volver",
+  },
+  en: {
+    ok: "Message sent. I'll get back to you as soon as I can.",
+    error: "The message could not be sent. Please try again in a few minutes.",
+    back: "Go back",
+  },
+  fr: {
+    ok: "Message envoyé. Je vous répondrai dès que possible.",
+    error: "Le message n'a pas pu être envoyé. Veuillez réessayer dans quelques minutes.",
+    back: "Retour",
+  },
+  ca: {
+    ok: "Missatge enviat. Et respondré tan aviat com pugui.",
+    error: "No s'ha pogut enviar el missatge. Torna-ho a provar d'aquí a uns minuts.",
+    back: "Tornar",
+  },
+};
+
+export function renderFormResultPage(lang: unknown, ok: boolean, backHref = "/"): string {
+  const copy = NOJS_RESULT_COPY[lang as keyof typeof NOJS_RESULT_COPY] ?? NOJS_RESULT_COPY.es;
+  const htmlLang = typeof lang === "string" && lang in NOJS_RESULT_COPY ? lang : "es";
+  const message = ok ? copy.ok : copy.error;
+  const safeBack = backHref.startsWith("/") ? backHref : "/";
+  return `<!doctype html>
+<html lang="${htmlLang}">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex"><title>${escapeHtml(message)}</title>
+<style>body{font:16px/1.6 system-ui,sans-serif;max-width:32rem;margin:15vh auto;padding:0 1.5rem;color:#0a0f1c}a{color:#1a4d8f}</style>
+</head>
+<body><p>${escapeHtml(message)}</p><p><a href="${escapeHtml(safeBack)}">${escapeHtml(copy.back)}</a></p></body>
+</html>`;
+}
