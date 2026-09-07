@@ -57,7 +57,7 @@ export const routes: RouteDef[] = [
   },
   {
     key: "environmentalScience",
-    lastmod: "2026-08-25",
+    lastmod: "2026-09-06",
     slugs: {
       es: "/cienciasambientales/",
       en: "/en/environmental-science/",
@@ -89,7 +89,7 @@ export const routes: RouteDef[] = [
   },
   {
     key: "education",
-    lastmod: "2026-08-23",
+    lastmod: "2026-09-06",
     slugs: { es: "/formacion/", en: "/en/education/", fr: "/fr/formation/", ca: "/ca/formacio/" },
     labels: {
       es: "Formación",
