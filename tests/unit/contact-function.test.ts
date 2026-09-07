@@ -250,21 +250,34 @@ describe("onRequestPost /api/contact", () => {
     expect(fetchMock.mock.calls.some(([url]) => url === RESEND_URL)).toBe(false);
   });
 
-  it("blocks the 4th submission from the same IP within an hour (limit is 3)", async () => {
+  it("blocks the 6th submission from the same IP within an hour (limit is 5)", async () => {
     const kv = new FakeKV();
     const env = { ...ENV_BASE, CONTACT_RATE_LIMIT: kv };
 
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 5; i++) {
       const response = await onRequestPost({ request: makeRequest(validBody({ email: `ana${i}@example.com` })), env });
       expect(response.status).toBe(200);
     }
 
     const blocked = await onRequestPost({
-      request: makeRequest(validBody({ email: "ana-fourth@example.com" })),
+      request: makeRequest(validBody({ email: "ana-sixth@example.com" })),
       env,
     });
     expect(blocked.status).toBe(429);
     await expect(blocked.json()).resolves.toEqual({ ok: false, error: "rate_limited" });
+  });
+
+  it("does not spend the IP quota on submissions that fail field validation", async () => {
+    const kv = new FakeKV();
+    const env = { ...ENV_BASE, CONTACT_RATE_LIMIT: kv };
+
+    // 10 envíos inválidos (mensaje demasiado corto): ninguno cuenta.
+    for (let i = 0; i < 10; i++) {
+      const bad = await onRequestPost({ request: makeRequest(validBody({ message: "corto" })), env });
+      expect(bad.status).toBe(400);
+    }
+    const good = await onRequestPost({ request: makeRequest(validBody()), env });
+    expect(good.status).toBe(200);
   });
 
   it("rate-limits independently per IP", async () => {
@@ -281,16 +294,18 @@ describe("onRequestPost /api/contact", () => {
     expect(otherIp.status).toBe(200);
   });
 
-  it("blocks a 2nd submission from the same email within a day, even from a different IP", async () => {
+  it("blocks the 4th submission from the same email within a day, even from a different IP (limit is 3)", async () => {
     const kv = new FakeKV();
     const env = { ...ENV_BASE, CONTACT_RATE_LIMIT: kv };
 
-    const first = await onRequestPost({ request: makeRequest(validBody(), "203.0.113.1"), env });
-    expect(first.status).toBe(200);
+    for (let i = 0; i < 3; i++) {
+      const ok = await onRequestPost({ request: makeRequest(validBody(), `203.0.113.${i}`), env });
+      expect(ok.status).toBe(200);
+    }
 
-    const second = await onRequestPost({ request: makeRequest(validBody(), "198.51.100.7"), env });
-    expect(second.status).toBe(429);
-    await expect(second.json()).resolves.toEqual({ ok: false, error: "rate_limited" });
+    const fourth = await onRequestPost({ request: makeRequest(validBody(), "198.51.100.7"), env });
+    expect(fourth.status).toBe(429);
+    await expect(fourth.json()).resolves.toEqual({ ok: false, error: "rate_limited" });
   });
 
   it("does not consume the daily email quota when the submission is rejected as spam", async () => {
@@ -356,7 +371,7 @@ describe("onRequestPost /api/contact", () => {
     await expect(response.json()).resolves.toEqual({ ok: false, error: "server" });
   });
 
-  it("also accepts a classic form-encoded submission (no-JS fallback)", async () => {
+  it("accepts a classic form-encoded submission and replies with an HTML result page (no-JS fallback)", async () => {
     const kv = new FakeKV();
     const form = new URLSearchParams({
       name: "Ana García",
@@ -370,12 +385,49 @@ describe("onRequestPost /api/contact", () => {
     });
     const request = new Request("https://victorcazorla.com/api/contact", {
       method: "POST",
-      headers: { "Content-Type": "application/x-www-form-urlencoded", "CF-Connecting-IP": "203.0.113.1" },
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+        "CF-Connecting-IP": "203.0.113.1",
+        Referer: "https://victorcazorla.com/fr/contact/",
+      },
       body: form.toString(),
     });
 
     const response = await onRequestPost({ request, env: { ...ENV_BASE, CONTACT_RATE_LIMIT: kv } });
     expect(response.status).toBe(200);
-    await expect(response.json()).resolves.toEqual({ ok: true });
+    expect(response.headers.get("content-type")).toContain("text/html");
+    const html = await response.text();
+    // Idioma y enlace de vuelta salen del Referer.
+    expect(html).toContain('<html lang="fr">');
+    expect(html).toContain("Message envoyé");
+    expect(html).toContain('href="/fr/contact/"');
+    // El correo principal se envió igualmente.
+    expect(fetchMock.mock.calls.some(([url]) => url === RESEND_URL)).toBe(true);
+  });
+
+  it("renders the error result page for a no-JS submission that fails", async () => {
+    fetchMock = makeFetchMock({ captchaOk: false });
+    vi.stubGlobal("fetch", fetchMock);
+    const kv = new FakeKV();
+    const form = new URLSearchParams({
+      name: "Ana García",
+      email: "ana@example.com",
+      reason: "academic",
+      message: "Hola, quería consultar sobre una colaboración.",
+      consent: "on",
+      lang: "es",
+      "h-captcha-response": "bad-token",
+    });
+    const request = new Request("https://victorcazorla.com/api/contact", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded", "CF-Connecting-IP": "203.0.113.9" },
+      body: form.toString(),
+    });
+    const response = await onRequestPost({ request, env: { ...ENV_BASE, CONTACT_RATE_LIMIT: kv } });
+    expect(response.status).toBe(422);
+    expect(response.headers.get("content-type")).toContain("text/html");
+    const html = await response.text();
+    expect(html).toContain('<html lang="es">');
+    expect(html).toMatch(/no se ha podido enviar/i);
   });
 });

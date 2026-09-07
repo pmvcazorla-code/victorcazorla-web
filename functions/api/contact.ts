@@ -6,6 +6,7 @@ import {
   emailRateLimitKey,
   isDisposableEmail,
   checkForSpamContent,
+  renderFormResultPage,
   type ContactInput,
   type EmailPayload,
 } from "../_lib/contact";
@@ -31,8 +32,8 @@ interface RequestContext {
   env: Env;
 }
 
-const IP_RATE_LIMIT_MAX_PER_HOUR = 3;
-const EMAIL_RATE_LIMIT_MAX_PER_DAY = 1;
+const IP_RATE_LIMIT_MAX_PER_HOUR = 5;
+const EMAIL_RATE_LIMIT_MAX_PER_DAY = 3;
 const JSON_HEADERS = { "Content-Type": "application/json; charset=utf-8" };
 
 function json(body: unknown, status = 200): Response {
@@ -104,19 +105,51 @@ async function parseBody(request: Request): Promise<Record<string, unknown>> {
   return result;
 }
 
+// Idioma y URL de vuelta para la página de resultado sin JS, deducidos
+// del Referer (la página de contacto desde la que se envió el <form>).
+function noJsContext(request: Request): { lang: string; backHref: string } {
+  try {
+    const ref = new URL(request.headers.get("Referer") || "");
+    const canonical = new URL(request.url);
+    if (ref.host !== canonical.host) return { lang: "es", backHref: "/" };
+    const prefix = ref.pathname.split("/")[1];
+    const lang = prefix === "en" || prefix === "fr" || prefix === "ca" ? prefix : "es";
+    return { lang, backHref: ref.pathname };
+  } catch {
+    return { lang: "es", backHref: "/" };
+  }
+}
+
 export async function onRequestPost(context: RequestContext): Promise<Response> {
+  const wasJson = (context.request.headers.get("content-type") || "").includes("application/json");
+  const res = await handleContact(context);
+  if (wasJson) return res;
+
+  // El <form> nativo (sin JS) muestra la respuesta tal cual: se traduce
+  // el JSON a una página mínima con el resultado y un enlace de vuelta.
+  const data = (await res.clone().json().catch(() => ({ ok: false }))) as { ok?: boolean };
+  const { lang, backHref } = noJsContext(context.request);
+  return new Response(renderFormResultPage(lang, Boolean(data.ok), backHref), {
+    status: res.status,
+    headers: { "Content-Type": "text/html; charset=utf-8" },
+  });
+}
+
+async function handleContact(context: RequestContext): Promise<Response> {
   const { request, env } = context;
   const ip = request.headers.get("CF-Connecting-IP") || "unknown";
 
-  // 1. Límite por IP: la comprobación más barata, primera línea de
-  // defensa contra abuso puramente volumétrico.
+  // 1. Límite por IP: primera línea contra abuso volumétrico. El contador
+  // se incrementa más abajo, solo si la petición pasa la validación de
+  // campos, para que una ráfaga de basura o de señuelos no agote la cuota
+  // de un visitante real (Cloudflare ya absorbe el volumen bruto en el
+  // borde).
   const ipRateLimitKey = rateLimitKey(ip);
   const ipCount = Number((await env.CONTACT_RATE_LIMIT.get(ipRateLimitKey)) ?? "0");
   if (ipCount >= IP_RATE_LIMIT_MAX_PER_HOUR) {
     logBlockedAttempt("ip_rate_limited", { ip });
     return json({ ok: false, error: "rate_limited" }, 429);
   }
-  await env.CONTACT_RATE_LIMIT.put(ipRateLimitKey, String(ipCount + 1), { expirationTtl: 3600 });
 
   let body: Record<string, unknown>;
   try {
@@ -169,6 +202,10 @@ export async function onRequestPost(context: RequestContext): Promise<Response> 
     );
     return json({ ok: false, error: "validation", fields: result.errors }, 400);
   }
+
+  // La petición tiene forma de envío real: ahora sí cuenta para el
+  // límite por IP.
+  await env.CONTACT_RATE_LIMIT.put(ipRateLimitKey, String(ipCount + 1), { expirationTtl: 3600 });
 
   const { data } = result;
 
