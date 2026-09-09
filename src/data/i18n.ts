@@ -89,7 +89,7 @@ export const routes: RouteDef[] = [
   },
   {
     key: "education",
-    lastmod: "2026-09-06",
+    lastmod: "2026-09-09",
     slugs: { es: "/formacion/", en: "/en/education/", fr: "/fr/formation/", ca: "/ca/formacio/" },
     labels: {
       es: "Formación",
