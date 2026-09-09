@@ -683,33 +683,34 @@ footer {
   gap: 1.2rem;
 }
 
-/* Tarjeta de LinkedIn */
-.linkedin-card {
+/* Tarjetas de perfil externo de la portada (LinkedIn, Google
+   Académico/Scholar, ResearchGate, Dialnet). Antes eran tres bloques CSS
+   casi idénticos; ahora comparten .profile-card y cada variante solo
+   cambia --card-accent (el color de la marca). Componente:
+   src/components/ProfileLink.astro. */
+.profile-card {
+  --card-accent: var(--color-accent);
   display: flex;
   align-items: center;
   gap: 1.3rem;
-  margin: 3rem 0;
+  margin: 2.4rem 0;
   padding: 1.2rem 1.5rem;
   max-width: 560px;
   border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 16px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.04),
-    rgba(255, 255, 255, 0.015)
-  );
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.015));
   text-decoration: none;
   color: inherit;
   transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
 }
 
-.linkedin-card:hover {
-  border-color: rgba(212, 175, 55, 0.4);
+.profile-card:hover {
+  border-color: color-mix(in srgb, var(--card-accent) 45%, transparent);
   background: rgba(255, 255, 255, 0.05);
   transform: translateY(-2px);
 }
 
-.linkedin-card__icon {
+.profile-card__icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -717,237 +718,56 @@ footer {
   height: 64px;
   border-radius: 50%;
   flex-shrink: 0;
-  background: rgba(212, 175, 55, 0.12);
-  border: 1px solid rgba(212, 175, 55, 0.6);
-  color: #d4af37;
+  background: color-mix(in srgb, var(--card-accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--card-accent) 55%, transparent);
+  color: var(--card-accent);
 }
 
-.linkedin-card__icon svg {
+.profile-card__icon svg {
   width: 30px;
   height: 30px;
   fill: currentColor;
 }
 
-.linkedin-card__body {
+.profile-card__body {
   display: flex;
   flex-direction: column;
   gap: 0.45rem;
   min-width: 0;
 }
 
-.linkedin-card__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
+.profile-card__badge {
   font-size: 0.72rem;
   font-weight: 600;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--card-accent);
 }
 
-.linkedin-card__badge svg {
-  width: 14px;
-  height: 14px;
-  fill: currentColor;
-  flex-shrink: 0;
-}
-
-.linkedin-card__lead {
+.profile-card__lead {
   margin: 0;
   font-size: 0.93rem;
   line-height: 1.5;
   color: rgba(255, 255, 255, 0.85);
 }
 
+.profile-card--linkedin { --card-accent: #d4af37; }
+.profile-card--scholar { --card-accent: #4285f4; }
+.profile-card--researchgate { --card-accent: #00ccbb; }
+.profile-card--dialnet { --card-accent: #4a8c2a; }
+
 @media (max-width: 480px) {
-  .linkedin-card {
+  .profile-card {
     gap: 1rem;
     padding: 1rem 1.1rem;
   }
 
-  .linkedin-card__icon {
+  .profile-card__icon {
     width: 52px;
     height: 52px;
   }
 
-  .linkedin-card__icon svg {
-    width: 24px;
-    height: 24px;
-  }
-}
-
-/* Tarjeta de Google Scholar (misma estructura que .linkedin-card,
-   acento en el azul de marca de Google) */
-.scholar-card {
-  display: flex;
-  align-items: center;
-  gap: 1.3rem;
-  margin: 3rem 0;
-  padding: 1.2rem 1.5rem;
-  max-width: 560px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.04),
-    rgba(255, 255, 255, 0.015)
-  );
-  text-decoration: none;
-  color: inherit;
-  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
-}
-
-.scholar-card:hover {
-  border-color: rgba(66, 133, 244, 0.45);
-  background: rgba(255, 255, 255, 0.05);
-  transform: translateY(-2px);
-}
-
-.scholar-card__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  background: rgba(66, 133, 244, 0.12);
-  border: 1px solid rgba(66, 133, 244, 0.6);
-  color: #4285f4;
-}
-
-.scholar-card__icon svg {
-  width: 30px;
-  height: 30px;
-  fill: currentColor;
-}
-
-.scholar-card__body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-  min-width: 0;
-}
-
-.scholar-card__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #4285f4;
-}
-
-.scholar-card__badge svg {
-  width: 14px;
-  height: 14px;
-  fill: currentColor;
-  flex-shrink: 0;
-}
-
-.scholar-card__lead {
-  margin: 0;
-  font-size: 0.93rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.85);
-}
-
-/* Tarjeta de ResearchGate (misma estructura, acento en el verde
-   turquesa de marca de ResearchGate) */
-.researchgate-card {
-  display: flex;
-  align-items: center;
-  gap: 1.3rem;
-  margin: 3rem 0;
-  padding: 1.2rem 1.5rem;
-  max-width: 560px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 16px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 255, 255, 0.04),
-    rgba(255, 255, 255, 0.015)
-  );
-  text-decoration: none;
-  color: inherit;
-  transition: border-color 0.25s ease, background 0.25s ease, transform 0.25s ease;
-}
-
-.researchgate-card:hover {
-  border-color: rgba(0, 204, 187, 0.45);
-  background: rgba(255, 255, 255, 0.05);
-  transform: translateY(-2px);
-}
-
-.researchgate-card__icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 64px;
-  height: 64px;
-  border-radius: 50%;
-  flex-shrink: 0;
-  background: rgba(0, 204, 187, 0.12);
-  border: 1px solid rgba(0, 204, 187, 0.6);
-  color: #00ccbb;
-}
-
-.researchgate-card__icon svg {
-  width: 30px;
-  height: 30px;
-  fill: currentColor;
-}
-
-.researchgate-card__body {
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
-  min-width: 0;
-}
-
-.researchgate-card__badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: #00ccbb;
-}
-
-.researchgate-card__badge svg {
-  width: 14px;
-  height: 14px;
-  fill: currentColor;
-  flex-shrink: 0;
-}
-
-.researchgate-card__lead {
-  margin: 0;
-  font-size: 0.93rem;
-  line-height: 1.5;
-  color: rgba(255, 255, 255, 0.85);
-}
-
-@media (max-width: 480px) {
-  .scholar-card,
-  .researchgate-card {
-    gap: 1rem;
-    padding: 1rem 1.1rem;
-  }
-
-  .scholar-card__icon,
-  .researchgate-card__icon {
-    width: 52px;
-    height: 52px;
-  }
-
-  .scholar-card__icon svg,
-  .researchgate-card__icon svg {
+  .profile-card__icon svg {
     width: 24px;
     height: 24px;
   }
