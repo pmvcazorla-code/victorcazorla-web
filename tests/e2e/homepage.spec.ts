@@ -28,6 +28,20 @@ test.describe("Home page", () => {
     await expect(skipLink).toBeFocused();
   });
 
+  test("Person schema links the COAMB profile and models the COAMB roles", async ({ page }) => {
+    await page.goto("/");
+    const jsonLdBlocks = await page.locator('script[type="application/ld+json"]').allTextContents();
+    const person = jsonLdBlocks.map((json) => JSON.parse(json)).find((data) => data["@type"] === "Person");
+    expect(person.sameAs).toContain("https://www.coamb.cat/team/victor-cazorla-fernandez/");
+    expect(person.memberOf).toContainEqual(
+      expect.objectContaining({
+        "@type": "OrganizationRole",
+        roleName: "President del Comitè d'Ètica i Deontologia",
+        memberOf: expect.objectContaining({ url: "https://www.coamb.cat/", alternateName: "COAMB" }),
+      }),
+    );
+  });
+
   test("does not have a BreadcrumbList schema (it's the root page)", async ({ page }) => {
     await page.goto("/");
     const jsonLdBlocks = await page.locator('script[type="application/ld+json"]').allTextContents();

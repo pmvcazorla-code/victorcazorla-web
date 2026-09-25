@@ -93,9 +93,16 @@ const isHome = matchedRoute?.key === "home";
 // con una expresión regular no reconoce la dirección. El HTML visible ya
 // se ofusca aparte con ObfuscatedEmail.
 const contactEmail = "contacto@victorcazorla.com";
+const coambOrganization = {
+  "@type": "Organization",
+  name: "Col·legi d'Ambientòlegs de Catalunya",
+  alternateName: "COAMB",
+  url: "https://www.coamb.cat/",
+};
 const personJsonLd = JSON.stringify({
   "@context": "https://schema.org",
   "@type": "Person",
+  "@id": `${siteUrl}/#person`,
   name: "Víctor Cazorla Fernández",
   url: siteUrl,
   email: contactEmail,
@@ -111,11 +118,22 @@ const personJsonLd = JSON.stringify({
     { "@type": "CollegeOrUniversity", name: "URJC (Universidad Rey Juan Carlos)" },
     { "@type": "CollegeOrUniversity", name: "UCMA (Universitat Carlemany, Andorra)" },
   ],
-  memberOf: {
-    "@type": "Organization",
-    name: "Col·legi d'Ambientòlegs de Catalunya (COAMB)",
-    url: "https://directori.coamb.cat/perfil/2438/",
-  },
+  // Cargos en el COAMB como OrganizationRole: el rol envuelve a la
+  // organización (patrón Role de schema.org). La fecha de inicio es la
+  // que ya se publica en las páginas de deontología ("Desde 2025").
+  memberOf: [
+    {
+      "@type": "OrganizationRole",
+      roleName: "President del Comitè d'Ètica i Deontologia",
+      startDate: "2025",
+      memberOf: coambOrganization,
+    },
+    {
+      "@type": "OrganizationRole",
+      roleName: "Vocal de Deontologia de la Junta de Govern",
+      memberOf: coambOrganization,
+    },
+  ],
   knowsLanguage: ["es", "en", "fr", "ca"],
   sameAs: [
     "https://www.linkedin.com/in/victorcazorla-f/",
@@ -126,6 +144,7 @@ const personJsonLd = JSON.stringify({
     "https://dialnet.unirioja.es/servlet/autor?codigo=7384355",
     "https://www.wikidata.org/wiki/Q141389632",
     "https://directori.coamb.cat/perfil/2438/",
+    "https://www.coamb.cat/team/victor-cazorla-fernandez/",
   ],
   knowsAbout: [
     "IT Governance",
