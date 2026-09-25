@@ -71,7 +71,8 @@ describe("onRequestPost /api/chat", () => {
     expect(body.ok).toBe(true);
     expect(body.answer).toBe("Es perito judicial ambiental.");
     expect(body.sources.length).toBeGreaterThan(0);
-    expect(body.sources.every((s) => s.url && s.url.startsWith("https://victorcazorla.com/"))).toBe(true);
+    // Las notas curadas (kb/curated) citan su fuente original, que puede ser externa.
+    expect(body.sources.every((s) => s.url && s.url.startsWith("https://"))).toBe(true);
     // No expone el resumen de perfil como "fuente".
     expect(body.sources.some((s) => /llms\.txt/.test(s.url))).toBe(false);
 
