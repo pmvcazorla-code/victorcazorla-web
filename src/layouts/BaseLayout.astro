@@ -119,13 +119,13 @@ const personJsonLd = JSON.stringify({
     { "@type": "CollegeOrUniversity", name: "UCMA (Universitat Carlemany, Andorra)" },
   ],
   // Cargos en el COAMB como OrganizationRole: el rol envuelve a la
-  // organización (patrón Role de schema.org). La fecha de inicio es la
-  // que ya se publica en las páginas de deontología ("Desde 2025").
+  // organización (patrón Role de schema.org). Inicio de la presidencia:
+  // agosto de 2025, como en LinkedIn (las páginas dicen "Desde 2025").
   memberOf: [
     {
       "@type": "OrganizationRole",
       roleName: "President del Comitè d'Ètica i Deontologia",
-      startDate: "2025",
+      startDate: "2025-08",
       memberOf: coambOrganization,
     },
     {

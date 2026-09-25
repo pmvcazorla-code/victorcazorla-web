@@ -10,7 +10,7 @@ updated: "2026-09-25"
 
 Víctor Cazorla Fernández es presidente del Comité de Ética y Deontología
 (en catalán, President del Comitè d'Ètica i Deontologia) del Col·legi
-d'Ambientòlegs de Catalunya (COAMB) desde 2025. El COAMB publica su perfil
+d'Ambientòlegs de Catalunya (COAMB) desde agosto de 2025. El COAMB publica su perfil
 oficial en su web.
 
 En la Junta de Govern del COAMB figura además como vocal de Deontología
@@ -18,7 +18,7 @@ En la Junta de Govern del COAMB figura además como vocal de Deontología
 
 ## Puntos clave
 
-- Cargo principal: presidente del Comité de Ética y Deontología del COAMB, desde 2025.
+- Cargo principal: presidente del Comité de Ética y Deontología del COAMB, desde agosto de 2025.
 - Junta de Govern del COAMB: Vocalia Deontologia.
 - Organización: Col·legi d'Ambientòlegs de Catalunya (COAMB), https://www.coamb.cat/
 - Perfil oficial en el COAMB: https://www.coamb.cat/team/victor-cazorla-fernandez/
