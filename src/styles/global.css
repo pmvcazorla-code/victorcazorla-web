@@ -295,7 +295,7 @@ em {
 
 .career-card__header {
   display: flex;
-  align-items: flex-start;
+  align-items: center;
   gap: 0.9rem;
   padding-bottom: 0.8rem;
   border-bottom: 1px solid var(--color-border);
